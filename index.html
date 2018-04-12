@@ -154,7 +154,9 @@
 <li>安装 node.js。 网址如下<a href="https://nodejs.org/en/" target="_blank" rel="noopener">node.js</a>。静默安装即可，完成后可以在命令行中使用 node -v 检测，如果出现版本信息，表示安装成功。</li>
 <li>安装Git。 网址如下<a href="https://git-scm.com/download/win" target="_blank" rel="noopener">Git</a>。静默安装即可，完成后可以在命令行中使用 git –version 检测，如果出现版本信息，表示安装成功。</li>
 <li>安装hexo。 桌面右键鼠标，点击Git Bash Here，输入以下npm命令即可安装。<br>npm install hexo-cli -g   （安装hexo）<br>npm install hexo-deployer-git –save   （安装hexo部署到git page的deployer插件）</li>
-<li>hexo初始化。  在盘中任意位置创建一个文件夹（该文件夹用于保存博客相关的信息），比如 d:\hexo\blog。在该文件夹下桌面右键鼠标，点击     Git Bash Here，输入 hexo init blog</li>
+<li>hexo初始化。  在盘中任意位置创建一个文件夹（该文件夹用于保存博客相关的信息），比如 d:\hexo\blog。在该文件夹下打开命令行或者使用Git Bash Here 输入 hexo init命令。 等待命令完成后 依次输入 hexo g (生成静态文件，会在当前目录下生成一个新的叫做public的文件夹)<br>hexo s(启动本地web服务，用于博客的预览). 等待命令执行完成后 在浏览器中访问<a href="https://localhost:4000/" target="_blank" rel="noopener">https://localhost:4000/</a> 此时可以看到一个博客的系统网页。</li>
+<li>将博客部署到Githubpage上。<br>（1）在github中创建一个新的仓库（仓库名称为:yourGithubName.github.io,比如你的github名是sky,那么仓库名称就是sky.github.io).<br>(2) 配置SSH密钥。（此处创建的密钥用于添加到github中，实现本地git和网络中自身github账户的通信验证。）<pre><code>首先检查
+</code></pre></li>
 </ol>
 
         
