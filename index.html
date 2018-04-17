@@ -79,6 +79,130 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2018/04/16/SpringMVC学习简记(1)/" title="SpringMVC学习简记(1)" itemprop="url">SpringMVC学习简记(1)</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
+		
+  <p class="article-time">
+    <time datetime="2018-04-16T08:29:38.000Z" itemprop="datePublished"> Published 2018-04-16</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>SpringMVC学习过程简记</p>
+<h2 id="Spring-MVC概述"><a href="#Spring-MVC概述" class="headerlink" title="Spring MVC概述"></a>Spring MVC概述</h2><pre><code>Spring MVC框架是一个开源的Java平台，为开发强大的基于Java的Web应用程序提供全面的基础架构支持非常容易和非常快速。
+
+Spring web MVC框架提供了MVC(模型-视图-控制器)架构和用于开发灵活和松散耦合的Web应用程序的组件。 MVC模式导致应用程序的不同方面(输入逻辑，业务逻辑和UI逻辑)分离，同时提供这些元素之间的松散耦合。
+</code></pre><ul>
+<li><strong>模型(Model)</strong>封装了应用程序数据，通常它们将由POJO类组成。</li>
+<li><strong>视图(View)</strong>负责渲染模型数据，一般来说它生成客户端浏览器可以解释HTML输出。</li>
+<li><strong>控制器(Controller)</strong>负责处理用户请求并构建适当的模型，并将其传递给视图进行渲染。</li>
+</ul>
+<h2 id="DispatcherServlet组件类"><a href="#DispatcherServlet组件类" class="headerlink" title="DispatcherServlet组件类"></a>DispatcherServlet组件类</h2><pre><code>Spring Web模型-视图-控制器(MVC)框架是围绕DispatcherServlet设计的，它处理所有的HTTP请求和响应。 Spring Web MVC DispatcherServlet的请求处理工作流如下图所示：
+</code></pre><p><img src="http://www.yiibai.com/uploads/images/201701/18/451110124_66519.png" alt=""></p>
+<pre><code>以下是对应于到DispatcherServlet的传入HTTP请求的事件顺序：
+</code></pre><ul>
+<li>在接收到HTTP请求后，DispatcherServlet会查询HandlerMapping以调用相应的Controller。</li>
+<li>Controller接受请求并根据使用的GET或POST方法调用相应的服务方法。服务方法将基于定义的业务逻辑设置模型数据，并将视图名称返回给DispatcherServlet。</li>
+<li>DispatcherServlet将从ViewResolver获取请求的定义视图。</li>
+<li>当视图完成，DispatcherServlet将模型数据传递到最终的视图，并在浏览器上呈现。</li>
+</ul>
+<h2 id="关于SpringMvc项目的创建"><a href="#关于SpringMvc项目的创建" class="headerlink" title="关于SpringMvc项目的创建"></a>关于SpringMvc项目的创建</h2><p>   以HelloWeb为例：</p>
+<ol>
+<li>创建一个名为HelloWeb的动态Web项目，并在创建的项目中的src文件夹下创建一个包com.yiibai.springmvc。</li>
+<li>将下面提到的Spring和其他库拖放到文件夹WebContent/WEB-INF/lib中。<br><img src="http://www.yiibai.com/uploads/images/201701/18/563150102_38758.png" alt=""></li>
+<li>在com.yiibai.springmvc包下创建一个Java类HelloController。</li>
+<li>在WebContent/WEB-INF文件夹下创建Spring配置文件web.xml和HelloWeb-servlet.xml。</li>
+<li>在WebContent/WEB-INF文件夹下创建一个名为jsp的子文件夹。在此子文件夹下创建视图文件hello.jsp。<br>说明：SpringMVC框架包含两个XML配置文件，web.xml以及有web.xml内部<servlet-name>定义产生xxx而派生的xxx-servlet.xml文件。</servlet-name></li>
+</ol>
+<h2 id="关于XML文件的配置"><a href="#关于XML文件的配置" class="headerlink" title="关于XML文件的配置"></a>关于XML文件的配置</h2><h3 id="web-xml的配置"><a href="#web-xml的配置" class="headerlink" title="web.xml的配置"></a>web.xml的配置</h3><pre><code> &lt;web-app id=&quot;WebApp_ID&quot; version=&quot;2.4&quot;
+ xmlns=&quot;http://java.sun.com/xml/ns/j2ee&quot; 
+ xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+ xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/j2ee 
+ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd&quot;&gt;
+
+&lt;display-name&gt;Spring MVC Application&lt;/display-name&gt;
+
+&lt;servlet&gt;
+ &lt;servlet-name&gt;HelloWeb&lt;/servlet-name&gt; // a行
+&lt;servlet-class&gt;
+     org.springframework.web.servlet.DispatcherServlet  //该框架围绕DispatcherServlet设计
+&lt;/servlet-class&gt;
+&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+
+&lt;servlet-mapping&gt;
+&lt;servlet-name&gt;HelloWeb&lt;/servlet-name&gt;
+&lt;url-pattern&gt;/&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+&lt;/web-app&gt;
+</code></pre><p>关于上方a行的说明：servlet-name一般为项目名称，此处的定义主要是为了映射xxx-servlet.xml文件。比如此处如果定义sky,那么应当再定义sky-servlet.xml文件。</p>
+<h3 id="HelloWeb-servlet-xml配置"><a href="#HelloWeb-servlet-xml配置" class="headerlink" title="HelloWeb-servlet.xml配置"></a>HelloWeb-servlet.xml配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> &lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line"> xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</span><br><span class="line">xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line"> xsi:schemaLocation=&quot;</span><br><span class="line"> http://www.springframework.org/schema/beans     </span><br><span class="line"> http://www.springframework.org/schema/beans/spring-beans-3.0.xsd</span><br><span class="line">http://www.springframework.org/schema/context </span><br><span class="line">http://www.springframework.org/schema/context/spring-context-3.0.xsd&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;context:component-scan base-package=&quot;com.yiibai&quot; /&gt; </span><br><span class="line"></span><br><span class="line">&lt;bean class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;</span><br><span class="line">     &lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/jsp/&quot; /&gt;</span><br><span class="line">    &lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot; /&gt;</span><br><span class="line"> &lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+<p>关于上方的几点说明：</p>
+<ol>
+<li>[servlet-name]-servlet.xml文件将用于创建定义的bean，它会覆盖在全局范围中使用相同名称定义的任何bean的定义。</li>
+<li>&lt;context：component-scan…&gt;标签将用于激活SpringMVC注释扫描功能，允许使用@Controller和@RequestMapping等注释。</li>
+<li>InternalResourceViewResolver将定义用于解析视图名称的规则。根据上面定义的规则，hello的逻辑视图将委托给位于/WEB-INF/jsp/hello.jsp这个视图来实现。前缀定义了文件所在的位置，后缀定义了文件的后缀。</li>
+</ol>
+<h2 id="关于控制器的配置"><a href="#关于控制器的配置" class="headerlink" title="关于控制器的配置"></a>关于控制器的配置</h2><pre><code>DispatcherServlet将请求委派给控制器以执行特定于其的功能。
+@Controller注释指示特定类充当控制器的角色。
+@RequestMapping注释用于将URL映射到整个类或特定处理程序方法。
+</code></pre><h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Controller</span><br><span class="line">@RequestMapping(&quot;/hello&quot;)</span><br><span class="line">public class HelloController&#123;</span><br><span class="line">@RequestMapping(method = RequestMethod.GET)</span><br><span class="line">public String printHello(ModelMap model) &#123;</span><br><span class="line"> model.addAttribute(&quot;message&quot;, &quot;Hello Spring MVC Framework!&quot;);</span><br><span class="line">return &quot;hello&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="上方的另一种写法"><a href="#上方的另一种写法" class="headerlink" title="上方的另一种写法"></a>上方的另一种写法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span></span>&#123;</span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/hello"</span>, method = RequestMethod.GET)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">printHello</span><span class="params">(ModelMap model)</span> </span>&#123;</span><br><span class="line"> model.addAttribute(<span class="string">"message"</span>, <span class="string">"Hello Spring MVC Framework!"</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="string">"hello"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>value属性指示处理程序方法映射到的URL，method属性定义处理HTTP GET请求的服务方法。</p>
+<h2 id="创建视图"><a href="#创建视图" class="headerlink" title="创建视图"></a>创建视图</h2><p>   Spring MVC支持许多类型的视图用于不同的表示技术。包括 - JSP，HTML，PDF，Excel工作表，XML，Velocity模板，XSLT，JSON，Atom 和 RSS 源，JasperReports等。但最常见的是使用JSPL编写的JSP模板，这里使用的是JSP模板，并在/WEB-INF/hello/hello.jsp中写一个简单的hello视图：</p>
+<pre><code>   &lt;html&gt;
+  &lt;head&gt;
+  &lt;title&gt;Hello Spring MVC&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;h2&gt;${message}&lt;/h2&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/SpringMVC/">SpringMVC</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2018/04/15/Github入门简记/" title="Github入门简记" itemprop="url">Github入门简记</a>
   </h1>
   <p class="article-author">By
@@ -452,7 +576,7 @@ Baidu[^1]
 <p>Markdown </p>
 <pre><code>轻量级文本标记语言，可以转换成html，pdf等格式  //  此处没有使用:
 </code></pre><h3 id="示例2-看一下二者的不同效果。"><a href="#示例2-看一下二者的不同效果。" class="headerlink" title="示例2 看一下二者的不同效果。"></a>示例2 看一下二者的不同效果。</h3><p>代码块定义<br>:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">    num+=i;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"此处未使用自定义语法"</span>);</span><br></pre></td></tr></table></figure></p>
-<h2 id="自动邮箱链接"><a href="#自动邮箱链接" class="headerlink" title="自动邮箱链接"></a>自动邮箱链接</h2><p><a href="mailto:&#x77;&#x65;&#x63;&#x68;&#x61;&#116;&#64;&#x71;&#x71;&#46;&#x63;&#x6f;&#109;" target="_blank" rel="noopener">&#x77;&#x65;&#x63;&#x68;&#x61;&#116;&#64;&#x71;&#x71;&#46;&#x63;&#x6f;&#109;</a></p>
+<h2 id="自动邮箱链接"><a href="#自动邮箱链接" class="headerlink" title="自动邮箱链接"></a>自动邮箱链接</h2><p><a href="mailto:&#119;&#x65;&#99;&#x68;&#97;&#116;&#x40;&#113;&#113;&#46;&#x63;&#x6f;&#109;" target="_blank" rel="noopener">&#119;&#x65;&#99;&#x68;&#97;&#116;&#x40;&#113;&#113;&#46;&#x63;&#x6f;&#109;</a></p>
 <h2 id="时序图（todo）"><a href="#时序图（todo）" class="headerlink" title="时序图（todo）"></a>时序图（todo）</h2><h2 id="流程图（todo）"><a href="#流程图（todo）" class="headerlink" title="流程图（todo）"></a>流程图（todo）</h2><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上内容是对于markdown的入门小节，总结的目的如下</p>
 <ol>
 <li>语法的入门练习。</li>
@@ -924,11 +1048,15 @@ hexo s(启动本地web服务，用于博客的预览).
 			
 		
 			
-				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>1</sup></a></li>
+				<li><a href="/tags/Spring框架简记/" title="Spring框架简记">Spring框架简记<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Spring框架简记/" title="Spring框架简记">Spring框架简记<sup>1</sup></a></li>
+				<li><a href="/tags/SpringMVC/" title="SpringMVC">SpringMVC<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>1</sup></a></li>
 			
 		
 			
