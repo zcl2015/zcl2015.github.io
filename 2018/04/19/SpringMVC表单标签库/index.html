@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="SelfBlog">
 <meta property="og:description" content="SpringMVC表单标签库的使用 Spring MVC 表单标签库简述   表单标签库主要用于网页中信息的获取。大体分为以下两个使用场景：  登陆界面：网页的登陆界面需要用户输入用户信息，从而完成用户的信息验证以及与之相关的操作。 基于实际需要填写信息。例如注册页面的信息采集，网页中表单信息的采集。基于以上考虑，标签在网页中使用非常普遍，应当熟练掌握。  Spring MVC 表单标签库分类不需">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-19T06:06:56.743Z">
+<meta property="og:updated_time" content="2018-04-19T07:50:50.416Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringMVC表单标签库">
 <meta name="twitter:description" content="SpringMVC表单标签库的使用 Spring MVC 表单标签库简述   表单标签库主要用于网页中信息的获取。大体分为以下两个使用场景：  登陆界面：网页的登陆界面需要用户输入用户信息，从而完成用户的信息验证以及与之相关的操作。 基于实际需要填写信息。例如注册页面的信息采集，网页中表单信息的采集。基于以上考虑，标签在网页中使用非常普遍，应当熟练掌握。  Spring MVC 表单标签库分类不需">
@@ -110,62 +110,85 @@
 </ol>
 <h2 id="Spring-MVC-表单标签库分类"><a href="#Spring-MVC-表单标签库分类" class="headerlink" title="Spring MVC 表单标签库分类"></a>Spring MVC 表单标签库分类</h2><h3 id="不需要外部数据标签"><a href="#不需要外部数据标签" class="headerlink" title="不需要外部数据标签"></a>不需要外部数据标签</h3><ol>
 <li><p><strong>文本框</strong><br>使用&lt;form:input /&gt;标签来渲染一个HTML文本框。</p>
-<pre><code>例如 -&lt;form:input path=&quot;xxx&quot; /&gt;  
+<pre><code>例如 -&lt;form:input path=&quot;Modelattribute&quot; /&gt;  
 HTML它将生成以下HTML内容： 
-&lt;input id=&quot;name&quot; name=&quot;name&quot; type=&quot;text&quot; value=&quot;&quot;/&gt; 
-</code></pre><p>效果如下： <input id="name" name="name" type="text" value=""></p>
+&lt;input id=&quot;Modelattribute&quot; name=&quot;Modelattribute&quot; type=&quot;text&quot; value=&quot;&quot;/&gt; 
+</code></pre><p>效果如下： <input id="Modelattribute" name="Modelattribute" type="text" value=""></p>
 </li>
 <li><p><strong>密码框</strong><br>使用&lt;form:password /&gt;标签来呈现HTML密码框。 </p>
-<pre><code>例如 -&lt;form:password path=&quot;xxx&quot; /&gt;
+<pre><code>例如 -&lt;form:password path=&quot;Modelattribute&quot; /&gt;
 HTML它将呈现以下HTML内容:
 &lt;input id=&quot;password&quot; name=&quot;password&quot; type=&quot;password&quot; value=&quot;&quot;/&gt;
-</code></pre><p>效果如下：<input id="password" name="password" type="password" value=""></p>
+</code></pre><p>效果如下：<input id="Modelattribute" name="Modelattribute" type="password" value=""></p>
 </li>
 <li><p><strong>文本域</strong><br>使用&lt;form:textarea /&gt;标签来呈现HTML密码框。</p>
 <pre><code>例如 - &lt;form:textarea path=&quot;xxx&quot; rows=&quot;5&quot; cols=&quot;30&quot; /&gt;
 HTML它将呈现以下HTML内容。
-&lt;textarea id=&quot;address&quot; name=&quot;address&quot; rows=&quot;5&quot; cols=&quot;30&quot;&gt;
-</code></pre><p>效果如下：<textarea id="address" name="address" rows="5" cols="30"></textarea></p>
+&lt;textarea id=&quot;Modelattribute&quot; name=&quot;Modelattribute&quot; rows=&quot;5&quot; cols=&quot;30&quot;&gt;
+</code></pre><p>效果如下：<textarea id="Modelattribute" name="Modelattribute" rows="5" cols="30"></textarea></p>
 </li>
 </ol>
 <ol start="4">
 <li><p><strong>复选框 (单选)</strong><br>使用&lt;form:checkbox /&gt;标签来呈现HTML密码框。 </p>
-<pre><code>例如 - &lt;form:checkbox path=&quot;xxx&quot; /&gt;
+<pre><code>例如 - &lt;form:checkbox path=&quot;Modelattribute&quot; /&gt;
 HTML它将呈现以下HTML内容。
-&lt;input id=&quot;xxx&quot; name=&quot;receivePaper&quot; type=&quot;checkbox&quot; value=&quot;true&quot;/&gt;
-&lt;input type=&quot;hidden&quot; name=&quot;_receivePaper&quot; value=&quot;on&quot;/&gt;
-</code></pre><p>效果如下：<br>   <input id="xxx" name="receivePaper" type="checkbox" value="true"></p>
-   <input name="_receivePaper" value="on">
-
-
+&lt;input id=&quot;Modelattribute&quot; name=&quot;Modelattribute&quot; type=&quot;checkbox&quot; value=&quot;true&quot;/&gt;
+</code></pre><p>效果如下：</p>
+   <input id="Modelattribute" name="Modelattribute" type="checkbox" value="true">
 </li>
-</ol>
-<ol start="5">
 <li><p><strong>单选框</strong><br>使用&lt;form:radiobutton /&gt;标签来呈现HTML密码框。</p>
-<pre><code>例如   &lt;form:radiobutton path=&quot;gender&quot; value=&quot;M&quot; label=&quot;男&quot; /&gt;  
-      &lt;form:radiobutton path=&quot;gender&quot; value=&quot;F&quot; label=&quot;女&quot; /&gt;
+<pre><code>例如   &lt;form:radiobutton path=&quot;Modelattribute&quot; value=&quot;M&quot; label=&quot;男&quot; /&gt;  
+      &lt;form:radiobutton path=&quot;Modelattribute&quot; value=&quot;F&quot; label=&quot;女&quot; /&gt;
 HTML它将呈现以下HTML内容。
 &lt;input id=&quot;gender1&quot; name=&quot;gender&quot; type=&quot;radio&quot; value=&quot;M&quot; checked=&quot;checked&quot;/&gt;&lt;label for=&quot;gender1&quot;&gt;男&lt;label&gt;
 &lt;input id=&quot;gender2&quot; name=&quot;gender&quot; type=&quot;radio&quot; value=&quot;F&quot;/&gt;&lt;label for=&quot;gender2&quot;&gt;女&lt;/label&gt;
-</code></pre></li>
-</ol>
-<p>   效果如下：<br>    <input id="gender1" name="gender" type="radio" value="M" checked="checked"><label for="gender1">男<label><br>    <input id="gender2" name="gender" type="radio" value="F"><label for="gender2">女</label></label></label></p>
-<ol start="6">
+</code></pre><p>效果如下：<br> <input id="gender1" name="gender" type="radio" value="M" checked="checked"><label for="gender1">男<label><br> <input id="gender2" name="gender" type="radio" value="F"><label for="gender2">女</label></label></label></p>
+</li>
 <li><p><strong>隐藏字段域</strong><br>使用&lt;form:hidden /&gt;标签来呈现HTML隐藏字段域。</p>
 <pre><code>例如 -&lt;form:hidden path=&quot;id&quot; value=&quot;1000&quot;/&gt;
 HTML它将呈现以下HTML内容。
 &lt;input id=&quot;id&quot; name=&quot;id&quot; type=&quot;hidden&quot; value=&quot;1000&quot;/&gt;
+以下作为对比:
+&lt;input id=&quot;id&quot; name=&quot;id&quot;  value=&quot;1000&quot;/&gt;
 </code></pre><p>效果如下：<br> <input id="id" name="id" value="1000"></p>
  <input id="id" name="id" type="hidden" value="1000">
 
 </li>
 </ol>
+<p>注：上方标签中的path分别指向Model类中的属性。</p>
 <h3 id="需要外部数据标签"><a href="#需要外部数据标签" class="headerlink" title="需要外部数据标签"></a>需要外部数据标签</h3><ol>
 <li><p><strong>复选框(多选)</strong></p>
 <pre><code>使用&lt;form:checkboxes /&gt;标签来呈现HTML多个复选框。 
-例如 -  &lt;form:checkboxes items=&quot;${webFrameworkList}&quot; path=&quot;favoriteFrameworks&quot; /&gt;
-其中webFrameworkList是在xxxController中使用@ModelAttribute(&quot;webFrameworkListSky&quot;)定义的。
+例如 -  
+&lt;form:checkboxes items=&quot;${xxx}&quot; path=&quot;Modelshuxing&quot; /&gt;
+其中xxx是在xxxController中使用@ModelAttribute(&quot;yyy&quot;)定义的。
 </code></pre></li>
+<li><p><strong>单选框(多个选项)</strong></p>
+<pre><code>使用&lt;form:radiobuttons /&gt;标签来呈现HTML密码框。
+例如 - 
+&lt;form:radiobuttons items=&quot;${yyy}&quot; path=&quot;Modelshuxing&quot; /&gt;
+其中xxx是在xxxController中使用@ModelAttribute(&quot;yyy&quot;)定义的。
+</code></pre></li>
+<li><p><strong>下拉框</strong></p>
+<p> 使用&lt;form:select /&gt; , &lt;form:option /&gt; 和 &lt;form:options /&gt;标签来呈现HTML密码框。<br> 例如 - &lt;form:select path=”country”&gt;</p>
+<pre><code>&lt;form:option value=&quot;NONE&quot; label=&quot;Select&quot;/&gt;
+&lt;form:options items=&quot;${countryList}&quot; /&gt;&lt;/form:select&gt;
+</code></pre><p>  HTML它将呈现以下HTML内容。</p>
+<pre><code>&lt;select id=&quot;country&quot; name=&quot;country&quot;&gt;
+&lt;option value=&quot;NONE&quot;&gt;请选择...&lt;/option&gt;
+&lt;option value=&quot;US&quot;&gt;United States&lt;/option&gt;
+&lt;option value=&quot;CH&quot;&gt;China&lt;/option&gt;
+&lt;option value=&quot;MY&quot;&gt;Malaysia&lt;/option&gt;
+&lt;option value=&quot;SG&quot;&gt;Singapore&lt;/option&gt;
+&lt;/select&gt;
+</code></pre></li>
+<li><p><strong>列表多选框</strong></p>
+<p> 使用&lt;form:select /&gt; 及其属性 multiple=true标签来呈现HTML列表多选框。<br> 例如 -<br> &lt;form:select path=”skills” items=”${xxx}” multiple=”true” /&gt;<br> HTML它将呈现以下HTML内容。</p>
+ <select id="skills" name="skills" multiple="multiple"><br> <option value="Struts">Struts</option><br> <option value="Hibernate">Hibernate</option><br> <option value="Apache Wicket">Apache Hadoop</option><br> <option value="Spring">Spring</option><br> </select>
+</li>
+<li><p><strong>错误处理</strong></p>
+<p> 使用&lt;form:errors /&gt;标签来呈现HTML隐藏字段域。<br> 例如 -<br> &lt;form:errors path=”*” cssClass=”errorblock” element=”div” /&gt;<br> HTML它将呈现所有输入验证的错误消息。<br> 使用带有path =“name”的&lt;form：errors /&gt;标记来渲染name字段的错误消息。<br> &lt;form:errors path=”name” cssClass=”error” /&gt;</p>
+</li>
 </ol>
   
 	</div>
