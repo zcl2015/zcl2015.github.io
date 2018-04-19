@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="SelfBlog">
 <meta property="og:description" content="SpringMVC表单处理 Spring MVC 表单项目创建以下示例演示如何编写一个简单的基于Web的应用程序，它使用Spring Web MVC框架使用HTML表单。 首先使用Eclipse IDE，并按照以下步骤使用Spring Web Framework开发基于动态表单的Web应用程序：  基于上一小节中的Spring MVC - HelloWeb实例章节所创建的 HelloWeb来创建。">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-19T04:11:45.055Z">
+<meta property="og:updated_time" content="2018-04-19T04:19:30.911Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringMVC表单处理1">
 <meta name="twitter:description" content="SpringMVC表单处理 Spring MVC 表单项目创建以下示例演示如何编写一个简单的基于Web的应用程序，它使用Spring Web MVC框架使用HTML表单。 首先使用Eclipse IDE，并按照以下步骤使用Spring Web Framework开发基于动态表单的Web应用程序：  基于上一小节中的Spring MVC - HelloWeb实例章节所创建的 HelloWeb来创建。">
@@ -138,6 +138,7 @@
 }
 
 </code></pre>
+<p><strong>关于上方a行的说明：一般情况下创建Model类时最好创建一个不带参数的构造方法。</strong></p>
 <h2 id="关于Controller类"><a href="#关于Controller类" class="headerlink" title="关于Controller类"></a>关于Controller类</h2><h3 id="Controller类的创建"><a href="#Controller类的创建" class="headerlink" title="Controller类的创建"></a>Controller类的创建</h3><pre><code class="java"><span class="keyword">package</span> com.yiibai.springmvc;
 <span class="keyword">import</span> org.springframework.stereotype.Controller;
 <span class="keyword">import</span> org.springframework.web.bind.annotation.ModelAttribute;
@@ -152,6 +153,9 @@
    <span class="meta">@RequestMapping</span>(value = <span class="string">"/student"</span>, method = RequestMethod.GET)
    <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">student</span><span class="params">()</span> </span>{
     <span class="keyword">return</span> <span class="keyword">new</span> ModelAndView(<span class="string">"student"</span>, <span class="string">"command"</span>, <span class="keyword">new</span> Student());
+    <span class="comment">/* 我们已经在ModelAndView对象中传递了一个名为“command”的空对象，因为如果在JSP中使用&lt;form：form&gt;标签</span>
+<span class="comment">     spring框架需要一个名为“command”的对象文件。 所以当调用student()方法时，它返回student.jsp视图。</span>
+<span class="comment">       */</span>
    }
    <span class="meta">@RequestMapping</span>(value = <span class="string">"/addStudent"</span>, method = RequestMethod.POST)
    <span class="function"><span class="keyword">public</span> String <span class="title">addStudent</span><span class="params">(@ModelAttribute(<span class="string">"SpringWeb"</span>)</span>Student student, </span>
@@ -229,7 +233,7 @@
 &lt;/table&gt;  
 &lt;/body&gt;
 &lt;/html&gt;
-</code></pre><p>此处并没有什么额外要讲的。666</p>
+</code></pre><p>此处仅仅作为结果的展示界面，用于将控制器addStudent中的数据进行展示。</p>
   
 	</div>
 		<footer class="article-footer clearfix">
