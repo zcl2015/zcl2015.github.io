@@ -126,15 +126,20 @@ HTML它将呈现以下HTML内容。
 &lt;input type=&quot;hidden&quot; name=&quot;_receivePaper&quot; value=&quot;on&quot;/&gt;
 </code></pre><p>效果如下：<br>   <input id="xxx" name="receivePaper" type="checkbox" value="true"></p>
    <input type="hidden" name="_receivePaper" value="on">
+
+
 </li>
+</ol>
+<ol start="5">
 <li><p><strong>单选框</strong><br>使用&lt;form:radiobutton /&gt;标签来呈现HTML密码框。</p>
-<pre><code>例如 -   &lt;form:radiobutton path=&quot;gender&quot; value=&quot;M&quot; label=&quot;男&quot; /&gt;  
- //此处传递的value属性值可以用于条件判断。
- &lt;form:radiobutton path=&quot;gender&quot; value=&quot;F&quot; label=&quot;女&quot; /&gt;
- HTML它将呈现以下HTML内容。
- &lt;input id=&quot;gender1&quot; name=&quot;gender&quot; type=&quot;radio&quot; value=&quot;M&quot; checked=&quot;checked&quot;/&gt;&lt;label for=&quot;gender1&quot;&gt;男&lt;label&gt;&lt;input id=&quot;gender2&quot; name=&quot;gender&quot; type=&quot;radio&quot; value=&quot;F&quot;/&gt;&lt;label for=&quot;gender2&quot;&gt;女&lt;/label&gt;
+<pre><code>例如   &lt;form:radiobutton path=&quot;gender&quot; value=&quot;M&quot; label=&quot;男&quot; /&gt;  
+      &lt;form:radiobutton path=&quot;gender&quot; value=&quot;F&quot; label=&quot;女&quot; /&gt;
+HTML它将呈现以下HTML内容。
+&lt;input id=&quot;gender1&quot; name=&quot;gender&quot; type=&quot;radio&quot; value=&quot;M&quot; checked=&quot;checked&quot;/&gt;&lt;label for=&quot;gender1&quot;&gt;男&lt;label&gt;
+&lt;input id=&quot;gender2&quot; name=&quot;gender&quot; type=&quot;radio&quot; value=&quot;F&quot;/&gt;&lt;label for=&quot;gender2&quot;&gt;女&lt;/label&gt;
 </code></pre></li>
 </ol>
+<p>   效果如下：<br>    <input id="gender1" name="gender" type="radio" value="M" checked="checked"><label for="gender1">男<label><br>    <input id="gender2" name="gender" type="radio" value="F"><label for="gender2">女</label></label></label></p>
 
         
         
