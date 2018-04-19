@@ -99,20 +99,42 @@
 <li>基于实际需要填写信息。例如注册页面的信息采集，网页中表单信息的采集。<br>基于以上考虑，标签在网页中使用非常普遍，应当熟练掌握。</li>
 </ol>
 <h2 id="Spring-MVC-表单标签库分类"><a href="#Spring-MVC-表单标签库分类" class="headerlink" title="Spring MVC 表单标签库分类"></a>Spring MVC 表单标签库分类</h2><h3 id="Spring-MVC-表单标签库如下所示："><a href="#Spring-MVC-表单标签库如下所示：" class="headerlink" title="Spring MVC 表单标签库如下所示："></a>Spring MVC 表单标签库如下所示：</h3><ol>
-<li><p>文本框<br>:   使用&lt;form:input /&gt;标签来渲染一个HTML文本框。<br> 例如 -&lt;form:input path=”xxx” /&gt;<br> HTML它将生成以下HTML内容。  <input id="name" name="name" type="text" value=""></p>
+<li><p><strong>文本框</strong><br>使用&lt;form:input /&gt;标签来渲染一个HTML文本框。</p>
+<pre><code>例如 -&lt;form:input path=&quot;xxx&quot; /&gt;  
+HTML它将生成以下HTML内容： 
+&lt;input id=&quot;name&quot; name=&quot;name&quot; type=&quot;text&quot; value=&quot;&quot;/&gt; 
+</code></pre><p>效果如下： <input id="name" name="name" type="text" value=""></p>
 </li>
-<li><p>密码框<br>:   使用&lt;form:password /&gt;标签来呈现HTML密码框。 </p>
+<li><p><strong>密码框</strong><br>使用&lt;form:password /&gt;标签来呈现HTML密码框。 </p>
 <pre><code>例如 -&lt;form:password path=&quot;xxx&quot; /&gt;
-</code></pre><p>HTML它将呈现以下HTML内容。<input id="password" name="password" type="password" value=""></p>
+HTML它将呈现以下HTML内容:
+&lt;input id=&quot;password&quot; name=&quot;password&quot; type=&quot;password&quot; value=&quot;&quot;/&gt;
+</code></pre><p>效果如下：<input id="password" name="password" type="password" value=""></p>
 </li>
-<li><p>文本域<br>:   使用&lt;form:textarea /&gt;标签来呈现HTML密码框。<br>例如 - &lt;form:textarea path=”xxx” rows=”5” cols=”30” /&gt;<br>HTML它将呈现以下HTML内容。<textarea id="address" name="address" rows="5" cols="30"></textarea></p>
-</li>
-<li><p>复选框 (单选)<br>:   使用&lt;form:checkbox /&gt;标签来呈现HTML密码框。<br>例如 - &lt;form:checkbox path=”xxx” /&gt;<br>HTML它将呈现以下HTML内容。<br><input id="xxx" name="receivePaper" type="checkbox" value="true"></p>
-<input type="hidden" name="_receivePaper" value="on">
-
+<li><p><strong>文本域</strong><br>使用&lt;form:textarea /&gt;标签来呈现HTML密码框。</p>
+<pre><code>例如 - &lt;form:textarea path=&quot;xxx&quot; rows=&quot;5&quot; cols=&quot;30&quot; /&gt;
+HTML它将呈现以下HTML内容。
+&lt;textarea id=&quot;address&quot; name=&quot;address&quot; rows=&quot;5&quot; cols=&quot;30&quot;&gt;
+</code></pre><p>效果如下：<textarea id="address" name="address" rows="5" cols="30"></textarea></p>
 </li>
 </ol>
-<p>5.</p>
+<ol start="4">
+<li><p><strong>复选框 (单选)</strong><br>使用&lt;form:checkbox /&gt;标签来呈现HTML密码框。 </p>
+<pre><code>例如 - &lt;form:checkbox path=&quot;xxx&quot; /&gt;
+HTML它将呈现以下HTML内容。
+&lt;input id=&quot;xxx&quot; name=&quot;receivePaper&quot; type=&quot;checkbox&quot; value=&quot;true&quot;/&gt;
+&lt;input type=&quot;hidden&quot; name=&quot;_receivePaper&quot; value=&quot;on&quot;/&gt;
+</code></pre><p>效果如下：<br>   <input id="xxx" name="receivePaper" type="checkbox" value="true"></p>
+   <input type="hidden" name="_receivePaper" value="on">
+</li>
+<li><p><strong>单选框</strong><br>使用&lt;form:radiobutton /&gt;标签来呈现HTML密码框。</p>
+<pre><code>例如 -   &lt;form:radiobutton path=&quot;gender&quot; value=&quot;M&quot; label=&quot;男&quot; /&gt;  
+ //此处传递的value属性值可以用于条件判断。
+ &lt;form:radiobutton path=&quot;gender&quot; value=&quot;F&quot; label=&quot;女&quot; /&gt;
+ HTML它将呈现以下HTML内容。
+ &lt;input id=&quot;gender1&quot; name=&quot;gender&quot; type=&quot;radio&quot; value=&quot;M&quot; checked=&quot;checked&quot;/&gt;&lt;label for=&quot;gender1&quot;&gt;男&lt;label&gt;&lt;input id=&quot;gender2&quot; name=&quot;gender&quot; type=&quot;radio&quot; value=&quot;F&quot;/&gt;&lt;label for=&quot;gender2&quot;&gt;女&lt;/label&gt;
+</code></pre></li>
+</ol>
 
         
         
