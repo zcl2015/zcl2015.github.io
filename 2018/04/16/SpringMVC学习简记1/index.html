@@ -1,0 +1,560 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>SpringMVC学习简记1 | SelfBlog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="赵成龙">
+    
+
+    
+    <meta name="description" content="SpringMVC学习过程简记 Spring MVC概述Spring MVC框架是一个开源的Java平台，为开发强大的基于Java的Web应用程序提供全面的基础架构支持非常容易和非常快速。  Spring web MVC框架提供了MVC(模型-视图-控制器)架构和用于开发灵活和松散耦合的Web应用程序的组件。 MVC模式导致应用程序的不同方面(输入逻辑，业务逻辑和UI逻辑)分离，同时提供这些元素之">
+<meta name="keywords" content="SpringMVC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringMVC学习简记1">
+<meta property="og:url" content="http://yoursite.com/2018/04/16/SpringMVC学习简记1/index.html">
+<meta property="og:site_name" content="SelfBlog">
+<meta property="og:description" content="SpringMVC学习过程简记 Spring MVC概述Spring MVC框架是一个开源的Java平台，为开发强大的基于Java的Web应用程序提供全面的基础架构支持非常容易和非常快速。  Spring web MVC框架提供了MVC(模型-视图-控制器)架构和用于开发灵活和松散耦合的Web应用程序的组件。 MVC模式导致应用程序的不同方面(输入逻辑，业务逻辑和UI逻辑)分离，同时提供这些元素之">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://www.yiibai.com/uploads/images/201701/18/451110124_66519.png">
+<meta property="og:image" content="http://www.yiibai.com/uploads/images/201701/18/563150102_38758.png">
+<meta property="og:updated_time" content="2018-04-19T03:06:22.571Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringMVC学习简记1">
+<meta name="twitter:description" content="SpringMVC学习过程简记 Spring MVC概述Spring MVC框架是一个开源的Java平台，为开发强大的基于Java的Web应用程序提供全面的基础架构支持非常容易和非常快速。  Spring web MVC框架提供了MVC(模型-视图-控制器)架构和用于开发灵活和松散耦合的Web应用程序的组件。 MVC模式导致应用程序的不同方面(输入逻辑，业务逻辑和UI逻辑)分离，同时提供这些元素之">
+<meta name="twitter:image" content="http://www.yiibai.com/uploads/images/201701/18/451110124_66519.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="SelfBlog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="SelfBlog" title="SelfBlog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="SelfBlog">SelfBlog</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/04/16/SpringMVC学习简记1/" title="SpringMVC学习简记1" itemprop="url">SpringMVC学习简记1</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
+		
+  <p class="article-time">
+    <time datetime="2018-04-16T08:29:38.000Z" itemprop="datePublished"> Published 2018-04-16</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-MVC概述"><span class="toc-number">1.</span> <span class="toc-text">Spring MVC概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DispatcherServlet组件类"><span class="toc-number">2.</span> <span class="toc-text">DispatcherServlet组件类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于SpringMvc项目的创建"><span class="toc-number">3.</span> <span class="toc-text">关于SpringMvc项目的创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于XML文件的配置"><span class="toc-number">4.</span> <span class="toc-text">关于XML文件的配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#web-xml的配置"><span class="toc-number">4.1.</span> <span class="toc-text">web.xml的配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HelloWeb-servlet-xml配置"><span class="toc-number">4.2.</span> <span class="toc-text">HelloWeb-servlet.xml配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于控制器的配置"><span class="toc-number">5.</span> <span class="toc-text">关于控制器的配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实例"><span class="toc-number">5.1.</span> <span class="toc-text">实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#上方的另一种写法"><span class="toc-number">5.2.</span> <span class="toc-text">上方的另一种写法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建视图"><span class="toc-number">6.</span> <span class="toc-text">创建视图</span></a></li></ol>
+		
+		</div>
+		
+		<p>SpringMVC学习过程简记</p>
+<h2 id="Spring-MVC概述"><a href="#Spring-MVC概述" class="headerlink" title="Spring MVC概述"></a>Spring MVC概述</h2><pre><code>Spring MVC框架是一个开源的Java平台，为开发强大的基于Java的Web应用程序提供全面的基础架构支持非常容易和非常快速。
+
+Spring web MVC框架提供了MVC(模型-视图-控制器)架构和用于开发灵活和松散耦合的Web应用程序的组件。 MVC模式导致应用程序的不同方面(输入逻辑，业务逻辑和UI逻辑)分离，同时提供这些元素之间的松散耦合。
+</code></pre><ul>
+<li><strong>模型(Model)</strong>封装了应用程序数据，通常它们将由POJO类组成。</li>
+<li><strong>视图(View)</strong>负责渲染模型数据，一般来说它生成客户端浏览器可以解释HTML输出。</li>
+<li><strong>控制器(Controller)</strong>负责处理用户请求并构建适当的模型，并将其传递给视图进行渲染。</li>
+</ul>
+<h2 id="DispatcherServlet组件类"><a href="#DispatcherServlet组件类" class="headerlink" title="DispatcherServlet组件类"></a>DispatcherServlet组件类</h2><p><strong>Spring Web模型-视图-控制器(MVC)框架是围绕DispatcherServlet设计的，它处理所有的HTTP请求和响应。 Spring Web MVC DispatcherServlet的请求处理工作流如下图所示：</strong></p>
+<p><img src="http://www.yiibai.com/uploads/images/201701/18/451110124_66519.png" alt=""></p>
+<pre><code>以下是对应于到DispatcherServlet的传入HTTP请求的事件顺序：
+</code></pre><ul>
+<li>在接收到HTTP请求后，DispatcherServlet会查询HandlerMapping以调用相应的Controller。</li>
+<li>Controller接受请求并根据使用的GET或POST方法调用相应的服务方法。服务方法将基于定义的业务逻辑设置模型数据，并将视图名称返回给DispatcherServlet。</li>
+<li>DispatcherServlet将从ViewResolver获取请求的定义视图。</li>
+<li>当视图完成，DispatcherServlet将模型数据传递到最终的视图，并在浏览器上呈现。</li>
+</ul>
+<h2 id="关于SpringMvc项目的创建"><a href="#关于SpringMvc项目的创建" class="headerlink" title="关于SpringMvc项目的创建"></a>关于SpringMvc项目的创建</h2><p>   以HelloWeb为例：</p>
+<ol>
+<li>创建一个名为HelloWeb的动态Web项目，并在创建的项目中的src文件夹下创建一个包com.yiibai.springmvc。</li>
+<li>将下面提到的Spring和其他库拖放到文件夹WebContent/WEB-INF/lib中。<br><img src="http://www.yiibai.com/uploads/images/201701/18/563150102_38758.png" alt=""></li>
+<li>在com.yiibai.springmvc包下创建一个Java类HelloController。</li>
+<li>在WebContent/WEB-INF文件夹下创建Spring配置文件web.xml和HelloWeb-servlet.xml。</li>
+<li>在WebContent/WEB-INF文件夹下创建一个名为jsp的子文件夹。在此子文件夹下创建视图文件hello.jsp。<br>说明：SpringMVC框架包含两个XML配置文件，web.xml以及有web.xml内部<servlet-name>定义产生xxx而派生的xxx-servlet.xml文件。</servlet-name></li>
+</ol>
+<h2 id="关于XML文件的配置"><a href="#关于XML文件的配置" class="headerlink" title="关于XML文件的配置"></a>关于XML文件的配置</h2><h3 id="web-xml的配置"><a href="#web-xml的配置" class="headerlink" title="web.xml的配置"></a>web.xml的配置</h3><pre><code> &lt;web-app id=&quot;WebApp_ID&quot; version=&quot;2.4&quot;
+ xmlns=&quot;http://java.sun.com/xml/ns/j2ee&quot; 
+ xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+ xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/j2ee 
+ http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd&quot;&gt;
+
+&lt;display-name&gt;Spring MVC Application&lt;/display-name&gt;
+
+&lt;servlet&gt;
+ &lt;servlet-name&gt;HelloWeb&lt;/servlet-name&gt; // a行
+&lt;servlet-class&gt;
+     org.springframework.web.servlet.DispatcherServlet  //该框架围绕DispatcherServlet设计
+&lt;/servlet-class&gt;
+&lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+&lt;/servlet&gt;
+
+&lt;servlet-mapping&gt;
+&lt;servlet-name&gt;HelloWeb&lt;/servlet-name&gt;
+&lt;url-pattern&gt;/&lt;/url-pattern&gt;
+&lt;/servlet-mapping&gt;
+&lt;/web-app&gt;
+</code></pre><p>关于上方a行的说明：servlet-name一般为项目名称，此处的定义主要是为了映射xxx-servlet.xml文件。比如此处如果定义sky,那么应当再定义sky-servlet.xml文件。</p>
+<h3 id="HelloWeb-servlet-xml配置"><a href="#HelloWeb-servlet-xml配置" class="headerlink" title="HelloWeb-servlet.xml配置"></a>HelloWeb-servlet.xml配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> &lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line"> xmlns:context=&quot;http://www.springframework.org/schema/context&quot;</span><br><span class="line">xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line"> xsi:schemaLocation=&quot;</span><br><span class="line"> http://www.springframework.org/schema/beans     </span><br><span class="line"> http://www.springframework.org/schema/beans/spring-beans-3.0.xsd</span><br><span class="line">http://www.springframework.org/schema/context </span><br><span class="line">http://www.springframework.org/schema/context/spring-context-3.0.xsd&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;context:component-scan base-package=&quot;com.yiibai&quot; /&gt; </span><br><span class="line"></span><br><span class="line">&lt;bean class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot;&gt;</span><br><span class="line">     &lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/jsp/&quot; /&gt;</span><br><span class="line">    &lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot; /&gt;</span><br><span class="line"> &lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure>
+<p>关于上方的几点说明：</p>
+<ol>
+<li>[servlet-name]-servlet.xml文件将用于创建定义的bean，它会覆盖在全局范围中使用相同名称定义的任何bean的定义。</li>
+<li>&lt;context：component-scan…&gt;标签将用于激活SpringMVC注释扫描功能，允许使用@Controller和@RequestMapping等注释。</li>
+<li>InternalResourceViewResolver将定义用于解析视图名称的规则。根据上面定义的规则，hello的逻辑视图将委托给位于/WEB-INF/jsp/hello.jsp这个视图来实现。前缀定义了文件所在的位置，后缀定义了文件的后缀。</li>
+</ol>
+<h2 id="关于控制器的配置"><a href="#关于控制器的配置" class="headerlink" title="关于控制器的配置"></a>关于控制器的配置</h2><pre><code>DispatcherServlet将请求委派给控制器以执行特定于其的功能。
+@Controller注释指示特定类充当控制器的角色。
+@RequestMapping注释用于将URL映射到整个类或特定处理程序方法。
+</code></pre><h3 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@Controller</span><br><span class="line">@RequestMapping(&quot;/hello&quot;)</span><br><span class="line">public class HelloController&#123;</span><br><span class="line">@RequestMapping(method = RequestMethod.GET)</span><br><span class="line">public String printHello(ModelMap model) &#123;</span><br><span class="line"> model.addAttribute(&quot;message&quot;, &quot;Hello Spring MVC Framework!&quot;);</span><br><span class="line">return &quot;hello&quot;;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="上方的另一种写法"><a href="#上方的另一种写法" class="headerlink" title="上方的另一种写法"></a>上方的另一种写法</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Controller</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span></span>&#123;</span><br><span class="line"><span class="meta">@RequestMapping</span>(value = <span class="string">"/hello"</span>, method = RequestMethod.GET)</span><br><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">printHello</span><span class="params">(ModelMap model)</span> </span>&#123;</span><br><span class="line"> model.addAttribute(<span class="string">"message"</span>, <span class="string">"Hello Spring MVC Framework!"</span>);</span><br><span class="line"><span class="keyword">return</span> <span class="string">"hello"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>value属性指示处理程序方法映射到的URL，method属性定义处理HTTP GET请求的服务方法。</p>
+<h2 id="创建视图"><a href="#创建视图" class="headerlink" title="创建视图"></a>创建视图</h2><p>   Spring MVC支持许多类型的视图用于不同的表示技术。包括 - JSP，HTML，PDF，Excel工作表，XML，Velocity模板，XSLT，JSON，Atom 和 RSS 源，JasperReports等。但最常见的是使用JSPL编写的JSP模板，这里使用的是JSP模板，并在/WEB-INF/hello/hello.jsp中写一个简单的hello视图：</p>
+<pre><code>   &lt;html&gt;
+  &lt;head&gt;
+  &lt;title&gt;Hello Spring MVC&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+  &lt;h2&gt;${message}&lt;/h2&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</code></pre>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/SpringMVC/">SpringMVC</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2018/04/16/SpringMVC学习简记1/" data-title="SpringMVC学习简记1 | SelfBlog" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/04/17/SpringMVC表单处理1/" title="SpringMVC表单处理1">
+  <strong>上一篇：</strong><br/>
+  <span>
+  SpringMVC表单处理1</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/04/15/Github入门简记/"  title="Github入门简记">
+ <strong>下一篇：</strong><br/> 
+ <span>Github入门简记
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-MVC概述"><span class="toc-number">1.</span> <span class="toc-text">Spring MVC概述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#DispatcherServlet组件类"><span class="toc-number">2.</span> <span class="toc-text">DispatcherServlet组件类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于SpringMvc项目的创建"><span class="toc-number">3.</span> <span class="toc-text">关于SpringMvc项目的创建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于XML文件的配置"><span class="toc-number">4.</span> <span class="toc-text">关于XML文件的配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#web-xml的配置"><span class="toc-number">4.1.</span> <span class="toc-text">web.xml的配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HelloWeb-servlet-xml配置"><span class="toc-number">4.2.</span> <span class="toc-text">HelloWeb-servlet.xml配置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于控制器的配置"><span class="toc-number">5.</span> <span class="toc-text">关于控制器的配置</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#实例"><span class="toc-number">5.1.</span> <span class="toc-text">实例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#上方的另一种写法"><span class="toc-number">5.2.</span> <span class="toc-text">上方的另一种写法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建视图"><span class="toc-number">6.</span> <span class="toc-text">创建视图</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/辅助类简记/" title="辅助类简记">辅助类简记<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SpringMVC/" title="SpringMVC">SpringMVC<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据库简记/" title="数据库简记">数据库简记<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/博客搭建简记/" title="博客搭建简记">博客搭建简记<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Spring框架简记/" title="Spring框架简记">Spring框架简记<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://wuchong.me" target="_blank" title="Jark&#39;s Blog">Jark&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">Weibo</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Larry Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2176287895" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="赵成龙">赵成龙</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
