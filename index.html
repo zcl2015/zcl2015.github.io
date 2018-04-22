@@ -181,9 +181,34 @@ HTML它将呈现以下HTML内容。
 </ol>
 <h3 id="如何配置标签所需的外部数据"><a href="#如何配置标签所需的外部数据" class="headerlink" title="如何配置标签所需的外部数据"></a>如何配置标签所需的外部数据</h3><pre><code>使用 @ModelAttribute(&quot;XXX&quot;)属性来配置外部数据。添加方式包括以下两种：
 </code></pre><ol>
-<li>使用List。此时List添加的元素就是数据源。</li>
-<li>使用Map。此时Map中的value就是数据源。</li>
+<li>使用List。此时List添加的元素就是数据源，也就是在页面中显示的数据。</li>
+<li>使用Map。 此时Map中的key-value分别对应数据源-标签。</li>
 </ol>
+<p>以以下代码为例：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;tr&gt;</span><br><span class="line">         &lt;td&gt;&lt;form:label path="country"&gt;所在国家：(使用Map)&lt;/form:label&gt;&lt;/td&gt;</span><br><span class="line">         &lt;td&gt;&lt;form:select path=<span class="string">"country"</span>&gt;</span><br><span class="line">             &lt;form:option value=<span class="string">"NONE"</span> label=<span class="string">"请选择..."</span> /&gt;</span><br><span class="line">             &lt;form:options items=<span class="string">"$&#123;countryList&#125;"</span> /&gt;</span><br><span class="line">             &lt;/form:select&gt;&lt;/td&gt;</span><br><span class="line">   &lt;/tr&gt;</span><br><span class="line"></span><br><span class="line">     </span><br><span class="line">&lt;tr&gt;</span><br><span class="line">         &lt;td&gt;&lt;form:label path="country"&gt;所在国家：(使用list)&lt;/form:label&gt;&lt;/td&gt;</span><br><span class="line">         &lt;td&gt;&lt;form:select path=<span class="string">"country"</span>&gt;</span><br><span class="line">             &lt;form:option value=<span class="string">"NONE"</span> label=<span class="string">"请选择..."</span> /&gt;</span><br><span class="line">             &lt;form:options items=<span class="string">"$&#123;countryList1&#125;"</span> /&gt;</span><br><span class="line">             &lt;/form:select&gt;&lt;/td&gt;</span><br><span class="line">    &lt;/tr&gt;</span><br></pre></td></tr></table></figure>
+<p>其中上方代码的第一部分使用Map，第二部分使用List。数据源如下所示：</p>
+<pre><code class="java">  <span class="meta">@ModelAttribute</span>(<span class="string">"countryList1"</span>)
+    <span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getCountryList1</span><span class="params">()</span></span>
+<span class="function"></span>{
+   List&lt;String&gt; webFrameworkList = <span class="keyword">new</span> ArrayList&lt;String&gt;();
+   webFrameworkList.add(<span class="string">"United States"</span>);
+   webFrameworkList.add(<span class="string">"China"</span>);
+   webFrameworkList.add(<span class="string">"Singapore"</span>);
+   webFrameworkList.add(<span class="string">"Malaysia"</span>);
+   <span class="keyword">return</span> webFrameworkList;
+}
+
+<span class="meta">@ModelAttribute</span>(<span class="string">"countryList"</span>)
+<span class="function"><span class="keyword">public</span> Map&lt;String, String&gt; <span class="title">getCountryList</span><span class="params">()</span></span>
+<span class="function"></span>{
+   Map&lt;String, String&gt; countryList = <span class="keyword">new</span> HashMap&lt;String, String&gt;();
+   countryList.put(<span class="string">"US"</span>, <span class="string">"United States"</span>);
+   countryList.put(<span class="string">"CH"</span>, <span class="string">"China"</span>);
+   countryList.put(<span class="string">"SG"</span>, <span class="string">"Singapore"</span>);
+   countryList.put(<span class="string">"MY"</span>, <span class="string">"Malaysia"</span>);
+   <span class="keyword">return</span> countryList;
+}
+</code></pre>
 
         
         
