@@ -19,7 +19,7 @@
 <meta property="og:site_name" content="SelfBlog">
 <meta property="og:description" content="SpringMVC表单标签库的使用 Spring MVC 表单标签库简述   表单标签库主要用于网页中信息的获取。大体分为以下两个使用场景：  登陆界面：网页的登陆界面需要用户输入用户信息，从而完成用户的信息验证以及与之相关的操作。 基于实际需要填写信息。例如注册页面的信息采集，网页中表单信息的采集。基于以上考虑，标签在网页中使用非常普遍，应当熟练掌握。  Spring MVC 表单标签库分类不需">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-04-19T07:53:34.217Z">
+<meta property="og:updated_time" content="2018-04-19T08:46:06.333Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringMVC表单标签库">
 <meta name="twitter:description" content="SpringMVC表单标签库的使用 Spring MVC 表单标签库简述   表单标签库主要用于网页中信息的获取。大体分为以下两个使用场景：  登陆界面：网页的登陆界面需要用户输入用户信息，从而完成用户的信息验证以及与之相关的操作。 基于实际需要填写信息。例如注册页面的信息采集，网页中表单信息的采集。基于以上考虑，标签在网页中使用非常普遍，应当熟练掌握。  Spring MVC 表单标签库分类不需">
@@ -98,7 +98,7 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-MVC-表单标签库简述"><span class="toc-number">1.</span> <span class="toc-text">Spring MVC 表单标签库简述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-MVC-表单标签库分类"><span class="toc-number">2.</span> <span class="toc-text">Spring MVC 表单标签库分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#不需要外部数据标签"><span class="toc-number">2.1.</span> <span class="toc-text">不需要外部数据标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#需要外部数据标签"><span class="toc-number">2.2.</span> <span class="toc-text">需要外部数据标签</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-MVC-表单标签库简述"><span class="toc-number">1.</span> <span class="toc-text">Spring MVC 表单标签库简述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-MVC-表单标签库分类"><span class="toc-number">2.</span> <span class="toc-text">Spring MVC 表单标签库分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#不需要外部数据标签"><span class="toc-number">2.1.</span> <span class="toc-text">不需要外部数据标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#需要外部数据标签"><span class="toc-number">2.2.</span> <span class="toc-text">需要外部数据标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何配置标签所需的外部数据"><span class="toc-number">2.3.</span> <span class="toc-text">如何配置标签所需的外部数据</span></a></li></ol></li></ol>
 		
 		</div>
 		
@@ -189,6 +189,11 @@ HTML它将呈现以下HTML内容。
 <li><p><strong>错误处理</strong>(todo)</p>
 </li>
 </ol>
+<h3 id="如何配置标签所需的外部数据"><a href="#如何配置标签所需的外部数据" class="headerlink" title="如何配置标签所需的外部数据"></a>如何配置标签所需的外部数据</h3><pre><code>使用 @ModelAttribute(&quot;XXX&quot;)属性来配置外部数据。添加方式包括以下两种：
+</code></pre><ol>
+<li>使用List。此时List添加的元素就是数据源。</li>
+<li>使用Map。此时Map中的value就是数据源。</li>
+</ol>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -240,7 +245,7 @@ HTML它将呈现以下HTML内容。
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-MVC-表单标签库简述"><span class="toc-number">1.</span> <span class="toc-text">Spring MVC 表单标签库简述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-MVC-表单标签库分类"><span class="toc-number">2.</span> <span class="toc-text">Spring MVC 表单标签库分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#不需要外部数据标签"><span class="toc-number">2.1.</span> <span class="toc-text">不需要外部数据标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#需要外部数据标签"><span class="toc-number">2.2.</span> <span class="toc-text">需要外部数据标签</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-MVC-表单标签库简述"><span class="toc-number">1.</span> <span class="toc-text">Spring MVC 表单标签库简述</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-MVC-表单标签库分类"><span class="toc-number">2.</span> <span class="toc-text">Spring MVC 表单标签库分类</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#不需要外部数据标签"><span class="toc-number">2.1.</span> <span class="toc-text">不需要外部数据标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#需要外部数据标签"><span class="toc-number">2.2.</span> <span class="toc-text">需要外部数据标签</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#如何配置标签所需的外部数据"><span class="toc-number">2.3.</span> <span class="toc-text">如何配置标签所需的外部数据</span></a></li></ol></li></ol>
  
   </div>
 
