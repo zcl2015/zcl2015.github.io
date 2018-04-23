@@ -1,0 +1,503 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>SpringMVC处理映射 | SelfBlog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="赵成龙">
+    
+
+    
+    <meta name="description" content="Spring MVC控制器类名称处理映射ControllerClassNameHandlerMappingControllerClassNameHandlerMapping类是基于约定的处理程序映射类，它将URL请求映射到配置中提到的控制器的名称。这个类接受控制器名称并将其转换为带有前导“/”的小写形式。 例如HelloController映射到URL: &amp;quot;/hello*&amp;quot;。">
+<meta name="keywords" content="SpringMVC">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringMVC处理映射">
+<meta property="og:url" content="http://yoursite.com/2018/04/23/SpringMVC处理映射/index.html">
+<meta property="og:site_name" content="SelfBlog">
+<meta property="og:description" content="Spring MVC控制器类名称处理映射ControllerClassNameHandlerMappingControllerClassNameHandlerMapping类是基于约定的处理程序映射类，它将URL请求映射到配置中提到的控制器的名称。这个类接受控制器名称并将其转换为带有前导“/”的小写形式。 例如HelloController映射到URL: &amp;quot;/hello*&amp;quot;。">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-04-23T05:43:12.479Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringMVC处理映射">
+<meta name="twitter:description" content="Spring MVC控制器类名称处理映射ControllerClassNameHandlerMappingControllerClassNameHandlerMapping类是基于约定的处理程序映射类，它将URL请求映射到配置中提到的控制器的名称。这个类接受控制器名称并将其转换为带有前导“/”的小写形式。 例如HelloController映射到URL: &amp;quot;/hello*&amp;quot;。">
+
+    
+    <link rel="alternative" href="/atom.xml" title="SelfBlog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="SelfBlog" title="SelfBlog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="SelfBlog">SelfBlog</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/04/23/SpringMVC处理映射/" title="SpringMVC处理映射" itemprop="url">SpringMVC处理映射</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
+		
+  <p class="article-time">
+    <time datetime="2018-04-23T04:19:47.000Z" itemprop="datePublished"> Published 2018-04-23</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-MVC控制器类名称处理映射"><span class="toc-number">1.</span> <span class="toc-text">Spring MVC控制器类名称处理映射</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ControllerClassNameHandlerMapping"><span class="toc-number">1.1.</span> <span class="toc-text">ControllerClassNameHandlerMapping</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于ControllerClassNameHandlerMapping来定义Controller类"><span class="toc-number">1.2.</span> <span class="toc-text">基于ControllerClassNameHandlerMapping来定义Controller类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于-ModelAndView-以及-ModelMap的使用说明"><span class="toc-number">1.3.</span> <span class="toc-text">关于 ModelAndView 以及 ModelMap的使用说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-MVC简单URL处理程序映射"><span class="toc-number">2.</span> <span class="toc-text">Spring MVC简单URL处理程序映射</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SimpleUrlHandlerMapping类分别显式地将URL映射到相应的控制器上"><span class="toc-number">2.1.</span> <span class="toc-text">SimpleUrlHandlerMapping类分别显式地将URL映射到相应的控制器上</span></a></li></ol></li></ol>
+		
+		</div>
+		
+		<h2 id="Spring-MVC控制器类名称处理映射"><a href="#Spring-MVC控制器类名称处理映射" class="headerlink" title="Spring MVC控制器类名称处理映射"></a>Spring MVC控制器类名称处理映射</h2><h3 id="ControllerClassNameHandlerMapping"><a href="#ControllerClassNameHandlerMapping" class="headerlink" title="ControllerClassNameHandlerMapping"></a>ControllerClassNameHandlerMapping</h3><pre><code>ControllerClassNameHandlerMapping类是基于约定的处理程序映射类，它将URL请求映射到配置中提到的控制器的名称。这个类接受控制器名称并将其转换为带有前导“/”的小写形式。 例如HelloController映射到URL: &quot;/hello*&quot;。
+</code></pre><p>配置如下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.InternalResourceViewResolver"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"prefix"</span> <span class="attr">value</span>=<span class="string">"/WEB-INF/jsp/"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suffix"</span> <span class="attr">value</span>=<span class="string">".jsp"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">   <span class="comment">&lt;!-- 此处的匹配是略微带有正则表达式部分匹配的映射。匹配的表达式部分是XxxController 中的Xxx，匹配的内容是前缀带有xxx的部分 helloSky或者helloSky.html都可以匹配到</span></span><br><span class="line"><span class="comment">HelloController中的handleRequest方法，该方法继承自抽象类AbstractController</span></span><br><span class="line"><span class="comment">         --&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"com.yiibai.springmvc.HelloController"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"com.yiibai.springmvc.WelcomeController"</span>/&gt;</span>   </span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>说明: 如果使用上面的配置，URI：</p>
+<ul>
+<li>对于/helloWorld.html或 /hello{任何字母}.html，DispatcherServlet将请求转发到HelloController类。</li>
+<li>对于/welcome.html，DispatcherServlet会将请求转发给WelcomeController类。</li>
+</ul>
+<p>简而言之 helloxxx都会由HelloController来处理。</p>
+<h3 id="基于ControllerClassNameHandlerMapping来定义Controller类"><a href="#基于ControllerClassNameHandlerMapping来定义Controller类" class="headerlink" title="基于ControllerClassNameHandlerMapping来定义Controller类"></a>基于ControllerClassNameHandlerMapping来定义Controller类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yiibai.springmvc;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.mvc.AbstractController;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span> <span class="keyword">extends</span> <span class="title">AbstractController</span></span>&#123;</span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">protected</span> ModelAndView <span class="title">handleRequestInternal</span><span class="params">(HttpServletRequest request,</span></span></span><br><span class="line"><span class="function"><span class="params">      HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">      ModelAndView model = <span class="keyword">new</span> ModelAndView(<span class="string">"hello"</span>);</span><br><span class="line">                            <span class="comment">//viewName 查看源代码 设置视图 也就是对应下方的hello.jsp</span></span><br><span class="line">      model.addObject(<span class="string">"message"</span>, <span class="string">"Hello--Via HelloController with helloxxx "</span>);</span><br><span class="line">      <span class="keyword">return</span> model;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在之前关于SpringMVC的实例中，在web.xml文件中会添加以下的配置文件，而此处并没有如下的注释扫描配置。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 自动扫描beans </span></span><br><span class="line"><span class="comment">&lt;context：component-scan ...&gt;标签将用于激活Spring MVC注释扫描功能，</span></span><br><span class="line"><span class="comment">允许使用@Controller和@RequestMapping等注释。--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.yiibai"</span>/&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>在上方的HelloController类中，该类继承自抽象类AbstractController，并实现该类的handleRequestInternal方法。没有使用@Controller和@RequestMapping等注释。因为HelloController已经以bean的形式添加到配置文件中。</p>
+<h3 id="关于-ModelAndView-以及-ModelMap的使用说明"><a href="#关于-ModelAndView-以及-ModelMap的使用说明" class="headerlink" title="关于 ModelAndView 以及 ModelMap的使用说明"></a>关于 ModelAndView 以及 ModelMap的使用说明</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">printHello</span><span class="params">(ModelMap model)</span> </span>&#123;</span><br><span class="line">     model.addAttribute(<span class="string">"message"</span>, <span class="string">"Hello Spring MVC Framework!"</span>);</span><br><span class="line">     <span class="keyword">return</span> <span class="string">"helloSky"</span>;  </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> ModelAndView <span class="title">handleRequestInternal</span><span class="params">(HttpServletRequest request,</span></span></span><br><span class="line"><span class="function"><span class="params">     HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">     ModelAndView model = <span class="keyword">new</span> ModelAndView(<span class="string">"hello"</span>);</span><br><span class="line">                           <span class="comment">//viewName 查看源代码 设置视图 也就是对应下方的hello.jsp</span></span><br><span class="line">     model.addObject(<span class="string">"message"</span>, <span class="string">"Hello--Via HelloController with helloxxx "</span>);</span><br><span class="line">     <span class="keyword">return</span> model;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用ModelMap设置的只是属性名称和属性值，仍然需要一个return一个String值作为视图名称。而ModelAndView在构造方法中已经设置了视图的名称，并在addObject方法中设定了属性名称和属性值。</li>
+<li>ModelMap：addAttribute   ModelAndView：addObject</li>
+</ul>
+<h2 id="Spring-MVC简单URL处理程序映射"><a href="#Spring-MVC简单URL处理程序映射" class="headerlink" title="Spring MVC简单URL处理程序映射"></a>Spring MVC简单URL处理程序映射</h2><h3 id="SimpleUrlHandlerMapping类分别显式地将URL映射到相应的控制器上"><a href="#SimpleUrlHandlerMapping类分别显式地将URL映射到相应的控制器上" class="headerlink" title="SimpleUrlHandlerMapping类分别显式地将URL映射到相应的控制器上"></a>SimpleUrlHandlerMapping类分别显式地将URL映射到相应的控制器上</h3><p>配置如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.InternalResourceViewResolver"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"prefix"</span> <span class="attr">value</span>=<span class="string">"/WEB-INF/jsp/"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suffix"</span> <span class="attr">value</span>=<span class="string">".jsp"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.handler.SimpleUrlHandlerMapping"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"mappings"</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">props</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"/welcome.html"</span>&gt;</span>welcomeController<span class="tag">&lt;/<span class="name">prop</span>&gt;</span>           </span><br><span class="line">            <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"/helloWorld.html"</span>&gt;</span>helloController<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;/<span class="name">props</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloController"</span> <span class="attr">class</span>=<span class="string">"com.yiibai.springmvc.HelloController"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"welcomeController"</span> <span class="attr">class</span>=<span class="string">"com.yiibai.springmvc.WelcomeController"</span>/&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>说明：使用上面的配置，如果URI：</p>
+<ul>
+<li>对于/helloWorld.html请求，DispatcherServlet将请求转发到HelloController类。</li>
+<li>对于/welcome.html，DispatcherServlet会将请求转发给WelcomeController类。</li>
+</ul>
+<p>简易说明：上方的ControllerClassNameHandlerMapping是基于自身定义规则的模糊匹配，而SimpleUrlHandlerMapping是指定的显示匹配。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/SpringMVC/">SpringMVC</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2018/04/23/SpringMVC处理映射/" data-title="SpringMVC处理映射 | SelfBlog" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+
+<div class="next">
+<a href="/2018/04/19/SpringMVC表单标签库/"  title="SpringMVC表单标签库">
+ <strong>下一篇：</strong><br/> 
+ <span>SpringMVC表单标签库
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-MVC控制器类名称处理映射"><span class="toc-number">1.</span> <span class="toc-text">Spring MVC控制器类名称处理映射</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ControllerClassNameHandlerMapping"><span class="toc-number">1.1.</span> <span class="toc-text">ControllerClassNameHandlerMapping</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#基于ControllerClassNameHandlerMapping来定义Controller类"><span class="toc-number">1.2.</span> <span class="toc-text">基于ControllerClassNameHandlerMapping来定义Controller类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#关于-ModelAndView-以及-ModelMap的使用说明"><span class="toc-number">1.3.</span> <span class="toc-text">关于 ModelAndView 以及 ModelMap的使用说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Spring-MVC简单URL处理程序映射"><span class="toc-number">2.</span> <span class="toc-text">Spring MVC简单URL处理程序映射</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#SimpleUrlHandlerMapping类分别显式地将URL映射到相应的控制器上"><span class="toc-number">2.1.</span> <span class="toc-text">SimpleUrlHandlerMapping类分别显式地将URL映射到相应的控制器上</span></a></li></ol></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/SpringMVC/" title="SpringMVC">SpringMVC<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/辅助类简记/" title="辅助类简记">辅助类简记<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Spring框架简记/" title="Spring框架简记">Spring框架简记<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/博客搭建简记/" title="博客搭建简记">博客搭建简记<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据库简记/" title="数据库简记">数据库简记<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://wuchong.me" target="_blank" title="Jark&#39;s Blog">Jark&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">Weibo</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Larry Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2176287895" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="赵成龙">赵成龙</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
