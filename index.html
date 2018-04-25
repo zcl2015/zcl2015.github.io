@@ -79,6 +79,73 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2018/04/25/Spring依赖注入简记/" title="Spring依赖注入简记" itemprop="url">Spring依赖注入简记</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
+		
+  <p class="article-time">
+    <time datetime="2018-04-25T07:20:00.000Z" itemprop="datePublished"> Published 2018-04-25</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>Spring依赖注入简记</p>
+<h2 id="什么是依赖注入"><a href="#什么是依赖注入" class="headerlink" title="什么是依赖注入"></a>什么是依赖注入</h2><p>在Spring框架中，依赖注入(DI)的设计模式是用来定义对象彼此间的依赖。类型如下：</p>
+<ul>
+<li>构造器注入</li>
+<li>Setter方法注入</li>
+</ul>
+<h2 id="Setter方法注入"><a href="#Setter方法注入" class="headerlink" title="Setter方法注入"></a>Setter方法注入</h2><p><strong>java类</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yiibai.output;</span><br><span class="line"><span class="keyword">import</span> com.yiibai.output.IOutputGenerator;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OutputHelper</span> </span>&#123;</span><br><span class="line">	IOutputGenerator outputGenerator;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">generateOutput</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		outputGenerator.generateOutput();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//DI via setter method</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setOutputGenerator</span><span class="params">(IOutputGenerator outputGenerator)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.outputGenerator = outputGenerator;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>xml配置文件</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">	xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</span><br><span class="line">	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd&quot;&gt;</span><br><span class="line"></span><br><span class="line">	&lt;bean id=&quot;OutputHelper&quot; class=&quot;com.yiibai.output.OutputHelper&quot;&gt;</span><br><span class="line">		&lt;property name=&quot;outputGenerator&quot; ref=&quot;CsvOutputGenerator&quot; /&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line">    &lt;bean id=&quot;CsvOutputGenerator&quot; class=&quot;com.yiibai.output.impl.CsvOutputGenerator&quot; /&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure></p>
+<h2 id="构造方法注入"><a href="#构造方法注入" class="headerlink" title="构造方法注入"></a>构造方法注入</h2><p><strong>java类</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yiibai.output;</span><br><span class="line"><span class="keyword">import</span> com.yiibai.output.IOutputGenerator;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">OutputHelper</span> </span>&#123;</span><br><span class="line">	IOutputGenerator outputGenerator;</span><br><span class="line"></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">generateOutput</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		outputGenerator.generateOutput();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//DI via constructor  通过构造方法注入</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">OutputHelper</span><span class="params">(IOutputGenerator outputGenerator)</span></span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.outputGenerator = outputGenerator;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>xml配置文件</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">	xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</span><br><span class="line">	http://www.springframework.org/schema/beans/spring-beans-2.5.xsd&quot;&gt;</span><br><span class="line">    &lt;bean id=&quot;OutputHelper&quot; class=&quot;com.yiibai.output.OutputHelper&quot;&gt;</span><br><span class="line">		&lt;constructor-arg&gt;</span><br><span class="line">			&lt;ref bean=&quot;JsonOutputGenerator&quot; /&gt;</span><br><span class="line">		&lt;/constructor-arg&gt;</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line"> </span><br><span class="line">	&lt;bean id=&quot;JsonOutputGenerator&quot; class=&quot;com.yiibai.output.impl.JsonOutputGenerator&quot; /&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="构造器注入有可能带来的注入类型歧义问题"><a href="#构造器注入有可能带来的注入类型歧义问题" class="headerlink" title="构造器注入有可能带来的注入类型歧义问题"></a>构造器注入有可能带来的注入类型歧义问题</h3><p>类型歧义主要是因为存在自动类型转换的问题，如 28， 数据类型既可以是 int也有可能是String。 为此可以 采用指定参数类型的解决（如果好多参数类型都相同，那么可能就与参数顺序有关，如果还是有问题说明你自身代码定义构造方法不合理，此处简单了解即可。）</p>
+<p>给出参考文件如下：<br><strong>java类</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yiibai.common;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Customer</span> </span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">	<span class="keyword">private</span> String name;</span><br><span class="line">	<span class="keyword">private</span> String address;</span><br><span class="line">	<span class="keyword">private</span> <span class="keyword">int</span> age;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Customer</span><span class="params">(String name, String address, <span class="keyword">int</span> age)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">		<span class="keyword">this</span>.address = address;</span><br><span class="line">		<span class="keyword">this</span>.age = age;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="title">Customer</span><span class="params">(String name, <span class="keyword">int</span> age, String address)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">this</span>.name = name;</span><br><span class="line">		<span class="keyword">this</span>.age = age;</span><br><span class="line">		<span class="keyword">this</span>.address = address;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="comment">//getter and setter methods</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span></span>&#123;</span><br><span class="line">		<span class="keyword">return</span> <span class="string">" name : "</span> +name + <span class="string">"\n address : "</span></span><br><span class="line">               + address + <span class="string">"\n age : "</span> + age;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>配置文件如下：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans</span><br><span class="line">http://www.springframework.org/schema/beans/spring-beans-2.5.xsd&quot;&gt;</span><br><span class="line"></span><br><span class="line">	&lt;bean id=&quot;CustomerBean&quot; class=&quot;com.yiibai.common.Customer&quot;&gt;</span><br><span class="line">	</span><br><span class="line">		&lt;constructor-arg type=&quot;java.lang.String&quot;&gt;</span><br><span class="line">			&lt;value&gt;yiibai&lt;/value&gt;</span><br><span class="line">		&lt;/constructor-arg&gt;</span><br><span class="line">		</span><br><span class="line">		&lt;constructor-arg type=&quot;java.lang.String&quot;&gt;</span><br><span class="line">			&lt;value&gt;188&lt;/value&gt;</span><br><span class="line">		&lt;/constructor-arg&gt;</span><br><span class="line">		</span><br><span class="line">		&lt;constructor-arg type=&quot;int&quot;&gt;</span><br><span class="line">			&lt;value&gt;28&lt;/value&gt;</span><br><span class="line">		&lt;/constructor-arg&gt;</span><br><span class="line">		</span><br><span class="line">	&lt;/bean&gt;</span><br><span class="line"></span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Spring框架简记/">Spring框架简记</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2018/04/25/Spring-JavaConfig简记/" title="Spring JavaConfig简记" itemprop="url">Spring JavaConfig简记</a>
   </h1>
   <p class="article-author">By
@@ -1104,60 +1171,6 @@ Spring web MVC框架提供了MVC(模型-视图-控制器)架构和用于开发�
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2018/04/15/Github入门简记/" title="Github入门简记" itemprop="url">Github入门简记</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
-		
-  <p class="article-time">
-    <time datetime="2018-04-15T09:53:09.000Z" itemprop="datePublished"> Published 2018-04-15</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/辅助类简记/">辅助类简记</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -1185,7 +1198,7 @@ Spring web MVC框架提供了MVC(模型-视图-控制器)架构和用于开发�
 			
 		
 			
-				<li><a href="/tags/Spring框架简记/" title="Spring框架简记">Spring框架简记<sup>3</sup></a></li>
+				<li><a href="/tags/Spring框架简记/" title="Spring框架简记">Spring框架简记<sup>4</sup></a></li>
 			
 		
 			
