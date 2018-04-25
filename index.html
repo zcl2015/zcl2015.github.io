@@ -79,6 +79,73 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2018/04/25/Spring-JavaConfig简记/" title="Spring JavaConfig简记" itemprop="url">Spring JavaConfig简记</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
+		
+  <p class="article-time">
+    <time datetime="2018-04-25T06:17:20.000Z" itemprop="datePublished"> Published 2018-04-25</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <pre><code>Spring JavaConfig简记
+</code></pre><h2 id="Spring-JavaConfig简介"><a href="#Spring-JavaConfig简介" class="headerlink" title="Spring JavaConfig简介"></a>Spring JavaConfig简介</h2><p>   JavaConfig允许开发者将xml中的配置（包括bean定义和其他配置）在Java类中实现，也就是在类中实现和xml配置的相同效果。<br>   简易示例：以下两个文件效果等效。<br><strong>xml文件：</strong><br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">   <span class="tag">&lt;<span class="name">beans</span> <span class="attr">xmlns</span>=<span class="string">"http://www.springframework.org/schema/beans"</span></span></span><br><span class="line"><span class="tag"><span class="attr">xmlns:xsi</span>=<span class="string">"http://www.w3.org/2001/XMLSchema-instance"</span></span></span><br><span class="line"><span class="tag"><span class="attr">xsi:schemaLocation</span>=<span class="string">"http://www.springframework.org/schema/beans</span></span></span><br><span class="line"><span class="tag"><span class="string">http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloBean"</span> <span class="attr">class</span>=<span class="string">"com.yiibai.hello.impl.HelloWorldImpl"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p><strong>java文件：</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yiibai.config;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="keyword">import</span> com.yiibai.hello.HelloWorld;</span><br><span class="line"><span class="keyword">import</span> com.yiibai.hello.impl.HelloWorldImpl;</span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppConfig</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">    <span class="meta">@Bean</span>(name=<span class="string">"helloBean"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> HelloWorld <span class="title">helloWorld</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> HelloWorldImpl();</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="Spring-JavaConfig实例"><a href="#Spring-JavaConfig实例" class="headerlink" title="Spring JavaConfig实例"></a>Spring JavaConfig实例</h2><h3 id="java-bean"><a href="#java-bean" class="headerlink" title="java bean"></a>java bean</h3><p><strong>定义接口</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yiibai.hello;</span><br><span class="line"> </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="function"><span class="keyword">void</span> <span class="title">printHelloWorld</span><span class="params">(String msg)</span></span>;</span><br><span class="line"> </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>定义接口实现类</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yiibai.config;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorldImpl</span> <span class="keyword">implements</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printHelloWorld</span><span class="params">(String msg)</span> </span>&#123;</span><br><span class="line">       System.out.println(<span class="string">"Hello : "</span> + msg);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>定义配置类</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yiibai.config;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Bean;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.Configuration;</span><br><span class="line"><span class="meta">@Configuration</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">AppConfig</span> </span>&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="meta">@Bean</span>(name=<span class="string">"helloBean"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> HelloWorld <span class="title">helloWorld</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">new</span> HelloWorldImpl();</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>定义运行类</strong><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yiibai.config;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.ApplicationContext;</span><br><span class="line"><span class="keyword">import</span> org.springframework.context.annotation.AnnotationConfigApplicationContext;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">App</span> </span>&#123;</span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">	 <span class="comment">// 借助xml配置文件（参考下方的配置） a行</span></span><br><span class="line">	<span class="comment">//ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");</span></span><br><span class="line">	</span><br><span class="line">	<span class="comment">// 借助javaConfig配置文件 实现的效果和上方相同。 b行</span></span><br><span class="line">	ApplicationContext context = <span class="keyword">new</span> AnnotationConfigApplicationContext(AppConfig.class);</span><br><span class="line">	HelloWorld obj = (HelloWorld) context.getBean(<span class="string">"helloBean"</span>);</span><br><span class="line">	obj.printHelloWorld(<span class="string">"Spring Java Config"</span>);</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><strong>关于上方的说明：</strong></p>
+<ul>
+<li>加载xml的配置文件时需要使用a行下方的代码，而加载java配置信息时需要使用b行下方的代码。</li>
+</ul>
+<p><strong>和上方配置类效果相同的配置文件</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;beans</span><br><span class="line">	xmlns=&quot;http://www.springframework.org/schema/beans&quot;</span><br><span class="line">	xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">	xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans </span><br><span class="line">	http://www.springframework.org/schema/beans/spring-beans-3.1.xsd&quot;&gt;</span><br><span class="line"></span><br><span class="line">&lt;bean id=&quot;helloBean&quot; class=&quot;com.yiibai.config.HelloWorldImpl&quot;/&gt;</span><br><span class="line">&lt;/beans&gt;</span><br></pre></td></tr></table></figure></p>
+<h3 id="运行结果："><a href="#运行结果：" class="headerlink" title="运行结果："></a>运行结果：</h3><p><img src="https://s1.ax1x.com/2018/04/25/C1POld.png" alt="C1POld.png"></p>
+<h3 id="关于javaConfig的复杂配置（例如一个类内部含有一个类变量，如何给变量赋值—》todo）"><a href="#关于javaConfig的复杂配置（例如一个类内部含有一个类变量，如何给变量赋值—》todo）" class="headerlink" title="关于javaConfig的复杂配置（例如一个类内部含有一个类变量，如何给变量赋值—》todo）"></a>关于javaConfig的复杂配置（例如一个类内部含有一个类变量，如何给变量赋值—》todo）</h3><h2 id="未完待续"><a href="#未完待续" class="headerlink" title="未完待续"></a>未完待续</h2>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Spring框架简记/">Spring框架简记</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2018/04/24/Spring自动装配Bean简记/" title="Spring自动装配Bean简记" itemprop="url">Spring自动装配Bean简记</a>
   </h1>
   <p class="article-author">By
@@ -1091,374 +1158,6 @@ Spring web MVC框架提供了MVC(模型-视图-控制器)架构和用于开发�
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2018/04/14/Markdown语法示例简记/" title="Markdown语法示例简记" itemprop="url">Markdown语法示例简记</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
-		
-  <p class="article-time">
-    <time datetime="2018-04-14T15:20:53.000Z" itemprop="datePublished"> Published 2018-04-14</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="标题"><a href="#标题" class="headerlink" title="标题"></a>标题</h2><h3 id="示例如下：（-–-h1–h6）"><a href="#示例如下：（-–-h1–h6）" class="headerlink" title="示例如下：（#–######,h1–h6）"></a>示例如下：（#–######,h1–h6）</h3><pre><code>#h1  
-## h2
-### h3 
-#### h4 
-##### h5 
-###### h6 
-####### h7 // 错误代码 
-</code></pre><h2 id="上下文标题"><a href="#上下文标题" class="headerlink" title="上下文标题"></a>上下文标题</h2><h3 id="示例如下："><a href="#示例如下：" class="headerlink" title="示例如下："></a>示例如下：</h3><pre><code>一级标题
-======================
-
-  二级标题
----------------------
-</code></pre><h2 id="引用"><a href="#引用" class="headerlink" title="引用"></a>引用</h2><p>单行式</p>
-<blockquote>
-<p>hello world!</p>
-</blockquote>
-<p>多行式1</p>
-<blockquote>
-<p>hello world!<br>hello world!<br>hello world!</p>
-</blockquote>
-<p>多行式2</p>
-<blockquote>
-<p>hello world!<br>hello world!<br>hello world!</p>
-</blockquote>
-<p>多行嵌套</p>
-<blockquote>
-<p>aaaaaaaaa</p>
-<blockquote>
-<p>bbbbbbbbb</p>
-<blockquote>
-<p>cccccccccc</p>
-</blockquote>
-</blockquote>
-</blockquote>
-<h2 id="标记"><a href="#标记" class="headerlink" title="标记"></a>标记</h2><h3 id="行内标记-注：用-标记代码块将变成一行"><a href="#行内标记-注：用-标记代码块将变成一行" class="headerlink" title="行内标记 注：用 ` 标记代码块将变成一行"></a>行内标记 注：用 ` 标记代码块将变成一行</h3><p>标记之外<code>hello world</code>标记之外</p>
-<h3 id="代码块"><a href="#代码块" class="headerlink" title="代码块"></a>代码块</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div&gt;   </span><br><span class="line">    &lt;div&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;&lt;/div&gt;</span><br><span class="line">    &lt;div&gt;&lt;/div&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
-<p>下面是两个比较后的效果。</p>
-<p>标记之外<code>&lt; div&gt;   
-    &lt; div&gt;&lt;/div&gt;
-    &lt; div&gt;&lt;/div&gt;
-    &lt; div&gt;&lt;/div&gt;
-&lt; /div&gt;</code>标记之外</p>
-<p>自定义语法 注：根据不同的语言配置不同的代码着色<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">    num+=i;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"此处使用了自定义语法"</span>);</span><br></pre></td></tr></table></figure></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var num = 0;</span><br><span class="line">for (var i = 0; i &lt; 5; i++) &#123;</span><br><span class="line">    num+=i;</span><br><span class="line">&#125;</span><br><span class="line">console.log(&quot;此处未使用自定义语法&quot;);</span><br></pre></td></tr></table></figure>
-<h2 id="链接-图片"><a href="#链接-图片" class="headerlink" title="链接+图片"></a>链接+图片</h2><h3 id="链接"><a href="#链接" class="headerlink" title="链接"></a>链接</h3><hr>
-<p><a href="https://www.bilibili.com/video/av17941476?from=search&amp;seid=6435304828224282362" target="_blank" rel="noopener">来自宅男的怒吼</a><br><a href="https://www.bilibili.com/video/av16595534?from=search&amp;seid=9428831205465954083" target="_blank" rel="noopener">可爱少女-花泽香菜</a><br><a href="https://www.bilibili.com/video/av10602427?from=search&amp;seid=9089998716909831624" target="_blank" rel="noopener">Adele</a></p>
-<h3 id="图片"><a href="#图片" class="headerlink" title="图片"></a>图片</h3><hr>
-<p><img src="https://cdn.sspai.com/attachment/thumbnail/2016/11/04/264631b984633898c415a818b181e5205653e_mw_640.jpg" alt=""></p>
-<h3 id="链接-图片-1"><a href="#链接-图片-1" class="headerlink" title="链接+图片"></a>链接+图片</h3><hr>
-<p><a href="http://www.bilibili.com/" target="_blank" rel="noopener"><img src="https://cdn.sspai.com/attachment/thumbnail/2016/11/04/264631b984633898c415a818b181e5205653e_mw_640.jpg" alt=""></a></p>
-<h2 id="序表"><a href="#序表" class="headerlink" title="序表"></a>序表</h2><h3 id="有序表-注：序列-后-保持空格"><a href="#有序表-注：序列-后-保持空格" class="headerlink" title="有序表(注：序列.后 保持空格)"></a>有序表(注：序列.后 保持空格)</h3><h4 id="有空格"><a href="#有空格" class="headerlink" title="有空格"></a>有空格</h4><hr>
-<ol>
-<li>one</li>
-<li>two</li>
-<li>three</li>
-</ol>
-<h4 id="无空格"><a href="#无空格" class="headerlink" title="无空格"></a>无空格</h4><hr>
-<p>1.one<br>2.two<br>3.three</p>
-<h3 id="无序表-注：序列-后-保持空格"><a href="#无序表-注：序列-后-保持空格" class="headerlink" title="无序表(注：序列.后 保持空格)"></a>无序表(注：序列.后 保持空格)</h3><h4 id="有空格-1"><a href="#有空格-1" class="headerlink" title="有空格"></a>有空格</h4><hr>
-<ul>
-<li>one</li>
-<li>two</li>
-<li>three</li>
-</ul>
-<h4 id="无空格-1"><a href="#无空格-1" class="headerlink" title="无空格"></a>无空格</h4><hr>
-<p><em>one
-</em>two<br>*three</p>
-<h3 id="序表嵌套"><a href="#序表嵌套" class="headerlink" title="序表嵌套"></a>序表嵌套</h3><ol>
-<li>one<ol>
-<li>one-1</li>
-<li>two-2</li>
-</ol>
-</li>
-<li>two <ul>
-<li>two-1</li>
-<li>two-2</li>
-</ul>
-</li>
-</ol>
-<h3 id="序表嵌套代码块-注：换行-两个Tab"><a href="#序表嵌套代码块-注：换行-两个Tab" class="headerlink" title="序表嵌套代码块(注：换行+两个Tab)"></a>序表嵌套代码块(注：换行+两个Tab)</h3><ul>
-<li><p>one </p>
-<pre><code>var num = 0;
-for (var i = 0; i &lt; 5; i++) {
-    num+=i;
-}
-console.log(&quot;换行+两个TAB键，下方是采用上方已经提过的方式&quot;);
-</code></pre></li>
-<li>two<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">var num = 0;</span><br><span class="line">for (var i = 0; i &lt; 5; i++) &#123;</span><br><span class="line">    num+=i;</span><br><span class="line">&#125;</span><br><span class="line">console.log(&quot;此处未使用自定义语法&quot;);</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="任务列表"><a href="#任务列表" class="headerlink" title="任务列表"></a>任务列表</h2><h3 id="任务列表-1"><a href="#任务列表-1" class="headerlink" title="任务列表"></a>任务列表</h3><ul>
-<li style="list-style: none"><input type="checkbox" checked> 选项一 </li>
-<li style="list-style: none"><input type="checkbox"> 选项二  </li>
-<li style="list-style: none"><input type="checkbox"> [选项3]</li>
-</ul>
-<h2 id="表格"><a href="#表格" class="headerlink" title="表格"></a>表格</h2><p>注：  <code>: 代表对齐方式</code>,  <code>** : 与 | 之间不要有空格**</code>。</p>
-<h3 id="样例1"><a href="#样例1" class="headerlink" title="样例1"></a>样例1</h3><hr>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">a</th>
-<th style="text-align:left">b</th>
-<th style="text-align:right">c</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">居中</td>
-<td style="text-align:left">左对齐</td>
-<td style="text-align:right">右对齐</td>
-</tr>
-<tr>
-<td style="text-align:center">=======</td>
-<td style="text-align:left">=========</td>
-<td style="text-align:right">========</td>
-</tr>
-</tbody>
-</table>
-<h3 id="样例2-简约写法：也就是将左右两边全部去除"><a href="#样例2-简约写法：也就是将左右两边全部去除" class="headerlink" title="样例2(简约写法：也就是将左右两边全部去除)"></a>样例2(简约写法：也就是将左右两边全部去除)</h3><hr>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">a</th>
-<th style="text-align:left">b</th>
-<th style="text-align:right">c  </th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">    居中</td>
-<td style="text-align:left">左对齐</td>
-<td style="text-align:right">右对齐    </td>
-</tr>
-<tr>
-<td style="text-align:center">============</td>
-<td style="text-align:left">=================</td>
-<td style="text-align:right">=============</td>
-</tr>
-</tbody>
-</table>
-<h3 id="样例3（使用在线生成markdown代码工具Tables-Generator）"><a href="#样例3（使用在线生成markdown代码工具Tables-Generator）" class="headerlink" title="样例3（使用在线生成markdown代码工具Tables Generator）"></a>样例3（使用在线生成markdown代码工具<a href="http://www.tablesgenerator.com/markdown_tables" target="_blank" rel="noopener">Tables Generator</a>）</h3><hr>
-<table>
-<thead>
-<tr>
-<th>aa</th>
-<th>cc</th>
-<th>dd</th>
-<th>ee</th>
-<th></th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td>hh</td>
-<td>bb</td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td>gg</td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-<tr>
-<td></td>
-<td></td>
-<td></td>
-<td></td>
-</tr>
-</tbody>
-</table>
-<h3 id="小节：上方样例3非常方便，优先推荐使用。"><a href="#小节：上方样例3非常方便，优先推荐使用。" class="headerlink" title="小节：上方样例3非常方便，优先推荐使用。"></a>小节：上方样例3非常方便，优先推荐使用。</h3><h2 id="语义标记-标签"><a href="#语义标记-标签" class="headerlink" title="语义标记/标签"></a>语义标记/标签</h2><h3 id="语义标记"><a href="#语义标记" class="headerlink" title="语义标记"></a>语义标记</h3><table>
-<thead>
-<tr>
-<th>描述</th>
-<th>效果</th>
-<th>代码</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>斜体</td>
-<td>斜体</td>
-<td><em>斜体</em></td>
-</tr>
-<tr>
-<td>斜体</td>
-<td>斜体</td>
-<td>_斜体_</td>
-</tr>
-<tr>
-<td>加粗</td>
-<td>加粗</td>
-<td><strong>加粗</strong></td>
-</tr>
-<tr>
-<td>加粗+斜体</td>
-<td>加粗+斜体</td>
-<td><strong><em>加粗+斜体</em></strong></td>
-</tr>
-<tr>
-<td>加粗+斜体</td>
-<td>加粗+斜体</td>
-<td><strong><em>加粗+斜体</em></strong></td>
-</tr>
-<tr>
-<td>删除线</td>
-<td>删除线</td>
-<td><del>删除线</del></td>
-</tr>
-</tbody>
-</table>
-<h4 id="样例如下"><a href="#样例如下" class="headerlink" title="样例如下"></a>样例如下</h4><hr>
-<ul>
-<li><em>这是斜体</em>   <em>这也是斜体</em></li>
-<li><strong>这是加粗</strong></li>
-<li><strong><em>这是加粗+斜体</em></strong> <strong><em>这是加粗+斜体</em></strong></li>
-<li><del>这是删除线</del></li>
-</ul>
-<h3 id="语义标签"><a href="#语义标签" class="headerlink" title="语义标签"></a>语义标签</h3><p>======================</p>
-<table>
-<thead>
-<tr>
-<th>描述</th>
-<th>效果</th>
-<th>代码</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>斜体</td>
-<td>斜体</td>
-<td><i>斜体</i></td>
-</tr>
-<tr>
-<td>加粗</td>
-<td>加粗</td>
-<td><b>加粗</b></td>
-</tr>
-<tr>
-<td>强调</td>
-<td>强调</td>
-<td><em>强调</em></td>
-</tr>
-<tr>
-<td>上标</td>
-<td></td>
-<td>Z<sup>a</sup></td>
-</tr>
-<tr>
-<td>下标</td>
-<td></td>
-<td>Z<sub>a</sub></td>
-</tr>
-<tr>
-<td>键盘文字</td>
-<td></td>
-<td><kbd>Ctrl</kbd></td>
-</tr>
-</tbody>
-</table>
-<h4 id="样例如下-1"><a href="#样例如下-1" class="headerlink" title="样例如下"></a>样例如下</h4><hr>
-<ul>
-<li><i>这是斜体</i></li>
-<li><b>这是加粗</b></li>
-<li><em>这是强调</em></li>
-<li>上标： Z<sup>a</sup> </li>
-<li>下标： Z<sub>a</sub> </li>
-<li>键盘文字：<kbd>Ctrl</kbd>  <kbd>ENTER</kbd> </li>
-</ul>
-<h2 id="公式（todo）"><a href="#公式（todo）" class="headerlink" title="公式（todo）"></a>公式（todo）</h2><p>注：1个$左对齐，2个居中</p>
-<pre><code>$$ x \href{why-equal.html}{=} y^2 + 1 $$
-</code></pre><p>$$ x \href{why-equal.html}{=} y^2 + 1 $$</p>
-<pre><code>$ x = {-b \pm \sqrt{b^2-4ac} \over 2a}. $   
-</code></pre><p>$ x = {-b \pm \sqrt{b^2-4ac} \over 2a}. $</p>
-<h2 id="分割符"><a href="#分割符" class="headerlink" title="分割符"></a>分割符</h2><p>注：最少三个 —  或  <em> </em> *  ，其中第一个需要换行。</p>
-<pre><code>***
-</code></pre><hr>
-<pre><code>---
-</code></pre><hr>
-<h2 id="脚注（todo）"><a href="#脚注（todo）" class="headerlink" title="脚注（todo）"></a>脚注（todo）</h2><pre><code>Markdown[^1]
-Baidu[^1]
-[^1]: Markdown是一种纯文本标记语言    // 在文章最后面显示脚注
-[^1]: 百度是一种搜索引擎    
-</code></pre><h2 id="定义型列表"><a href="#定义型列表" class="headerlink" title="定义型列表"></a>定义型列表</h2><p>注：解释型定义</p>
-<h3 id="示例1-看一下二者的不同效果。"><a href="#示例1-看一下二者的不同效果。" class="headerlink" title="示例1 看一下二者的不同效果。"></a>示例1 看一下二者的不同效果。</h3><p>Markdown<br>:   轻量级文本标记语言，可以转换成html，pdf等格式  //  开头一个<code>:</code> + <code>Tab</code> 或 四个空格</p>
-<p>Markdown </p>
-<pre><code>轻量级文本标记语言，可以转换成html，pdf等格式  //  此处没有使用:
-</code></pre><h3 id="示例2-看一下二者的不同效果。"><a href="#示例2-看一下二者的不同效果。" class="headerlink" title="示例2 看一下二者的不同效果。"></a>示例2 看一下二者的不同效果。</h3><p>代码块定义<br>:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">    num+=i;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"此处未使用自定义语法"</span>);</span><br></pre></td></tr></table></figure></p>
-<h2 id="自动邮箱链接"><a href="#自动邮箱链接" class="headerlink" title="自动邮箱链接"></a>自动邮箱链接</h2><p><a href="mailto:&#119;&#x65;&#x63;&#104;&#x61;&#x74;&#64;&#x71;&#113;&#46;&#x63;&#x6f;&#x6d;" target="_blank" rel="noopener">&#119;&#x65;&#x63;&#104;&#x61;&#x74;&#64;&#x71;&#113;&#46;&#x63;&#x6f;&#x6d;</a></p>
-<h2 id="时序图（todo）"><a href="#时序图（todo）" class="headerlink" title="时序图（todo）"></a>时序图（todo）</h2><h2 id="流程图（todo）"><a href="#流程图（todo）" class="headerlink" title="流程图（todo）"></a>流程图（todo）</h2><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上内容是对于markdown的入门小节，总结的目的如下</p>
-<ol>
-<li>语法的入门练习。</li>
-<li>博客书写的需要。</li>
-</ol>
-<p>以后根据需要在补充。 </p>
-<p>参考网址：<br><a href="http://www.bilibili.com/" target="_blank" rel="noopener">Markdown 语法整理大集合2017</a><br><a href="http://wowubuntu.com/markdown/#list" target="_blank" rel="noopener">Markdown 语法说明</a><br><a href="https://www.zybuluo.com/mdeditor" target="_blank" rel="noopener">Markdown 在线编辑工具</a><br><a href="https://www.zybuluo.com/mdeditor?url=https://www.zybuluo.com/static/editor/md-help.markdown" target="_blank" rel="noopener">Markdown 语法实例说明</a></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/辅助类简记/">辅助类简记</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -1486,11 +1185,11 @@ Baidu[^1]
 			
 		
 			
-				<li><a href="/tags/辅助类简记/" title="辅助类简记">辅助类简记<sup>2</sup></a></li>
+				<li><a href="/tags/Spring框架简记/" title="Spring框架简记">Spring框架简记<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Spring框架简记/" title="Spring框架简记">Spring框架简记<sup>2</sup></a></li>
+				<li><a href="/tags/辅助类简记/" title="辅助类简记">辅助类简记<sup>2</sup></a></li>
 			
 		
 			
@@ -1498,11 +1197,11 @@ Baidu[^1]
 			
 		
 			
-				<li><a href="/tags/数据库简记/" title="数据库简记">数据库简记<sup>1</sup></a></li>
+				<li><a href="/tags/算法/" title="算法">算法<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/算法/" title="算法">算法<sup>1</sup></a></li>
+				<li><a href="/tags/数据库简记/" title="数据库简记">数据库简记<sup>1</sup></a></li>
 			
 		
 			
