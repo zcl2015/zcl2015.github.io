@@ -79,6 +79,178 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2018/04/19/SpringMVC表单标签库/" title="SpringMVC表单标签库" itemprop="url">SpringMVC表单标签库</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
+		
+  <p class="article-time">
+    <time datetime="2018-04-19T04:25:36.000Z" itemprop="datePublished"> Published 2018-04-19</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>SpringMVC表单标签库的使用</p>
+<h2 id="Spring-MVC-表单标签库简述"><a href="#Spring-MVC-表单标签库简述" class="headerlink" title="Spring MVC 表单标签库简述"></a>Spring MVC 表单标签库简述</h2><p>   表单标签库主要用于网页中信息的获取。大体分为以下两个使用场景：</p>
+<ol>
+<li>登陆界面：网页的登陆界面需要用户输入用户信息，从而完成用户的信息验证以及与之相关的操作。</li>
+<li>基于实际需要填写信息。例如注册页面的信息采集，网页中表单信息的采集。<br>基于以上考虑，标签在网页中使用非常普遍，应当熟练掌握。</li>
+</ol>
+<h2 id="Spring-MVC-表单标签库分类"><a href="#Spring-MVC-表单标签库分类" class="headerlink" title="Spring MVC 表单标签库分类"></a>Spring MVC 表单标签库分类</h2><h3 id="不需要外部数据标签"><a href="#不需要外部数据标签" class="headerlink" title="不需要外部数据标签"></a>不需要外部数据标签</h3><ol>
+<li><p><strong>文本框</strong><br>使用&lt;form:input /&gt;标签来渲染一个HTML文本框。</p>
+<pre><code>例如 -&lt;form:input path=&quot;Modelattribute&quot; /&gt;  
+HTML它将生成以下HTML内容： 
+&lt;input id=&quot;Modelattribute&quot; name=&quot;Modelattribute&quot; type=&quot;text&quot; value=&quot;&quot;/&gt; 
+</code></pre><p>效果如下： <input id="Modelattribute" name="Modelattribute" type="text" value=""></p>
+</li>
+<li><p><strong>密码框</strong><br>使用&lt;form:password /&gt;标签来呈现HTML密码框。 </p>
+<pre><code>例如 -&lt;form:password path=&quot;Modelattribute&quot; /&gt;
+HTML它将呈现以下HTML内容:
+&lt;input id=&quot;password&quot; name=&quot;password&quot; type=&quot;password&quot; value=&quot;&quot;/&gt;
+</code></pre><p>效果如下：<input id="Modelattribute" name="Modelattribute" type="password" value=""></p>
+</li>
+<li><p><strong>文本域</strong><br>使用&lt;form:textarea /&gt;标签来呈现HTML密码框。</p>
+<pre><code>例如 - &lt;form:textarea path=&quot;xxx&quot; rows=&quot;5&quot; cols=&quot;30&quot; /&gt;
+HTML它将呈现以下HTML内容。
+&lt;textarea id=&quot;Modelattribute&quot; name=&quot;Modelattribute&quot; rows=&quot;5&quot; cols=&quot;30&quot;&gt;
+</code></pre><p>效果如下：<textarea id="Modelattribute" name="Modelattribute" rows="5" cols="30"></textarea></p>
+</li>
+</ol>
+<ol start="4">
+<li><p><strong>复选框 (单选)</strong><br>使用&lt;form:checkbox /&gt;标签来呈现HTML密码框。 </p>
+<pre><code>例如 - &lt;form:checkbox path=&quot;Modelattribute&quot; /&gt;
+HTML它将呈现以下HTML内容。
+&lt;input id=&quot;Modelattribute&quot; name=&quot;Modelattribute&quot; type=&quot;checkbox&quot; value=&quot;true&quot;/&gt;
+</code></pre><p>效果如下：</p>
+   <input id="Modelattribute" name="Modelattribute" type="checkbox" value="true">
+</li>
+<li><p><strong>单选框</strong><br>使用&lt;form:radiobutton /&gt;标签来呈现HTML密码框。</p>
+<pre><code>例如   &lt;form:radiobutton path=&quot;Modelattribute&quot; value=&quot;M&quot; label=&quot;男&quot; /&gt;  
+      &lt;form:radiobutton path=&quot;Modelattribute&quot; value=&quot;F&quot; label=&quot;女&quot; /&gt;
+HTML它将呈现以下HTML内容。
+&lt;input id=&quot;gender1&quot; name=&quot;gender&quot; type=&quot;radio&quot; value=&quot;M&quot; checked=&quot;checked&quot;/&gt;&lt;label for=&quot;gender1&quot;&gt;男&lt;label&gt;
+&lt;input id=&quot;gender2&quot; name=&quot;gender&quot; type=&quot;radio&quot; value=&quot;F&quot;/&gt;&lt;label for=&quot;gender2&quot;&gt;女&lt;/label&gt;
+</code></pre><p>效果如下：<br> <input id="gender1" name="gender" type="radio" value="M" checked="checked"><label for="gender1">男<label><br> <input id="gender2" name="gender" type="radio" value="F"><label for="gender2">女</label></label></label></p>
+</li>
+<li><p><strong>隐藏字段域</strong><br>使用&lt;form:hidden /&gt;标签来呈现HTML隐藏字段域。</p>
+<pre><code>例如 -&lt;form:hidden path=&quot;id&quot; value=&quot;1000&quot;/&gt;
+HTML它将呈现以下HTML内容。
+&lt;input id=&quot;id&quot; name=&quot;id&quot; type=&quot;hidden&quot; value=&quot;1000&quot;/&gt;
+以下作为对比:
+&lt;input id=&quot;id&quot; name=&quot;id&quot;  value=&quot;1000&quot;/&gt;
+</code></pre><p>效果如下：<br> <input id="id" name="id" value="1000"></p>
+ <input id="id" name="id" type="hidden" value="1000">
+
+</li>
+</ol>
+<p>注：上方标签中的path分别指向Model类中的属性。</p>
+<h3 id="需要外部数据标签"><a href="#需要外部数据标签" class="headerlink" title="需要外部数据标签"></a>需要外部数据标签</h3><ol>
+<li><p><strong>复选框(多选)</strong></p>
+<pre><code>使用&lt;form:checkboxes /&gt;标签来呈现HTML多个复选框。 
+例如 -  
+&lt;form:checkboxes items=&quot;${xxx}&quot; path=&quot;Modelshuxing&quot; /&gt;
+其中xxx是在xxxController中使用@ModelAttribute(&quot;yyy&quot;)定义的。
+</code></pre></li>
+<li><p><strong>单选框(多个选项)</strong></p>
+<pre><code>使用&lt;form:radiobuttons /&gt;标签来呈现HTML密码框。
+例如 - 
+&lt;form:radiobuttons items=&quot;${yyy}&quot; path=&quot;Modelshuxing&quot; /&gt;
+其中xxx是在xxxController中使用@ModelAttribute(&quot;yyy&quot;)定义的。
+</code></pre></li>
+<li><p><strong>下拉框</strong></p>
+<p> 使用&lt;form:select /&gt; , &lt;form:option /&gt; 和 &lt;form:options /&gt;标签来呈现HTML密码框。<br> 例如 - &lt;form:select path=”country”&gt;</p>
+<pre><code>&lt;form:option value=&quot;NONE&quot; label=&quot;Select&quot;/&gt;
+&lt;form:options items=&quot;${countryList}&quot; /&gt;&lt;/form:select&gt;
+</code></pre><p>  HTML它将呈现以下HTML内容。</p>
+<pre><code>&lt;select id=&quot;country&quot; name=&quot;country&quot;&gt;
+&lt;option value=&quot;NONE&quot;&gt;请选择...&lt;/option&gt;
+&lt;option value=&quot;US&quot;&gt;United States&lt;/option&gt;
+&lt;option value=&quot;CH&quot;&gt;China&lt;/option&gt;
+&lt;option value=&quot;MY&quot;&gt;Malaysia&lt;/option&gt;
+&lt;option value=&quot;SG&quot;&gt;Singapore&lt;/option&gt;
+&lt;/select&gt;
+</code></pre></li>
+<li><p><strong>列表多选框</strong></p>
+<p> 使用&lt;form:select /&gt; 及其属性 multiple=true标签来呈现HTML列表多选框。<br> 例如 -<br> &lt;form:select path=”skills” items=”${xxx}” multiple=”true” /&gt;<br> HTML它将呈现以下HTML内容。</p>
+ <select id="skills" name="skills" multiple="multiple"><br> <option value="Struts">Struts</option><br> <option value="Hibernate">Hibernate</option><br> <option value="Apache Wicket">Apache Hadoop</option><br> <option value="Spring">Spring</option><br> </select>
+</li>
+<li><p><strong>错误处理</strong>(todo)</p>
+</li>
+</ol>
+<h3 id="如何配置标签所需的外部数据"><a href="#如何配置标签所需的外部数据" class="headerlink" title="如何配置标签所需的外部数据"></a>如何配置标签所需的外部数据</h3><pre><code>使用 @ModelAttribute(&quot;XXX&quot;)属性来配置外部数据。添加方式包括以下两种：
+</code></pre><ol>
+<li>使用List。此时List添加的元素就是数据源，也就是在页面中显示的数据。</li>
+<li>使用Map。 此时Map中的key-value分别对应数据源-标签。</li>
+</ol>
+<p>以以下代码为例：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;tr&gt;</span><br><span class="line">         &lt;td&gt;&lt;form:label path="country"&gt;所在国家：(使用Map)&lt;/form:label&gt;&lt;/td&gt;</span><br><span class="line">         &lt;td&gt;&lt;form:select path=<span class="string">"country"</span>&gt;</span><br><span class="line">             &lt;form:option value=<span class="string">"NONE"</span> label=<span class="string">"请选择..."</span> /&gt;</span><br><span class="line">             &lt;form:options items=<span class="string">"$&#123;countryList&#125;"</span> /&gt;</span><br><span class="line">             &lt;/form:select&gt;&lt;/td&gt;</span><br><span class="line">   &lt;/tr&gt;</span><br><span class="line"></span><br><span class="line">     </span><br><span class="line">&lt;tr&gt;</span><br><span class="line">         &lt;td&gt;&lt;form:label path="country"&gt;所在国家：(使用list)&lt;/form:label&gt;&lt;/td&gt;</span><br><span class="line">         &lt;td&gt;&lt;form:select path=<span class="string">"country"</span>&gt;</span><br><span class="line">             &lt;form:option value=<span class="string">"NONE"</span> label=<span class="string">"请选择..."</span> /&gt;</span><br><span class="line">             &lt;form:options items=<span class="string">"$&#123;countryList1&#125;"</span> /&gt;</span><br><span class="line">             &lt;/form:select&gt;&lt;/td&gt;</span><br><span class="line">    &lt;/tr&gt;</span><br></pre></td></tr></table></figure>
+<p>其中上方代码的第一部分使用Map，第二部分使用List。数据源如下所示：</p>
+<pre><code class="java"><span class="meta">@ModelAttribute</span>(<span class="string">"countryList1"</span>)
+<span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getCountryList1</span><span class="params">()</span></span>
+<span class="function">  </span>{
+     List&lt;String&gt; webFrameworkList = <span class="keyword">new</span> ArrayList&lt;String&gt;();
+     webFrameworkList.add(<span class="string">"United States"</span>);
+     webFrameworkList.add(<span class="string">"China"</span>);
+     webFrameworkList.add(<span class="string">"Singapore"</span>);
+     webFrameworkList.add(<span class="string">"Malaysia"</span>);
+     <span class="keyword">return</span> webFrameworkList;
+  }
+
+<span class="meta">@ModelAttribute</span>(<span class="string">"countryList"</span>)
+<span class="function"><span class="keyword">public</span> Map&lt;String, String&gt; <span class="title">getCountryList</span><span class="params">()</span></span>
+<span class="function">  </span>{
+     Map&lt;String, String&gt; countryList = <span class="keyword">new</span> HashMap&lt;String, String&gt;();
+     countryList.put(<span class="string">"US"</span>, <span class="string">"United States"</span>);
+     countryList.put(<span class="string">"CH"</span>, <span class="string">"China"</span>);
+     countryList.put(<span class="string">"SG"</span>, <span class="string">"Singapore"</span>);
+     countryList.put(<span class="string">"MY"</span>, <span class="string">"Malaysia"</span>);
+     <span class="keyword">return</span> countryList;
+  }
+</code></pre>
+<p>效果如下：<br><img src="https://s1.ax1x.com/2018/04/23/CQ0MEq.png" alt="CQ0MEq.png"><br><img src="https://s1.ax1x.com/2018/04/23/CQ0QU0.png" alt="CQ0QU0.png"><br>如上图所示：对于List的数据来源，展示界面和最终的数据都是add（xxx）中添加的数据，对于map而言，展示中的数据是key-value中的value，而获取到的数据是key-value中的key。 </p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/SpringMVC/">SpringMVC</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2018/04/19/SpringMVC表单处理/" title="SpringMVC表单处理1" itemprop="url">SpringMVC表单处理1</a>
   </h1>
   <p class="article-author">By
@@ -743,7 +915,7 @@ Baidu[^1]
 <p>Markdown </p>
 <pre><code>轻量级文本标记语言，可以转换成html，pdf等格式  //  此处没有使用:
 </code></pre><h3 id="示例2-看一下二者的不同效果。"><a href="#示例2-看一下二者的不同效果。" class="headerlink" title="示例2 看一下二者的不同效果。"></a>示例2 看一下二者的不同效果。</h3><p>代码块定义<br>:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">    num+=i;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"此处未使用自定义语法"</span>);</span><br></pre></td></tr></table></figure></p>
-<h2 id="自动邮箱链接"><a href="#自动邮箱链接" class="headerlink" title="自动邮箱链接"></a>自动邮箱链接</h2><p><a href="mailto:&#x77;&#101;&#99;&#104;&#x61;&#116;&#x40;&#113;&#113;&#x2e;&#99;&#x6f;&#x6d;" target="_blank" rel="noopener">&#x77;&#101;&#99;&#104;&#x61;&#116;&#x40;&#113;&#113;&#x2e;&#99;&#x6f;&#x6d;</a></p>
+<h2 id="自动邮箱链接"><a href="#自动邮箱链接" class="headerlink" title="自动邮箱链接"></a>自动邮箱链接</h2><p><a href="mailto:&#x77;&#x65;&#x63;&#x68;&#97;&#116;&#64;&#113;&#113;&#46;&#99;&#111;&#x6d;" target="_blank" rel="noopener">&#x77;&#x65;&#x63;&#x68;&#97;&#116;&#64;&#113;&#113;&#46;&#99;&#111;&#x6d;</a></p>
 <h2 id="时序图（todo）"><a href="#时序图（todo）" class="headerlink" title="时序图（todo）"></a>时序图（todo）</h2><h2 id="流程图（todo）"><a href="#流程图（todo）" class="headerlink" title="流程图（todo）"></a>流程图（todo）</h2><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上内容是对于markdown的入门小节，总结的目的如下</p>
 <ol>
 <li>语法的入门练习。</li>
@@ -1078,92 +1250,9 @@ Baidu[^1]
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2018/04/11/使用-hexo-github-搭建个人博客简记/" title="使用 hexo+github 搭建个人博客简记" itemprop="url">使用 hexo+github 搭建个人博客简记</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
-		
-  <p class="article-time">
-    <time datetime="2018-04-11T09:35:51.000Z" itemprop="datePublished"> Published 2018-04-11</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p><strong><em>总体顺序如下</em></strong></p>
-<h2 id="安装-node-js。"><a href="#安装-node-js。" class="headerlink" title="安装 node.js。"></a>安装 node.js。</h2><pre><code>网址如下[node.js](https://nodejs.org/en/)。静默安装即可，完成后可以在命令行中使用 node -v 检测，如果出现版本信息，表示安装成功。
-</code></pre><h2 id="安装Git。"><a href="#安装Git。" class="headerlink" title="安装Git。"></a>安装Git。</h2><pre><code>网址如下[Git](https://git-scm.com/download/win)。静默安装即可，
-完成后可以在命令行中使用 git --version 检测，如果出现版本信息，表示安装成功。
-</code></pre><h2 id="安装hexo。"><a href="#安装hexo。" class="headerlink" title="安装hexo。"></a>安装hexo。</h2><pre><code>桌面右键鼠标，点击Git Bash Here，输入以下npm命令即可安装。
-npm install hexo-cli -g   （安装hexo）
-npm install hexo-deployer-git --save   （安装hexo部署到git page的deployer插件）
-</code></pre><h2 id="hexo初始化。"><a href="#hexo初始化。" class="headerlink" title="hexo初始化。"></a>hexo初始化。</h2><pre><code>在盘中任意位置创建一个文件夹（该文件夹用于保存博客相关的信息），比如 d:\hexo\blog。
-在该文件夹下打开命令行或者使用Git Bash Here 输入 hexo init命令。 
-等待命令完成后 依次输入 hexo g (生成静态文件，会在当前目录下生成一个新的叫做public的文件夹)
-hexo s(启动本地web服务，用于博客的预览). 
-等待命令执行完成后 在浏览器中访问https://localhost:4000/ 此时可以看到一个博客的系统网页。
-</code></pre><h2 id="将博客部署到Githubpage上。"><a href="#将博客部署到Githubpage上。" class="headerlink" title="将博客部署到Githubpage上。"></a>将博客部署到Githubpage上。</h2><h3 id="在github中创建一个新的仓库"><a href="#在github中创建一个新的仓库" class="headerlink" title="在github中创建一个新的仓库"></a>在github中创建一个新的仓库</h3><p>仓库名称为:yourGithubName.github.io,比如你的github名是sky,那么仓库名称就是sky.github.io).<br>并在下方的相关选项中选择public和Initialize this repository with a README。</p>
-<h3 id="配置SSH密钥。"><a href="#配置SSH密钥。" class="headerlink" title="配置SSH密钥。"></a>配置SSH密钥。</h3><p>（此处创建的密钥用于添加到github中，实现本地git和网络中自身github账户的通信验证。）</p>
-<h4 id="检查是否存在SSH密钥-keys"><a href="#检查是否存在SSH密钥-keys" class="headerlink" title="检查是否存在SSH密钥(keys)"></a>检查是否存在SSH密钥(keys)</h4><p>步骤如下<br>任意位置打开Git Bash Here,输入以下命令： cd ~/.ssh 如果存在直接进入3。这一步主要是为了提醒如果你之前设置过密钥，可以直接去使用而无需去操作步骤2，如果从来没有进行锅步骤2，本步骤可以省略，直接进入步骤2.）</p>
-<h4 id="创建SSH密钥。"><a href="#创建SSH密钥。" class="headerlink" title="创建SSH密钥。"></a>创建SSH密钥。</h4><p>在Git Bash Here命令中输入以下命令<br>$ git config –global user.name “userName”//用户名<br>$ git config –global user.email “userEmail”//填写自己的邮箱<br>ssh-keygen -t rsa -C “userEmail”  输入命令后等待执行，按照提示按回车键即可，无需输入任何密码。<br>之后在C:\Users\yourcomputername.ssh可以发现一个id_rsa的pub格式文件，该文件内部保留的就是我们需要的SSH密钥。</p>
-<h4 id="将SSH添加到github。"><a href="#将SSH添加到github。" class="headerlink" title="将SSH添加到github。"></a>将SSH添加到github。</h4><p>将2中创建（或者是原本存在的）的文件中的密钥添加到github账户中。 在github账户中点击图像（右上角的图像），选中Settings.（在一些老一点的教程中会让你使用自己当前创建的库中的Settings,自己尝试了一下并没有效果。）<br>选中SSH and GPG keys,点击上方的new SSH key,在点击后的页面中 title任取，将密钥添加到key选项中。保存即可。</p>
-<h4 id="配置测试。"><a href="#配置测试。" class="headerlink" title="配置测试。"></a>配置测试。</h4><p>在任意位置桌面右键鼠标，点击Git Bash Here<br>输入以下命令</p>
-<pre><code>ssh -T git@github.com 
-</code></pre><ul>
-<li>如果提示你输入yes/no? 输入yes即可。那么配置通过。</li>
-<li>如果提示连接超时，那么问题在于.ssh文件夹中缺少配置文件<a href="https://blog.csdn.net/xiaoshiyiqie/article/details/52846408" target="_blank" rel="noopener">config</a><br>注意配置文件的保存格式不是txt,也不是xml。<br>在用notepad++编辑时另存为: (文件名：config 保存类型：All types(<em>.</em>) ) 否则无效。</li>
-</ul>
-<h2 id="更换博客主题。"><a href="#更换博客主题。" class="headerlink" title="更换博客主题。"></a>更换博客主题。</h2><h3 id="首先选择你喜欢的博客主题。"><a href="#首先选择你喜欢的博客主题。" class="headerlink" title="首先选择你喜欢的博客主题。"></a>首先选择你喜欢的博客主题。</h3><p><a href="https://git-scm.com/download/win" target="_blank" rel="noopener">主题网站</a>。</p>
-<h3 id="将你喜欢的主题库clone到本地。"><a href="#将你喜欢的主题库clone到本地。" class="headerlink" title="将你喜欢的主题库clone到本地。"></a>将你喜欢的主题库clone到本地。</h3><p>点击主题后进入不同的网站，按照网站下方的提示进行相关操作。<br>       以<a href="https://github.com/AlynxZhou/hexo-theme-aria/blob/master/README.zh_CN.md" target="_blank" rel="noopener">此处为例</a><br>       网站提示操作如下  git clone <a href="https://github.com/AlynxZhou/hexo-theme-aria" target="_blank" rel="noopener">https://github.com/AlynxZhou/hexo-theme-aria</a> themes/aria。<br>       我们需要将其修改为：git clone <a href="https://github.com/AlynxZhou/hexo-theme-aria" target="_blank" rel="noopener">https://github.com/AlynxZhou/hexo-theme-aria</a> 本地的主题库<br>       git clone <a href="https://github.com/AlynxZhou/hexo-theme-aria" target="_blank" rel="noopener">https://github.com/AlynxZhou/hexo-theme-aria</a> d:\hexo\blog\themes/aria</p>
-<h3 id="修改配置文件。"><a href="#修改配置文件。" class="headerlink" title="修改配置文件。"></a>修改配置文件。</h3><p>选中本地blog文件夹下的_config.yml文件。将其中 theme: xxx 替换为喜欢的主题即可，比如此处是 aria。</p>
-<h2 id="修改部署"><a href="#修改部署" class="headerlink" title="修改部署"></a>修改部署</h2><p>配置文件中部署只是针对本地web,配置到githubpage中需要做如下修改。将_config.yml文件中的deploy替换如下<br>       deploy:<br>       type: git<br>       repo: <a href="mailto:git@github.com" target="_blank" rel="noopener">git@github.com</a>:zcl2015/zcl2015.github.io.git<br>       branch: master<br>       其中上方的repo是yourGithubName.github.io仓库中Clone or download中的内容。替换即可。</p>
-<h2 id="运行测试"><a href="#运行测试" class="headerlink" title="运行测试"></a>运行测试</h2><pre><code>hexo d -g 运行后 访问yourGithubName.github.io应该可以访问博客页面了。
-</code></pre><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>作为博客搭建的简易记录。<br>参考网址：<br><a href="https://my.oschina.net/ryaneLee/blog/638440" target="_blank" rel="noopener">小白独立搭建博客–Github Pages和Hexo简明教程</a><br><a href="https://segmentfault.com/a/1190000004947261" target="_blank" rel="noopener">手把手教你使用Hexo + Github Pages搭建个人独立博客</a><br><a href="http://ibruce.info/2013/11/22/hexo-your-blog/" target="_blank" rel="noopener">hexo你的博客</a><br><a href="https://hexo.io/zh-cn/" target="_blank" rel="noopener">快速、简洁且高效的博客框架</a></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/博客搭建简记/">博客搭建简记</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
-    <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
   </nav>
 
 </div>
@@ -1192,11 +1281,11 @@ hexo s(启动本地web服务，用于博客的预览).
 			
 		
 			
-				<li><a href="/tags/辅助类简记/" title="辅助类简记">辅助类简记<sup>2</sup></a></li>
+				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>3</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>2</sup></a></li>
+				<li><a href="/tags/辅助类简记/" title="辅助类简记">辅助类简记<sup>2</sup></a></li>
 			
 		
 			
@@ -1208,11 +1297,11 @@ hexo s(启动本地web服务，用于博客的预览).
 			
 		
 			
-				<li><a href="/tags/数据库简记/" title="数据库简记">数据库简记<sup>1</sup></a></li>
+				<li><a href="/tags/博客搭建简记/" title="博客搭建简记">博客搭建简记<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/博客搭建简记/" title="博客搭建简记">博客搭建简记<sup>1</sup></a></li>
+				<li><a href="/tags/数据库简记/" title="数据库简记">数据库简记<sup>1</sup></a></li>
 			
 		
 		</ul>
