@@ -11,14 +11,18 @@
     
 
     
-    <meta property="og:type" content="article">
+    <meta name="description" content="Servlet入门程序：此处入门程序不采用IDE或者ECLIPSE的方式运行，而是在webapps中运行。主要包括以下几个步骤。 创建一个Servlet 与之前的例子相呼应，此处采用扩展HttpServlet抽象类的方式创建Servlet。代码如下：12345678910111213141516import javax.servlet.*;import javax.servlet.http.*;i">
+<meta name="keywords" content="Servlet简记">
+<meta property="og:type" content="article">
 <meta property="og:title" content="Servlet入门程序">
 <meta property="og:url" content="http://yoursite.com/2018/05/29/Servlet入门程序/index.html">
 <meta property="og:site_name" content="SelfBlog">
+<meta property="og:description" content="Servlet入门程序：此处入门程序不采用IDE或者ECLIPSE的方式运行，而是在webapps中运行。主要包括以下几个步骤。 创建一个Servlet 与之前的例子相呼应，此处采用扩展HttpServlet抽象类的方式创建Servlet。代码如下：12345678910111213141516import javax.servlet.*;import javax.servlet.http.*;i">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-29T02:50:00.262Z">
+<meta property="og:updated_time" content="2018-05-29T04:20:38.488Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Servlet入门程序">
+<meta name="twitter:description" content="Servlet入门程序：此处入门程序不采用IDE或者ECLIPSE的方式运行，而是在webapps中运行。主要包括以下几个步骤。 创建一个Servlet 与之前的例子相呼应，此处采用扩展HttpServlet抽象类的方式创建Servlet。代码如下：12345678910111213141516import javax.servlet.*;import javax.servlet.http.*;i">
 
     
     <link rel="alternative" href="/atom.xml" title="SelfBlog" type="application/atom+xml">
@@ -94,15 +98,48 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建一个Servlet"><span class="toc-number">1.</span> <span class="toc-text">创建一个Servlet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译Servlet类"><span class="toc-number">2.</span> <span class="toc-text">编译Servlet类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建部署描述符"><span class="toc-number">3.</span> <span class="toc-text">创建部署描述符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动服务器并部署应用程序"><span class="toc-number">4.</span> <span class="toc-text">启动服务器并部署应用程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于上方的说明"><span class="toc-number">5.</span> <span class="toc-text">关于上方的说明</span></a></li></ol>
 		
 		</div>
 		
-		  
+		<p>Servlet入门程序：此处入门程序不采用IDE或者ECLIPSE的方式运行，而是在webapps中运行。主要包括以下几个步骤。</p>
+<h2 id="创建一个Servlet"><a href="#创建一个Servlet" class="headerlink" title="创建一个Servlet"></a>创建一个Servlet</h2><p> 与之前的例子相呼应，此处采用扩展HttpServlet抽象类的方式创建Servlet。代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import javax.servlet.*;</span><br><span class="line">import javax.servlet.http.*;</span><br><span class="line">import java.io.*;</span><br><span class="line"></span><br><span class="line">public class MyServlet extends HttpServlet</span><br><span class="line">&#123;</span><br><span class="line"> public void doGet(HttpServletRequest request,HttpServletResponse response) </span><br><span class="line">                     throws ServletException, IOException </span><br><span class="line"> &#123;</span><br><span class="line">   response.setContentType(&quot;text/html&quot;);</span><br><span class="line">   PrintWriter out = response.getWriter();</span><br><span class="line">   out.println(&quot;&lt;html&gt;&lt;body&gt;&quot;);</span><br><span class="line">   out.println(&quot;&lt;h2 style=&apos;text-align:center&apos;&gt;Hello Servlet ~&lt;/h2&gt;&quot;);</span><br><span class="line">   out.println(&quot;&lt;/body&gt;&lt;/html&gt;&quot;);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>将该文件放在F:\Demo\First目录下</p>
+<h2 id="编译Servlet类"><a href="#编译Servlet类" class="headerlink" title="编译Servlet类"></a>编译Servlet类</h2><pre><code>关于编译的说明：要编译Servlet，需要一个JAR文件。不同的服务器需要不同的JAR文件。在Apache Tomcat服务器需要的是servlet-api.jar文件来编译servlet类。（该jar文件可以直接在tomcat的lib目录下找到。）
+</code></pre><p>步骤如下：</p>
+<ol>
+<li>将上述jar包放在一个目录中（此处放置的位置是F:\Demo\library）</li>
+<li><p>在MyServlet所在的目录执行以下命令：</p>
+<pre><code>F:\Demo\First&gt; javac -Djava.ext.dirs=F:\Demo\library MyServlet.java
+</code></pre></li>
+<li>将当前目录下生成的类文件：MyServlet.class 粘贴到F:\Demo\First\WEB-INF\classes目录中。</li>
+</ol>
+<h2 id="创建部署描述符"><a href="#创建部署描述符" class="headerlink" title="创建部署描述符"></a>创建部署描述符</h2><p>   部署描述符(DD)是由Web容器用于运行Servlet和JSP页面的XML文档。也就是web.xml文件。其作用如下：</p>
+<ol>
+<li>将URL映射到Servlet类</li>
+<li>初始化参数</li>
+<li>定义错误页面</li>
+<li>安全角色</li>
+<li>声明标签库<br>web.xml代码如下：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;web-app xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot; xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot; id=&quot;WebApp_ID&quot; version=&quot;2.5&quot;&gt;</span><br><span class="line">  &lt;display-name&gt;MyFirstServlet&lt;/display-name&gt;</span><br><span class="line">  &lt;welcome-file-list&gt;</span><br><span class="line">    &lt;!--// 默认主页--&gt;</span><br><span class="line">    &lt;welcome-file&gt;index.html&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;index.html&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;default.html&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;default.html&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;default.jsp&lt;/welcome-file&gt;</span><br><span class="line">  &lt;/welcome-file-list&gt;</span><br><span class="line">  &lt;servlet&gt;</span><br><span class="line">    &lt;description&gt;&lt;/description&gt;</span><br><span class="line">    &lt;display-name&gt;MyServlet&lt;/display-name&gt;&lt;!--// 类的显示名称 --&gt;</span><br><span class="line">    &lt;servlet-name&gt;MyServlet&lt;/servlet-name&gt;&lt;!--// 类的别名 --&gt;</span><br><span class="line">    &lt;servlet-class&gt;MyServlet&lt;/servlet-class&gt;&lt;!--// 类的名称 --&gt;</span><br><span class="line">  &lt;/servlet&gt;</span><br><span class="line">  &lt;servlet-mapping&gt;</span><br><span class="line">    &lt;servlet-name&gt;MyServlet&lt;/servlet-name&gt;&lt;!--// 类的别名 --&gt;</span><br><span class="line">    &lt;url-pattern&gt;/hello&lt;/url-pattern&gt;&lt;!--// 请求此类的对应URL --&gt;</span><br><span class="line">  &lt;/servlet-mapping&gt;</span><br><span class="line">&lt;/web-app&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="启动服务器并部署应用程序"><a href="#启动服务器并部署应用程序" class="headerlink" title="启动服务器并部署应用程序"></a>启动服务器并部署应用程序</h2><pre><code>步骤如下：
+</code></pre><ol>
+<li>将目录F:\Demo\First 拷贝到 tomcat下的webapps目录下</li>
+<li>在tomcat的bin目录下启动项目</li>
+<li>访问http:localhost:8080/First/hello</li>
+</ol>
+<h2 id="关于上方的说明"><a href="#关于上方的说明" class="headerlink" title="关于上方的说明"></a>关于上方的说明</h2><pre><code>有点问题（todo）
+</code></pre>  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
 
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Servlet简记/">Servlet简记</a>
+  </div>
 
 </div>
 
@@ -144,7 +181,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#创建一个Servlet"><span class="toc-number">1.</span> <span class="toc-text">创建一个Servlet</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#编译Servlet类"><span class="toc-number">2.</span> <span class="toc-text">编译Servlet类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#创建部署描述符"><span class="toc-number">3.</span> <span class="toc-text">创建部署描述符</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#启动服务器并部署应用程序"><span class="toc-number">4.</span> <span class="toc-text">启动服务器并部署应用程序</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于上方的说明"><span class="toc-number">5.</span> <span class="toc-text">关于上方的说明</span></a></li></ol>
  
   </div>
 
@@ -175,11 +212,11 @@
 			
 		
 			
-				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>2</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>1</sup></a></li>
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
 			
 		
 			
