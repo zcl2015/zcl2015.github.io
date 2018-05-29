@@ -79,6 +79,78 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2018/05/29/ServletRequest接口/" title="ServletRequest接口" itemprop="url">ServletRequest接口</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
+		
+  <p class="article-time">
+    <time datetime="2018-05-29T08:17:38.000Z" itemprop="datePublished"> Published 2018-05-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>Servlet ServletRequest接口的简介和常用方法的使用说明</p>
+<h2 id="什么是ServletRequest接口"><a href="#什么是ServletRequest接口" class="headerlink" title="什么是ServletRequest接口"></a>什么是ServletRequest接口</h2><p>ServletRequest的对象用于向Servlet提供客户端请求信息，如内容类型，内容长度，参数名称和值，标题信息，属性等。</p>
+<p>常用方法如下所示：<br><img src="https://s1.ax1x.com/2018/05/29/C5PHAK.png" alt="C5PHAK.png"></p>
+<h2 id="ServletRequest-实例"><a href="#ServletRequest-实例" class="headerlink" title="ServletRequest 实例"></a>ServletRequest 实例</h2><p>该示例包含两个Servlet,通过在欢迎页中传递参数在不同的servlet中处理。</p>
+<h3 id="servlet代码"><a href="#servlet代码" class="headerlink" title="servlet代码"></a>servlet代码</h3><p>ServletRequest.java代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.request;</span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ServletRequestDemo</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        response.setContentType(<span class="string">"text/html"</span>);      <span class="comment">// 返回请求实体数据的网络媒体类型</span></span><br><span class="line">        PrintWriter pw = response.getWriter();</span><br><span class="line">        <span class="comment">// 1.通过名称获取值</span></span><br><span class="line">        String name = request.getParameter(<span class="string">"name"</span>);<span class="comment">// will return value  通过名称获取参数的值。</span></span><br><span class="line">        <span class="comment">//2. 通过名称获取数值数组 ------常用于多选框</span></span><br><span class="line">        String[] Fruits=request.getParameterValues(<span class="string">"Fruit"</span>);</span><br><span class="line">        String[] seaFood=request.getParameterValues(<span class="string">"seaFood"</span>);</span><br><span class="line">        pw.println(<span class="string">"Welcome "</span> + name+<span class="string">"&lt;br&gt;"</span>);</span><br><span class="line">        pw.println(<span class="string">"i want to eat friuts:"</span>+<span class="string">"&lt;br&gt;"</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">        	<span class="keyword">for</span>(String fruit:Fruits)&#123;</span><br><span class="line">            	pw.println(fruit+ <span class="string">"&lt;br&gt;"</span>);</span><br><span class="line">            &#125;;</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			<span class="comment">// <span class="doctag">TODO:</span> handle exception</span></span><br><span class="line">			pw.println(<span class="string">"你没选择任何水果"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">      </span><br><span class="line">        pw.println(<span class="string">"i want to eat seaFoods:"</span>+ <span class="string">"&lt;br&gt;"</span>);</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">        	 <span class="keyword">for</span>(String sea:seaFood)&#123;</span><br><span class="line">              pw.println(sea+ <span class="string">"&lt;br&gt;"</span>);</span><br><span class="line">            &#125;;</span><br><span class="line">			</span><br><span class="line">		&#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">			<span class="comment">// <span class="doctag">TODO:</span> handle exception</span></span><br><span class="line">			pw.println(<span class="string">"你没选择任何海鲜"</span>);</span><br><span class="line">		&#125;</span><br><span class="line">        pw.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>HeaderServlet.java代码如下</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.request;</span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">import</span> java.util.Enumeration;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.ServletException;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HeaderServlet</span> <span class="keyword">extends</span> <span class="title">HttpServlet</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">long</span> serialVersionUID = <span class="number">1L</span>;</span><br><span class="line">    <span class="meta">@SuppressWarnings</span>(<span class="string">"rawtypes"</span>)</span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">doGet</span><span class="params">(HttpServletRequest request, HttpServletResponse response)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> ServletException, IOException </span>&#123;</span><br><span class="line">        response.setContentType(<span class="string">"text/html"</span>);</span><br><span class="line">        PrintWriter out = response.getWriter();</span><br><span class="line">        <span class="comment">// 接口的getHeaderNames()方法返回一个包含所有头名称的Enumeration对象。</span></span><br><span class="line">        Enumeration enums = request.getHeaderNames();</span><br><span class="line">        <span class="keyword">while</span> (enums.hasMoreElements()) &#123;</span><br><span class="line">            String headerName = (String) enums.nextElement();</span><br><span class="line">            <span class="comment">// 接口的getHeader()方法返回给定头名称的头值。</span></span><br><span class="line">            String headerValue = request.getHeader(headerName);</span><br><span class="line">            out.print(<span class="string">"&lt;b&gt;"</span> + headerName + <span class="string">"&lt;/b&gt;: "</span>);</span><br><span class="line">            out.println(headerValue + <span class="string">"&lt;br/&gt;"</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="关于web-xml的配置"><a href="#关于web-xml的配置" class="headerlink" title="关于web.xml的配置"></a>关于web.xml的配置</h3><p>配置文件如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;web-app xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot; xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd&quot; id=&quot;WebApp_ID&quot; version=&quot;3.0&quot;&gt;</span><br><span class="line">  &lt;display-name&gt;InterfaceServlet&lt;/display-name&gt;</span><br><span class="line">  &lt;description&gt;Welcome to Tomcat&lt;/description&gt;</span><br><span class="line">  </span><br><span class="line">  &lt;welcome-file-list&gt;</span><br><span class="line">    &lt;welcome-file&gt;index.html&lt;/welcome-file&gt;</span><br><span class="line">  &lt;/welcome-file-list&gt;</span><br><span class="line">   </span><br><span class="line">  &lt;!-- 演示提交表单获取数据  --&gt;</span><br><span class="line">  &lt;servlet&gt;</span><br><span class="line">    &lt;servlet-name&gt;ServletRequestDemo&lt;/servlet-name&gt;</span><br><span class="line">    &lt;servlet-class&gt;com.request.ServletRequestDemo&lt;/servlet-class&gt;</span><br><span class="line">  &lt;/servlet&gt;</span><br><span class="line"></span><br><span class="line">  &lt;servlet-mapping&gt;</span><br><span class="line">    &lt;servlet-name&gt;ServletRequestDemo&lt;/servlet-name&gt;</span><br><span class="line">    &lt;url-pattern&gt;/ServletRequestDemoUrl&lt;/url-pattern&gt;</span><br><span class="line">  &lt;/servlet-mapping&gt; </span><br><span class="line">  &lt;!-- 演示获取头信息的示例 --&gt;</span><br><span class="line">  &lt;servlet&gt;</span><br><span class="line">    &lt;servlet-name&gt;HeaderServlet&lt;/servlet-name&gt;</span><br><span class="line">    &lt;servlet-class&gt;com.request.HeaderServlet&lt;/servlet-class&gt;</span><br><span class="line">  &lt;/servlet&gt;</span><br><span class="line"></span><br><span class="line">  &lt;servlet-mapping&gt;</span><br><span class="line">    &lt;servlet-name&gt;HeaderServlet&lt;/servlet-name&gt;</span><br><span class="line">    &lt;url-pattern&gt;/HeaderServletUrl&lt;/url-pattern&gt;</span><br><span class="line">  &lt;/servlet-mapping&gt; </span><br><span class="line">  </span><br><span class="line">  &lt;/web-app&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="自定义欢迎页"><a href="#自定义欢迎页" class="headerlink" title="自定义欢迎页"></a>自定义欢迎页</h3><p>欢迎页代码如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;Welcome - ServletRequest&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">   &lt;div style=&quot;text-align: center;color:red;&quot;&gt;</span><br><span class="line">        &lt;form action=&quot;/ServletDemo/ServletRequestDemoUrl&quot;&gt;</span><br><span class="line">            名字：&lt;input type=&quot;text&quot; name=&quot;name&quot;&gt;&lt;br /&gt;&lt;br /&gt;</span><br><span class="line">          您喜欢的水果？&lt;br /&gt;&lt;br /&gt;</span><br><span class="line">&lt;label&gt;&lt;input name=&quot;Fruit&quot; type=&quot;checkbox&quot; value=&quot;apple&quot; /&gt;苹果 &lt;/label&gt;</span><br><span class="line">&lt;label&gt;&lt;input name=&quot;Fruit&quot; type=&quot;checkbox&quot; value=&quot;peach&quot; /&gt;桃子 &lt;/label&gt;</span><br><span class="line">&lt;label&gt;&lt;input name=&quot;Fruit&quot; type=&quot;checkbox&quot; value=&quot;banana&quot; /&gt;香蕉 &lt;/label&gt;</span><br><span class="line">&lt;label&gt;&lt;input name=&quot;Fruit&quot; type=&quot;checkbox&quot; value=&quot;li&quot; /&gt;梨 &lt;/label&gt;&lt;br /&gt;&lt;br /&gt;</span><br><span class="line">         您喜欢的海鲜？&lt;br /&gt;&lt;br /&gt;</span><br><span class="line">&lt;label&gt;&lt;input name=&quot;seaFood&quot; type=&quot;checkbox&quot; value=&quot;longxia&quot; /&gt;龙虾 &lt;/label&gt;</span><br><span class="line">&lt;label&gt;&lt;input name=&quot;seaFood&quot; type=&quot;checkbox&quot; value=&quot;ppxia &quot; /&gt;皮皮虾 &lt;/label&gt;</span><br><span class="line">&lt;label&gt;&lt;input name=&quot;seaFood&quot; type=&quot;checkbox&quot; value=&quot;jwxia&quot; /&gt;基围虾 &lt;/label&gt;</span><br><span class="line">&lt;label&gt;&lt;input name=&quot;seaFood&quot; type=&quot;checkbox&quot; value=&quot;yuFish&quot; /&gt;鳗鱼 &lt;/label&gt;</span><br><span class="line">       &lt;input type=&quot;submit&quot; value=&quot;提交&quot;&gt;</span><br><span class="line">        &lt;/form&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;div style=&quot;text-align: center;color:green&quot;&gt;</span><br><span class="line">        请&lt;a href=&quot;/ServletDemo/HeaderServletUrl?key1=sky&quot;&gt;点击这里&lt;/a&gt;查看所有报头信息</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">    </span><br><span class="line">&lt;/body&gt;</span><br><span class="line"></span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>关于上方的说明：上方包括两部分内容，分别由不同的servlet处理。自己需要注意以下两点</p>
+<ol>
+<li>html标签的部分要会用。如文本框，复选框（name，type，value。龙虾是显示的内容，获取的值是内部的value）</li>
+<li>设定提交表单的action以及链接跳转时需要注意格式：/项目名/web.xml定义的url</li>
+</ol>
+<h3 id="运行截图："><a href="#运行截图：" class="headerlink" title="运行截图："></a>运行截图：</h3><p>启动页面</p>
+<p><img src="https://s1.ax1x.com/2018/05/29/C5kufU.png" alt="C5kufU.png"></p>
+<p>输入信息，点击提交后</p>
+<p><img src="https://s1.ax1x.com/2018/05/29/C5kdpD.png" alt="C5kdpD.png"></p>
+<p>在启动页面，点击头信息</p>
+<p><img src="https://s1.ax1x.com/2018/05/29/C5kw1e.png" alt="C5kw1e.png"></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2018/05/29/war包和web-xml的部分讲解/" title="war包和web.xml的部分讲解" itemprop="url">war包和web.xml的部分讲解</a>
   </h1>
   <p class="article-author">By
@@ -830,78 +902,6 @@ public static void main(String[] args) {
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2018/04/23/SpringMVC控制器/" title="SpringMVC控制器" itemprop="url">SpringMVC控制器</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
-		
-  <p class="article-time">
-    <time datetime="2018-04-23T05:45:59.000Z" itemprop="datePublished"> Published 2018-04-23</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>Spring MVC控制器</p>
-<h2 id="Spring-MVC多动作控制器（）"><a href="#Spring-MVC多动作控制器（）" class="headerlink" title="Spring MVC多动作控制器（）"></a>Spring MVC多动作控制器（）</h2><h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">"/home.html"</span> <span class="attr">class</span>=<span class="string">"com.yiibai.springmvc.UserController"</span> /&gt;</span> </span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">"/user/*.html"</span> <span class="attr">class</span>=<span class="string">"com.yiibai.springmvc.UserController"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
-<h3 id="控制器类"><a href="#控制器类" class="headerlink" title="控制器类"></a>控制器类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yiibai.springmvc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.mvc.multiaction.MultiActionController;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> <span class="keyword">extends</span> <span class="title">MultiActionController</span></span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">home</span><span class="params">(HttpServletRequest request,</span></span></span><br><span class="line"><span class="function"><span class="params">      HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">      ModelAndView model = <span class="keyword">new</span> ModelAndView(<span class="string">"home"</span>);</span><br><span class="line">      model.addObject(<span class="string">"message"</span>, <span class="string">"Home"</span>);</span><br><span class="line">      <span class="keyword">return</span> model;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">add</span><span class="params">(HttpServletRequest request,</span></span></span><br><span class="line"><span class="function"><span class="params">      HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">      ModelAndView model = <span class="keyword">new</span> ModelAndView(<span class="string">"user"</span>);</span><br><span class="line">      model.addObject(<span class="string">"message"</span>, <span class="string">"Add"</span>);</span><br><span class="line">      <span class="keyword">return</span> model;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">remove</span><span class="params">(HttpServletRequest request,</span></span></span><br><span class="line"><span class="function"><span class="params">      HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">      ModelAndView model = <span class="keyword">new</span> ModelAndView(<span class="string">"user"</span>);</span><br><span class="line">      model.addObject(<span class="string">"message"</span>, <span class="string">"Remove"</span>);</span><br><span class="line">      <span class="keyword">return</span> model;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>关于上方的说明：</p>
-<ul>
-<li>在配置文件中使用 BeanNameUrlHandlerMapping。基于该规则来处理映射。<br>使用如下:<br>对于/home.html请求，DispatcherServlet将请求转发到UserController类的 home()方法。<br>对于user/add.html，DispatcherServlet将请求转发到UserController类的 add()方法。<br>对于user/remove.html，DispatcherServlet将请求转发到UserController类的 remove()方法。</li>
-<li>对于控制器，该类实现了MultiActionController类，该类用于在单个控制器中分别映射多个URL到对应的方法 </li>
-</ul>
-<p>说明[上一节ControllerClassNameHandlerMapping][<a href="https://zcl2015.github.io/2018/04/23/SpringMVC处理映射/]" target="_blank" rel="noopener">https://zcl2015.github.io/2018/04/23/SpringMVC处理映射/]</a> 中尝试在配置文件中使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean name=&quot;xxx&quot; class=&quot;com.yiibai.springmvc.HelloController&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
-<p>并不会跳转。</p>
-<h2 id="Spring-MVC属性方法名称解析器"><a href="#Spring-MVC属性方法名称解析器" class="headerlink" title="Spring MVC属性方法名称解析器"></a>Spring MVC属性方法名称解析器</h2><h3 id="配置文件-1"><a href="#配置文件-1" class="headerlink" title="配置文件"></a>配置文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean class=&quot;org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping&quot;&gt; </span><br><span class="line">      &lt;property name=&quot;caseSensitive&quot; value=&quot;true&quot; /&gt;</span><br><span class="line">&lt;/bean&gt; </span><br><span class="line">&lt;bean class=&quot;com.yiibai.springmvc.UserController&quot;&gt;</span><br><span class="line">   &lt;property name=&quot;methodNameResolver&quot;&gt;</span><br><span class="line">      &lt;bean class=&quot;org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver&quot;&gt;</span><br><span class="line">         &lt;property name=&quot;mappings&quot;&gt;</span><br><span class="line">            &lt;props&gt;</span><br><span class="line">               &lt;prop key=&quot;/user/home.html&quot;&gt;home&lt;/prop&gt;</span><br><span class="line">               &lt;prop key=&quot;/user/add.html&quot;&gt;add&lt;/prop&gt;</span><br><span class="line">               &lt;prop key=&quot;/user/update.html&quot;&gt;update&lt;/prop&gt;      </span><br><span class="line">            &lt;/props&gt;</span><br><span class="line">         &lt;/property&gt;</span><br><span class="line">      &lt;/bean&gt;</span><br><span class="line">   &lt;/property&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
-<p>使用上面的配置，如果URI：</p>
-<ul>
-<li>对于/user/home.html请求，DispatcherServlet将请求转发到UserController类的 home()方法。</li>
-<li>对于user/add.html，DispatcherServlet将请求转发到UserController类的 add()方法。</li>
-<li>对于user/remove.html，DispatcherServlet将请求转发到UserController类的 remove()方法。</li>
-</ul>
-<p>此处配置与之前的配置有点类似但并不相同。可以[看一下][<a href="https://zcl2015.github.io/2018/04/23/SpringMVC%E5%A4%84%E7%90%86%E6%98%A0%E5%B0%84/]" target="_blank" rel="noopener">https://zcl2015.github.io/2018/04/23/SpringMVC%E5%A4%84%E7%90%86%E6%98%A0%E5%B0%84/]</a></p>
-<h2 id="Spring-MVC参数方法名称解析器（todo）"><a href="#Spring-MVC参数方法名称解析器（todo）" class="headerlink" title="Spring MVC参数方法名称解析器（todo）"></a>Spring MVC参数方法名称解析器（todo）</h2><h2 id="Spring-MVC可参数化的视图控制器（todo）"><a href="#Spring-MVC可参数化的视图控制器（todo）" class="headerlink" title="Spring MVC可参数化的视图控制器（todo）"></a>Spring MVC可参数化的视图控制器（todo）</h2>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/SpringMVC/">SpringMVC</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -949,11 +949,11 @@ public static void main(String[] args) {
 			
 		
 			
-				<li><a href="/tags/博客搭建简记/" title="博客搭建简记">博客搭建简记<sup>1</sup></a></li>
+				<li><a href="/tags/数据库简记/" title="数据库简记">数据库简记<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/数据库简记/" title="数据库简记">数据库简记<sup>1</sup></a></li>
+				<li><a href="/tags/博客搭建简记/" title="博客搭建简记">博客搭建简记<sup>1</sup></a></li>
 			
 		
 		</ul>

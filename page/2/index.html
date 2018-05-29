@@ -79,6 +79,78 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2018/04/23/SpringMVC控制器/" title="SpringMVC控制器" itemprop="url">SpringMVC控制器</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
+		
+  <p class="article-time">
+    <time datetime="2018-04-23T05:45:59.000Z" itemprop="datePublished"> Published 2018-04-23</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>Spring MVC控制器</p>
+<h2 id="Spring-MVC多动作控制器（）"><a href="#Spring-MVC多动作控制器（）" class="headerlink" title="Spring MVC多动作控制器（）"></a>Spring MVC多动作控制器（）</h2><h3 id="配置文件"><a href="#配置文件" class="headerlink" title="配置文件"></a>配置文件</h3><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">"/home.html"</span> <span class="attr">class</span>=<span class="string">"com.yiibai.springmvc.UserController"</span> /&gt;</span> </span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">name</span>=<span class="string">"/user/*.html"</span> <span class="attr">class</span>=<span class="string">"com.yiibai.springmvc.UserController"</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+<h3 id="控制器类"><a href="#控制器类" class="headerlink" title="控制器类"></a>控制器类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yiibai.springmvc;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.mvc.multiaction.MultiActionController;</span><br><span class="line"></span><br><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">UserController</span> <span class="keyword">extends</span> <span class="title">MultiActionController</span></span>&#123;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">home</span><span class="params">(HttpServletRequest request,</span></span></span><br><span class="line"><span class="function"><span class="params">      HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">      ModelAndView model = <span class="keyword">new</span> ModelAndView(<span class="string">"home"</span>);</span><br><span class="line">      model.addObject(<span class="string">"message"</span>, <span class="string">"Home"</span>);</span><br><span class="line">      <span class="keyword">return</span> model;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">add</span><span class="params">(HttpServletRequest request,</span></span></span><br><span class="line"><span class="function"><span class="params">      HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">      ModelAndView model = <span class="keyword">new</span> ModelAndView(<span class="string">"user"</span>);</span><br><span class="line">      model.addObject(<span class="string">"message"</span>, <span class="string">"Add"</span>);</span><br><span class="line">      <span class="keyword">return</span> model;</span><br><span class="line">   &#125;</span><br><span class="line"></span><br><span class="line">   <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">remove</span><span class="params">(HttpServletRequest request,</span></span></span><br><span class="line"><span class="function"><span class="params">      HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">      ModelAndView model = <span class="keyword">new</span> ModelAndView(<span class="string">"user"</span>);</span><br><span class="line">      model.addObject(<span class="string">"message"</span>, <span class="string">"Remove"</span>);</span><br><span class="line">      <span class="keyword">return</span> model;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>关于上方的说明：</p>
+<ul>
+<li>在配置文件中使用 BeanNameUrlHandlerMapping。基于该规则来处理映射。<br>使用如下:<br>对于/home.html请求，DispatcherServlet将请求转发到UserController类的 home()方法。<br>对于user/add.html，DispatcherServlet将请求转发到UserController类的 add()方法。<br>对于user/remove.html，DispatcherServlet将请求转发到UserController类的 remove()方法。</li>
+<li>对于控制器，该类实现了MultiActionController类，该类用于在单个控制器中分别映射多个URL到对应的方法 </li>
+</ul>
+<p>说明[上一节ControllerClassNameHandlerMapping][<a href="https://zcl2015.github.io/2018/04/23/SpringMVC处理映射/]" target="_blank" rel="noopener">https://zcl2015.github.io/2018/04/23/SpringMVC处理映射/]</a> 中尝试在配置文件中使用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean name=&quot;xxx&quot; class=&quot;com.yiibai.springmvc.HelloController&quot; /&gt;</span><br></pre></td></tr></table></figure></p>
+<p>并不会跳转。</p>
+<h2 id="Spring-MVC属性方法名称解析器"><a href="#Spring-MVC属性方法名称解析器" class="headerlink" title="Spring MVC属性方法名称解析器"></a>Spring MVC属性方法名称解析器</h2><h3 id="配置文件-1"><a href="#配置文件-1" class="headerlink" title="配置文件"></a>配置文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean class=&quot;org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping&quot;&gt; </span><br><span class="line">      &lt;property name=&quot;caseSensitive&quot; value=&quot;true&quot; /&gt;</span><br><span class="line">&lt;/bean&gt; </span><br><span class="line">&lt;bean class=&quot;com.yiibai.springmvc.UserController&quot;&gt;</span><br><span class="line">   &lt;property name=&quot;methodNameResolver&quot;&gt;</span><br><span class="line">      &lt;bean class=&quot;org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver&quot;&gt;</span><br><span class="line">         &lt;property name=&quot;mappings&quot;&gt;</span><br><span class="line">            &lt;props&gt;</span><br><span class="line">               &lt;prop key=&quot;/user/home.html&quot;&gt;home&lt;/prop&gt;</span><br><span class="line">               &lt;prop key=&quot;/user/add.html&quot;&gt;add&lt;/prop&gt;</span><br><span class="line">               &lt;prop key=&quot;/user/update.html&quot;&gt;update&lt;/prop&gt;      </span><br><span class="line">            &lt;/props&gt;</span><br><span class="line">         &lt;/property&gt;</span><br><span class="line">      &lt;/bean&gt;</span><br><span class="line">   &lt;/property&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+<p>使用上面的配置，如果URI：</p>
+<ul>
+<li>对于/user/home.html请求，DispatcherServlet将请求转发到UserController类的 home()方法。</li>
+<li>对于user/add.html，DispatcherServlet将请求转发到UserController类的 add()方法。</li>
+<li>对于user/remove.html，DispatcherServlet将请求转发到UserController类的 remove()方法。</li>
+</ul>
+<p>此处配置与之前的配置有点类似但并不相同。可以[看一下][<a href="https://zcl2015.github.io/2018/04/23/SpringMVC%E5%A4%84%E7%90%86%E6%98%A0%E5%B0%84/]" target="_blank" rel="noopener">https://zcl2015.github.io/2018/04/23/SpringMVC%E5%A4%84%E7%90%86%E6%98%A0%E5%B0%84/]</a></p>
+<h2 id="Spring-MVC参数方法名称解析器（todo）"><a href="#Spring-MVC参数方法名称解析器（todo）" class="headerlink" title="Spring MVC参数方法名称解析器（todo）"></a>Spring MVC参数方法名称解析器（todo）</h2><h2 id="Spring-MVC可参数化的视图控制器（todo）"><a href="#Spring-MVC可参数化的视图控制器（todo）" class="headerlink" title="Spring MVC可参数化的视图控制器（todo）"></a>Spring MVC可参数化的视图控制器（todo）</h2>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/SpringMVC/">SpringMVC</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2018/04/23/SpringMVC处理映射/" title="SpringMVC处理映射" itemprop="url">SpringMVC处理映射</a>
   </h1>
   <p class="article-author">By
@@ -993,7 +1065,7 @@ Baidu[^1]
 <p>Markdown </p>
 <pre><code>轻量级文本标记语言，可以转换成html，pdf等格式  //  此处没有使用:
 </code></pre><h3 id="示例2-看一下二者的不同效果。"><a href="#示例2-看一下二者的不同效果。" class="headerlink" title="示例2 看一下二者的不同效果。"></a>示例2 看一下二者的不同效果。</h3><p>代码块定义<br>:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">    num+=i;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"此处未使用自定义语法"</span>);</span><br></pre></td></tr></table></figure></p>
-<h2 id="自动邮箱链接"><a href="#自动邮箱链接" class="headerlink" title="自动邮箱链接"></a>自动邮箱链接</h2><p><a href="mailto:&#119;&#x65;&#99;&#104;&#97;&#x74;&#x40;&#x71;&#x71;&#x2e;&#99;&#x6f;&#x6d;" target="_blank" rel="noopener">&#119;&#x65;&#99;&#104;&#97;&#x74;&#x40;&#x71;&#x71;&#x2e;&#99;&#x6f;&#x6d;</a></p>
+<h2 id="自动邮箱链接"><a href="#自动邮箱链接" class="headerlink" title="自动邮箱链接"></a>自动邮箱链接</h2><p><a href="mailto:&#x77;&#101;&#x63;&#x68;&#97;&#x74;&#x40;&#113;&#113;&#x2e;&#99;&#111;&#x6d;" target="_blank" rel="noopener">&#x77;&#101;&#x63;&#x68;&#97;&#x74;&#x40;&#113;&#113;&#x2e;&#99;&#111;&#x6d;</a></p>
 <h2 id="时序图（todo）"><a href="#时序图（todo）" class="headerlink" title="时序图（todo）"></a>时序图（todo）</h2><h2 id="流程图（todo）"><a href="#流程图（todo）" class="headerlink" title="流程图（todo）"></a>流程图（todo）</h2><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上内容是对于markdown的入门小节，总结的目的如下</p>
 <ol>
 <li>语法的入门练习。</li>
@@ -1216,60 +1288,6 @@ Baidu[^1]
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2018/04/14/java算法简记/" title="java算法简记" itemprop="url">java算法简记</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
-		
-  <p class="article-time">
-    <time datetime="2018-04-14T13:38:33.000Z" itemprop="datePublished"> Published 2018-04-14</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/算法/">算法</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
@@ -1317,11 +1335,11 @@ Baidu[^1]
 			
 		
 			
-				<li><a href="/tags/博客搭建简记/" title="博客搭建简记">博客搭建简记<sup>1</sup></a></li>
+				<li><a href="/tags/数据库简记/" title="数据库简记">数据库简记<sup>1</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/数据库简记/" title="数据库简记">数据库简记<sup>1</sup></a></li>
+				<li><a href="/tags/博客搭建简记/" title="博客搭建简记">博客搭建简记<sup>1</sup></a></li>
 			
 		
 		</ul>
