@@ -79,6 +79,72 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2018/05/29/war包和web-xml的部分讲解/" title="war包和web.xml的部分讲解" itemprop="url">war包和web.xml的部分讲解</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
+		
+  <p class="article-time">
+    <time datetime="2018-05-29T07:35:04.000Z" itemprop="datePublished"> Published 2018-05-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>此处记录Servlet中的war包以及web.xml中的部分内容</p>
+<h2 id="关于WAR包"><a href="#关于WAR包" class="headerlink" title="关于WAR包"></a>关于WAR包</h2><h3 id="什么是WAR包"><a href="#什么是WAR包" class="headerlink" title="什么是WAR包"></a>什么是WAR包</h3><p>Web存档(war)文件包含Web应用程序的所有内容。它减少了传输文件所需要的时间。一个war(web archive)文件包含一个web项目的文件。它可能有servlet，xml，jsp，image，html，css，js等文件。</p>
+<h3 id="WAR包的优点"><a href="#WAR包的优点" class="headerlink" title="WAR包的优点"></a>WAR包的优点</h3><p>war文件将所有文件合并为一个单位。 所以在将文件从客户端传输到服务器时需要更少的时间。</p>
+<h3 id="WAR包的导出方法"><a href="#WAR包的导出方法" class="headerlink" title="WAR包的导出方法"></a>WAR包的导出方法</h3><p>此处使用Eclipse导出War文件。在项目名称上点击右键，选择：Export-&gt;War File，在弹出的对话框选选保存的位置。然后将该文件复制到tomcat下面的webapps目录下。在bin文件夹下启动项目，然后在浏览器中访问（访问地址与eclipse中的访问地址一致。）。</p>
+<h2 id="关于web-xml中的welcome-file-list"><a href="#关于web-xml中的welcome-file-list" class="headerlink" title="关于web.xml中的welcome-file-list"></a>关于web.xml中的welcome-file-list</h2><h3 id="welcome-file-list简介"><a href="#welcome-file-list简介" class="headerlink" title="welcome-file-list简介"></a>welcome-file-list简介</h3><p>在web.xml文件中的web-app块的welcome-file-list子元素用于定义欢迎文件列表。它的子元素是welcome-file，<strong>用于定义欢迎文件(即默认打开的页面)</strong>。<br><strong>如果不指定任何文件名，欢迎文件是服务器自动调用的文件</strong>。例如如果在浏览器中只是输入了项目名称，但是并没有指定相关的URL,那么此时就会自动跳转到欢迎文件。</p>
+<h3 id="服务器查找欢迎文件顺序如下（todo）"><a href="#服务器查找欢迎文件顺序如下（todo）" class="headerlink" title="服务器查找欢迎文件顺序如下（todo）"></a>服务器查找欢迎文件顺序如下（todo）</h3><ol>
+<li>web.xml文件中的welcome-file-list指定的文件</li>
+<li>index.html</li>
+<li>index.jsp</li>
+</ol>
+<p>如果在web.xml中指定了welcome-file，并且所有文件index.html和index.jsp都存在，那么优先级将转到welcome-file。<br>如果web.xml文件中不存在welcome-file-list项，那么优先级到index.html文件，然后是index.jsp文件。</p>
+<p>在之前的操作中，由于对与欢迎文件的查找顺序不了解，出现了一点问题，此处记录纠正。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Servlet简记/">Servlet简记</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2018/05/29/Servlet的几种实现方式/" title="Servlet的几种实现方式" itemprop="url">Servlet的几种实现方式</a>
   </h1>
   <p class="article-author">By
@@ -836,84 +902,6 @@ public static void main(String[] args) {
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2018/04/23/SpringMVC处理映射/" title="SpringMVC处理映射" itemprop="url">SpringMVC处理映射</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
-		
-  <p class="article-time">
-    <time datetime="2018-04-23T04:19:47.000Z" itemprop="datePublished"> Published 2018-04-23</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="Spring-MVC控制器类名称处理映射"><a href="#Spring-MVC控制器类名称处理映射" class="headerlink" title="Spring MVC控制器类名称处理映射"></a>Spring MVC控制器类名称处理映射</h2><h3 id="ControllerClassNameHandlerMapping"><a href="#ControllerClassNameHandlerMapping" class="headerlink" title="ControllerClassNameHandlerMapping"></a>ControllerClassNameHandlerMapping</h3><pre><code>ControllerClassNameHandlerMapping类是基于约定的处理程序映射类，它将URL请求映射到配置中提到的控制器的名称。这个类接受控制器名称并将其转换为带有前导“/”的小写形式。 例如HelloController映射到URL: &quot;/hello*&quot;。
-</code></pre><p>配置如下</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.InternalResourceViewResolver"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"prefix"</span> <span class="attr">value</span>=<span class="string">"/WEB-INF/jsp/"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suffix"</span> <span class="attr">value</span>=<span class="string">".jsp"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">   <span class="comment">&lt;!-- 此处的匹配是略微带有正则表达式部分匹配的映射。匹配的表达式部分是XxxController 中的Xxx，匹配的内容是前缀带有xxx的部分 helloSky或者helloSky.html都可以匹配到</span></span><br><span class="line"><span class="comment">HelloController中的handleRequest方法，该方法继承自抽象类AbstractController</span></span><br><span class="line"><span class="comment">         --&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"com.yiibai.springmvc.HelloController"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"com.yiibai.springmvc.WelcomeController"</span>/&gt;</span>   </span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>说明: 如果使用上面的配置，URI：</p>
-<ul>
-<li>对于/helloWorld.html或 /hello{任何字母}.html，DispatcherServlet将请求转发到HelloController类。</li>
-<li>对于/welcome.html，DispatcherServlet会将请求转发给WelcomeController类。</li>
-</ul>
-<p>简而言之 helloxxx都会由HelloController来处理。</p>
-<h3 id="基于ControllerClassNameHandlerMapping来定义Controller类"><a href="#基于ControllerClassNameHandlerMapping来定义Controller类" class="headerlink" title="基于ControllerClassNameHandlerMapping来定义Controller类"></a>基于ControllerClassNameHandlerMapping来定义Controller类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yiibai.springmvc;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.mvc.AbstractController;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span> <span class="keyword">extends</span> <span class="title">AbstractController</span></span>&#123;</span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">protected</span> ModelAndView <span class="title">handleRequestInternal</span><span class="params">(HttpServletRequest request,</span></span></span><br><span class="line"><span class="function"><span class="params">      HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">      ModelAndView model = <span class="keyword">new</span> ModelAndView(<span class="string">"hello"</span>);</span><br><span class="line">                            <span class="comment">//viewName 查看源代码 设置视图 也就是对应下方的hello.jsp</span></span><br><span class="line">      model.addObject(<span class="string">"message"</span>, <span class="string">"Hello--Via HelloController with helloxxx "</span>);</span><br><span class="line">      <span class="keyword">return</span> model;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在之前关于SpringMVC的实例中，在web.xml文件中会添加以下的配置文件，而此处并没有如下的注释扫描配置。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 自动扫描beans </span></span><br><span class="line"><span class="comment">&lt;context：component-scan ...&gt;标签将用于激活Spring MVC注释扫描功能，</span></span><br><span class="line"><span class="comment">允许使用@Controller和@RequestMapping等注释。--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.yiibai"</span>/&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>在上方的HelloController类中，该类继承自抽象类AbstractController，并实现该类的handleRequestInternal方法。没有使用@Controller和@RequestMapping等注释。因为HelloController已经以bean的形式添加到配置文件中。</p>
-<h3 id="关于-ModelAndView-以及-ModelMap的使用说明"><a href="#关于-ModelAndView-以及-ModelMap的使用说明" class="headerlink" title="关于 ModelAndView 以及 ModelMap的使用说明"></a>关于 ModelAndView 以及 ModelMap的使用说明</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">printHello</span><span class="params">(ModelMap model)</span> </span>&#123;</span><br><span class="line">     model.addAttribute(<span class="string">"message"</span>, <span class="string">"Hello Spring MVC Framework!"</span>);</span><br><span class="line">     <span class="keyword">return</span> <span class="string">"helloSky"</span>;  </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> ModelAndView <span class="title">handleRequestInternal</span><span class="params">(HttpServletRequest request,</span></span></span><br><span class="line"><span class="function"><span class="params">     HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">     ModelAndView model = <span class="keyword">new</span> ModelAndView(<span class="string">"hello"</span>);</span><br><span class="line">                           <span class="comment">//viewName 查看源代码 设置视图 也就是对应下方的hello.jsp</span></span><br><span class="line">     model.addObject(<span class="string">"message"</span>, <span class="string">"Hello--Via HelloController with helloxxx "</span>);</span><br><span class="line">     <span class="keyword">return</span> model;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>使用ModelMap设置的只是属性名称和属性值，仍然需要一个return一个String值作为视图名称。而ModelAndView在构造方法中已经设置了视图的名称，并在addObject方法中设定了属性名称和属性值。</li>
-<li>ModelMap：addAttribute   ModelAndView：addObject</li>
-</ul>
-<h2 id="Spring-MVC简单URL处理程序映射"><a href="#Spring-MVC简单URL处理程序映射" class="headerlink" title="Spring MVC简单URL处理程序映射"></a>Spring MVC简单URL处理程序映射</h2><h3 id="SimpleUrlHandlerMapping类分别显式地将URL映射到相应的控制器上"><a href="#SimpleUrlHandlerMapping类分别显式地将URL映射到相应的控制器上" class="headerlink" title="SimpleUrlHandlerMapping类分别显式地将URL映射到相应的控制器上"></a>SimpleUrlHandlerMapping类分别显式地将URL映射到相应的控制器上</h3><p>配置如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.InternalResourceViewResolver"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"prefix"</span> <span class="attr">value</span>=<span class="string">"/WEB-INF/jsp/"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suffix"</span> <span class="attr">value</span>=<span class="string">".jsp"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.handler.SimpleUrlHandlerMapping"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"mappings"</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">props</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"/welcome.html"</span>&gt;</span>welcomeController<span class="tag">&lt;/<span class="name">prop</span>&gt;</span>           </span><br><span class="line">            <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"/helloWorld.html"</span>&gt;</span>helloController<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;/<span class="name">props</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloController"</span> <span class="attr">class</span>=<span class="string">"com.yiibai.springmvc.HelloController"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"welcomeController"</span> <span class="attr">class</span>=<span class="string">"com.yiibai.springmvc.WelcomeController"</span>/&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>说明：使用上面的配置，如果URI：</p>
-<ul>
-<li>对于/helloWorld.html请求，DispatcherServlet将请求转发到HelloController类。</li>
-<li>对于/welcome.html，DispatcherServlet会将请求转发给WelcomeController类。</li>
-</ul>
-<p>简易说明：上方的ControllerClassNameHandlerMapping是基于自身定义规则的模糊匹配，而SimpleUrlHandlerMapping是指定的显示匹配。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/SpringMVC/">SpringMVC</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -941,11 +929,11 @@ public static void main(String[] args) {
 			
 		
 			
-				<li><a href="/tags/Spring框架简记/" title="Spring框架简记">Spring框架简记<sup>4</sup></a></li>
+				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>4</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>3</sup></a></li>
+				<li><a href="/tags/Spring框架简记/" title="Spring框架简记">Spring框架简记<sup>4</sup></a></li>
 			
 		
 			

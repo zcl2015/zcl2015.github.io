@@ -79,6 +79,84 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2018/04/23/SpringMVC处理映射/" title="SpringMVC处理映射" itemprop="url">SpringMVC处理映射</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
+		
+  <p class="article-time">
+    <time datetime="2018-04-23T04:19:47.000Z" itemprop="datePublished"> Published 2018-04-23</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="Spring-MVC控制器类名称处理映射"><a href="#Spring-MVC控制器类名称处理映射" class="headerlink" title="Spring MVC控制器类名称处理映射"></a>Spring MVC控制器类名称处理映射</h2><h3 id="ControllerClassNameHandlerMapping"><a href="#ControllerClassNameHandlerMapping" class="headerlink" title="ControllerClassNameHandlerMapping"></a>ControllerClassNameHandlerMapping</h3><pre><code>ControllerClassNameHandlerMapping类是基于约定的处理程序映射类，它将URL请求映射到配置中提到的控制器的名称。这个类接受控制器名称并将其转换为带有前导“/”的小写形式。 例如HelloController映射到URL: &quot;/hello*&quot;。
+</code></pre><p>配置如下</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.InternalResourceViewResolver"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"prefix"</span> <span class="attr">value</span>=<span class="string">"/WEB-INF/jsp/"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suffix"</span> <span class="attr">value</span>=<span class="string">".jsp"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line">   <span class="comment">&lt;!-- 此处的匹配是略微带有正则表达式部分匹配的映射。匹配的表达式部分是XxxController 中的Xxx，匹配的内容是前缀带有xxx的部分 helloSky或者helloSky.html都可以匹配到</span></span><br><span class="line"><span class="comment">HelloController中的handleRequest方法，该方法继承自抽象类AbstractController</span></span><br><span class="line"><span class="comment">         --&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.mvc.support.ControllerClassNameHandlerMapping"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"com.yiibai.springmvc.HelloController"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"com.yiibai.springmvc.WelcomeController"</span>/&gt;</span>   </span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>说明: 如果使用上面的配置，URI：</p>
+<ul>
+<li>对于/helloWorld.html或 /hello{任何字母}.html，DispatcherServlet将请求转发到HelloController类。</li>
+<li>对于/welcome.html，DispatcherServlet会将请求转发给WelcomeController类。</li>
+</ul>
+<p>简而言之 helloxxx都会由HelloController来处理。</p>
+<h3 id="基于ControllerClassNameHandlerMapping来定义Controller类"><a href="#基于ControllerClassNameHandlerMapping来定义Controller类" class="headerlink" title="基于ControllerClassNameHandlerMapping来定义Controller类"></a>基于ControllerClassNameHandlerMapping来定义Controller类</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yiibai.springmvc;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletRequest;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.http.HttpServletResponse;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;</span><br><span class="line"><span class="keyword">import</span> org.springframework.web.servlet.mvc.AbstractController;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloController</span> <span class="keyword">extends</span> <span class="title">AbstractController</span></span>&#123;</span><br><span class="line">   <span class="meta">@Override</span></span><br><span class="line">   <span class="function"><span class="keyword">protected</span> ModelAndView <span class="title">handleRequestInternal</span><span class="params">(HttpServletRequest request,</span></span></span><br><span class="line"><span class="function"><span class="params">      HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">      ModelAndView model = <span class="keyword">new</span> ModelAndView(<span class="string">"hello"</span>);</span><br><span class="line">                            <span class="comment">//viewName 查看源代码 设置视图 也就是对应下方的hello.jsp</span></span><br><span class="line">      model.addObject(<span class="string">"message"</span>, <span class="string">"Hello--Via HelloController with helloxxx "</span>);</span><br><span class="line">      <span class="keyword">return</span> model;</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>在之前关于SpringMVC的实例中，在web.xml文件中会添加以下的配置文件，而此处并没有如下的注释扫描配置。<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- 自动扫描beans </span></span><br><span class="line"><span class="comment">&lt;context：component-scan ...&gt;标签将用于激活Spring MVC注释扫描功能，</span></span><br><span class="line"><span class="comment">允许使用@Controller和@RequestMapping等注释。--&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">context:component-scan</span> <span class="attr">base-package</span>=<span class="string">"com.yiibai"</span>/&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>在上方的HelloController类中，该类继承自抽象类AbstractController，并实现该类的handleRequestInternal方法。没有使用@Controller和@RequestMapping等注释。因为HelloController已经以bean的形式添加到配置文件中。</p>
+<h3 id="关于-ModelAndView-以及-ModelMap的使用说明"><a href="#关于-ModelAndView-以及-ModelMap的使用说明" class="headerlink" title="关于 ModelAndView 以及 ModelMap的使用说明"></a>关于 ModelAndView 以及 ModelMap的使用说明</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> String <span class="title">printHello</span><span class="params">(ModelMap model)</span> </span>&#123;</span><br><span class="line">     model.addAttribute(<span class="string">"message"</span>, <span class="string">"Hello Spring MVC Framework!"</span>);</span><br><span class="line">     <span class="keyword">return</span> <span class="string">"helloSky"</span>;  </span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> ModelAndView <span class="title">handleRequestInternal</span><span class="params">(HttpServletRequest request,</span></span></span><br><span class="line"><span class="function"><span class="params">     HttpServletResponse response)</span> <span class="keyword">throws</span> Exception </span>&#123;</span><br><span class="line">     ModelAndView model = <span class="keyword">new</span> ModelAndView(<span class="string">"hello"</span>);</span><br><span class="line">                           <span class="comment">//viewName 查看源代码 设置视图 也就是对应下方的hello.jsp</span></span><br><span class="line">     model.addObject(<span class="string">"message"</span>, <span class="string">"Hello--Via HelloController with helloxxx "</span>);</span><br><span class="line">     <span class="keyword">return</span> model;</span><br><span class="line">  &#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>使用ModelMap设置的只是属性名称和属性值，仍然需要一个return一个String值作为视图名称。而ModelAndView在构造方法中已经设置了视图的名称，并在addObject方法中设定了属性名称和属性值。</li>
+<li>ModelMap：addAttribute   ModelAndView：addObject</li>
+</ul>
+<h2 id="Spring-MVC简单URL处理程序映射"><a href="#Spring-MVC简单URL处理程序映射" class="headerlink" title="Spring MVC简单URL处理程序映射"></a>Spring MVC简单URL处理程序映射</h2><h3 id="SimpleUrlHandlerMapping类分别显式地将URL映射到相应的控制器上"><a href="#SimpleUrlHandlerMapping类分别显式地将URL映射到相应的控制器上" class="headerlink" title="SimpleUrlHandlerMapping类分别显式地将URL映射到相应的控制器上"></a>SimpleUrlHandlerMapping类分别显式地将URL映射到相应的控制器上</h3><p>配置如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">beans</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.InternalResourceViewResolver"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"prefix"</span> <span class="attr">value</span>=<span class="string">"/WEB-INF/jsp/"</span>/&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suffix"</span> <span class="attr">value</span>=<span class="string">".jsp"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">  <span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.handler.SimpleUrlHandlerMapping"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"mappings"</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;<span class="name">props</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"/welcome.html"</span>&gt;</span>welcomeController<span class="tag">&lt;/<span class="name">prop</span>&gt;</span>           </span><br><span class="line">            <span class="tag">&lt;<span class="name">prop</span> <span class="attr">key</span>=<span class="string">"/helloWorld.html"</span>&gt;</span>helloController<span class="tag">&lt;/<span class="name">prop</span>&gt;</span></span><br><span class="line">         <span class="tag">&lt;/<span class="name">props</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"helloController"</span> <span class="attr">class</span>=<span class="string">"com.yiibai.springmvc.HelloController"</span> /&gt;</span></span><br><span class="line"></span><br><span class="line">   <span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"welcomeController"</span> <span class="attr">class</span>=<span class="string">"com.yiibai.springmvc.WelcomeController"</span>/&gt;</span>  </span><br><span class="line"><span class="tag">&lt;/<span class="name">beans</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
+<p>说明：使用上面的配置，如果URI：</p>
+<ul>
+<li>对于/helloWorld.html请求，DispatcherServlet将请求转发到HelloController类。</li>
+<li>对于/welcome.html，DispatcherServlet会将请求转发给WelcomeController类。</li>
+</ul>
+<p>简易说明：上方的ControllerClassNameHandlerMapping是基于自身定义规则的模糊匹配，而SimpleUrlHandlerMapping是指定的显示匹配。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/SpringMVC/">SpringMVC</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2018/04/19/SpringMVC表单标签库/" title="SpringMVC表单标签库" itemprop="url">SpringMVC表单标签库</a>
   </h1>
   <p class="article-author">By
@@ -915,7 +993,7 @@ Baidu[^1]
 <p>Markdown </p>
 <pre><code>轻量级文本标记语言，可以转换成html，pdf等格式  //  此处没有使用:
 </code></pre><h3 id="示例2-看一下二者的不同效果。"><a href="#示例2-看一下二者的不同效果。" class="headerlink" title="示例2 看一下二者的不同效果。"></a>示例2 看一下二者的不同效果。</h3><p>代码块定义<br>:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">    num+=i;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"此处未使用自定义语法"</span>);</span><br></pre></td></tr></table></figure></p>
-<h2 id="自动邮箱链接"><a href="#自动邮箱链接" class="headerlink" title="自动邮箱链接"></a>自动邮箱链接</h2><p><a href="mailto:&#x77;&#x65;&#x63;&#x68;&#97;&#116;&#64;&#113;&#113;&#46;&#99;&#111;&#x6d;" target="_blank" rel="noopener">&#x77;&#x65;&#x63;&#x68;&#97;&#116;&#64;&#113;&#113;&#46;&#99;&#111;&#x6d;</a></p>
+<h2 id="自动邮箱链接"><a href="#自动邮箱链接" class="headerlink" title="自动邮箱链接"></a>自动邮箱链接</h2><p><a href="mailto:&#119;&#x65;&#99;&#104;&#97;&#x74;&#x40;&#x71;&#x71;&#x2e;&#99;&#x6f;&#x6d;" target="_blank" rel="noopener">&#119;&#x65;&#99;&#104;&#97;&#x74;&#x40;&#x71;&#x71;&#x2e;&#99;&#x6f;&#x6d;</a></p>
 <h2 id="时序图（todo）"><a href="#时序图（todo）" class="headerlink" title="时序图（todo）"></a>时序图（todo）</h2><h2 id="流程图（todo）"><a href="#流程图（todo）" class="headerlink" title="流程图（todo）"></a>流程图（todo）</h2><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上内容是对于markdown的入门小节，总结的目的如下</p>
 <ol>
 <li>语法的入门练习。</li>
@@ -1192,64 +1270,6 @@ Baidu[^1]
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2018/04/11/hello-world/" title="Hello World" itemprop="url">Hello World</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
-		
-  <p class="article-time">
-    <time datetime="2018-04-11T10:33:42.284Z" itemprop="datePublished"> Published 2018-04-11</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
@@ -1277,11 +1297,11 @@ Baidu[^1]
 			
 		
 			
-				<li><a href="/tags/Spring框架简记/" title="Spring框架简记">Spring框架简记<sup>4</sup></a></li>
+				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>4</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>3</sup></a></li>
+				<li><a href="/tags/Spring框架简记/" title="Spring框架简记">Spring框架简记<sup>4</sup></a></li>
 			
 		
 			
