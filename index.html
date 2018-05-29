@@ -79,6 +79,55 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2018/05/29/Servlet入门程序/" title="Servlet入门程序" itemprop="url">Servlet入门程序</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
+		
+  <p class="article-time">
+    <time datetime="2018-05-29T02:50:00.000Z" itemprop="datePublished"> Published 2018-05-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2018/05/25/Java设计模式简记/" title="Java设计模式简记" itemprop="url">Java设计模式简记</a>
   </h1>
   <p class="article-author">By
@@ -934,192 +983,6 @@ HTML它将呈现以下HTML内容。
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2018/04/19/SpringMVC表单处理/" title="SpringMVC表单处理1" itemprop="url">SpringMVC表单处理1</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
-		
-  <p class="article-time">
-    <time datetime="2018-04-19T03:29:56.000Z" itemprop="datePublished"> Published 2018-04-19</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>SpringMVC表单处理</p>
-<h2 id="Spring-MVC-表单项目创建"><a href="#Spring-MVC-表单项目创建" class="headerlink" title="Spring MVC 表单项目创建"></a>Spring MVC 表单项目创建</h2><p><strong>以下示例演示如何编写一个简单的基于Web的应用程序，它使用Spring Web MVC框架使用HTML表单。 首先使用Eclipse IDE，并按照以下步骤使用Spring Web Framework开发基于动态表单的Web应用程序：</strong></p>
-<ul>
-<li>基于上一小节中的Spring MVC - HelloWeb实例章节所创建的 HelloWeb来创建。在com.yiibai.springmvc包下创建两个Java类Student，StudentController。分别作为MVC中的MOdell和Controller。</li>
-<li>在jsp子文件夹下创建两个视图文件student.jsp，result.jsp。</li>
-</ul>
-<h2 id="关于Model类"><a href="#关于Model类" class="headerlink" title="关于Model类"></a>关于Model类</h2><h3 id="Model类的创建"><a href="#Model类的创建" class="headerlink" title="Model类的创建"></a>Model类的创建</h3><pre><code class="java"> <span class="keyword">package</span> com.yiibai.springmvc;
- <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>{
-   <span class="keyword">private</span> Integer age;
-   <span class="keyword">private</span> String name;
-   <span class="keyword">private</span> Integer id;
-   Student(){  <span class="comment">// a行</span>
-   }
-   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(Integer age)</span> </span>{
-      <span class="keyword">this</span>.age = age;
-   }
-   <span class="function"><span class="keyword">public</span> Integer <span class="title">getAge</span><span class="params">()</span> </span>{
-      <span class="keyword">return</span> age;
-   }
-
-   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>{
-      <span class="keyword">this</span>.name = name;
-   }
-   <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>{
-      <span class="keyword">return</span> name;
-   }
-
-   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(Integer id)</span> </span>{
-      <span class="keyword">this</span>.id = id;
-   }
-   <span class="function"><span class="keyword">public</span> Integer <span class="title">getId</span><span class="params">()</span> </span>{
-      <span class="keyword">return</span> id;
-   }
-}
-
-</code></pre>
-<p><strong>关于上方a行的说明：一般情况下创建Model类时最好创建一个不带参数的构造方法。</strong></p>
-<h2 id="关于Controller类"><a href="#关于Controller类" class="headerlink" title="关于Controller类"></a>关于Controller类</h2><h3 id="Controller类的创建"><a href="#Controller类的创建" class="headerlink" title="Controller类的创建"></a>Controller类的创建</h3><pre><code class="java"><span class="keyword">package</span> com.yiibai.springmvc;
-<span class="keyword">import</span> org.springframework.stereotype.Controller;
-<span class="keyword">import</span> org.springframework.web.bind.annotation.ModelAttribute;
-<span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;
-<span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMethod;
-<span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;
-<span class="keyword">import</span> org.springframework.ui.ModelMap;
-
-<span class="meta">@Controller</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StudentController</span> </span>{
-
-   <span class="meta">@RequestMapping</span>(value = <span class="string">"/student"</span>, method = RequestMethod.GET)
-   <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">student</span><span class="params">()</span> </span>{
-    <span class="keyword">return</span> <span class="keyword">new</span> ModelAndView(<span class="string">"student"</span>, <span class="string">"command"</span>, <span class="keyword">new</span> Student());
-    <span class="comment">/* 我们已经在ModelAndView对象中传递了一个名为“command”的空对象，因为如果在JSP中使用&lt;form：form&gt;标签</span>
-<span class="comment">     spring框架需要一个名为“command”的对象文件。 所以当调用student()方法时，它返回student.jsp视图。</span>
-<span class="comment">       */</span>
-   }
-   <span class="meta">@RequestMapping</span>(value = <span class="string">"/addStudent"</span>, method = RequestMethod.POST)
-   <span class="function"><span class="keyword">public</span> String <span class="title">addStudent</span><span class="params">(@ModelAttribute(<span class="string">"SpringWeb"</span>)</span>Student student, </span>
-<span class="function">   ModelMap model) </span>{
-      model.addAttribute(<span class="string">"name"</span>, student.getName());
-      model.addAttribute(<span class="string">"age"</span>, student.getAge());
-      model.addAttribute(<span class="string">"id"</span>, student.getId());
-      <span class="keyword">return</span> <span class="string">"result"</span>;
-   }
-}
-</code></pre>
-<ul>
-<li>关于上方的ModelAndView，查看源代码可知返回模型和视图。其中构造方法中第一个参数表示viewName,而第二个参数的作用是将第三个对象设置为Model。</li>
-<li>关于上方的ModelAttribute。查看源代码可知，其作用是将方法参数或方法返回值绑定到(exposed to a web view)命名模型属性的注释。 其中的(“SpringWeb”)表示别名，可有可无。</li>
-</ul>
-<h2 id="关于视图类的创建"><a href="#关于视图类的创建" class="headerlink" title="关于视图类的创建"></a>关于视图类的创建</h2><h3 id="student-jsp"><a href="#student-jsp" class="headerlink" title="student.jsp"></a>student.jsp</h3><pre><code>&lt;%@ page contentType=&quot;text/html; charset=UTF-8&quot; %&gt;
-&lt;%@taglib uri=&quot;http://www.springframework.org/tags/form&quot; prefix=&quot;form&quot;%&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;title&gt;Spring MVC表单处理&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;h2&gt;Student Information&lt;/h2&gt;
-&lt;form:form method=&quot;POST&quot; action=&quot;/HelloWeb/addStudent&quot;&gt;
-&lt;table&gt;
-&lt;tr&gt;
-    &lt;td&gt;&lt;form:label path=&quot;name&quot;&gt;名字：&lt;/form:label&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;form:input path=&quot;name&quot; /&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-    &lt;td&gt;&lt;form:label path=&quot;age&quot;&gt;年龄：&lt;/form:label&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;form:input path=&quot;age&quot; /&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-    &lt;td&gt;&lt;form:label path=&quot;id&quot;&gt;编号：&lt;/form:label&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;form:input path=&quot;id&quot; /&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-    &lt;td colspan=&quot;2&quot;&gt;
-        &lt;input type=&quot;submit&quot; value=&quot;提交表单&quot;/&gt;
-    &lt;/td&gt;
-&lt;/tr&gt;
-&lt;/table&gt;  
-/form:form&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><p>关于上方的说明：</p>
-<ul>
-<li>form中的action：指明处理该请求的Controller /xxx/xxxx（其中xxx表示项目名称，比如此处既是HelloWeb，xxxx指明Controller的名称）</li>
-<li>下方的table 其中的path属性分别为Model类中的属性，比如此处的name,age和id。经过测试发现数据类型和数据范围必须与Model类中定义的一致，否则会报错。</li>
-<li>该视图提交后将交给addStudent控制器来处理，该控制器处理HTTP POST请求的服务方法.</li>
-</ul>
-<h3 id="result-jsp"><a href="#result-jsp" class="headerlink" title="result.jsp"></a>result.jsp</h3><pre><code>&lt;%@ page contentType=&quot;text/html; charset=UTF-8&quot; %&gt;
-&lt;%@taglib uri=&quot;http://www.springframework.org/tags/form&quot; prefix=&quot;form&quot;%&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;title&gt;Spring MVC表单处理&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-
-&lt;h2&gt;提交的学生信息如下 - &lt;/h2&gt;
-&lt;table&gt;
-&lt;tr&gt;
-   &lt;td&gt;名称：&lt;/td&gt;
-   &lt;td&gt;${name}&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-   &lt;td&gt;年龄：&lt;/td&gt;
-   &lt;td&gt;${age}&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-   &lt;td&gt;编号：&lt;/td&gt;
-   &lt;td&gt;${id}&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/table&gt;  
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><p>此处仅仅作为结果的展示界面，用于将控制器addStudent中的数据进行展示。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/SpringMVC/">SpringMVC</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -1155,6 +1018,10 @@ HTML它将呈现以下HTML内容。
 			
 		
 			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+			
+		
+			
 				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>1</sup></a></li>
 			
 		
@@ -1168,10 +1035,6 @@ HTML它将呈现以下HTML内容。
 		
 			
 				<li><a href="/tags/博客搭建简记/" title="博客搭建简记">博客搭建简记<sup>1</sup></a></li>
-			
-		
-			
-				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
 			
 		
 		</ul>
