@@ -79,6 +79,91 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2018/05/31/Servlet请求转发/" title="Servlet请求转发" itemprop="url">Servlet请求转发</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
+		
+  <p class="article-time">
+    <time datetime="2018-05-31T02:22:33.000Z" itemprop="datePublished"> Published 2018-05-31</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>此处记录的的主要是使用RequestDispatcher接口来进行请求转发操作。</p>
+<h2 id="什么是RequestDispatcher"><a href="#什么是RequestDispatcher" class="headerlink" title="什么是RequestDispatcher"></a>什么是RequestDispatcher</h2><p>   RequestDispatcher接口提供将请求转发送到另一个资源的功能，它<strong>可能是html，servlet或jsp等。</strong> 此接口也可用于包括另一资源的内容。它是servlet协作的一种方式。<br>   RequestDispatcher接口中包括以下两种方法。<br>   <img src="https://s1.ax1x.com/2018/05/31/C5xe4H.png" alt="C5xe4H.png"><br>   两种方法的区别在于:forward（”转发方不直接参与”) include(“转发方直接参与”)。具体差异参考下图：</p>
+<p>   <strong>forward()</strong><br>   <img src="https://s1.ax1x.com/2018/05/31/C5x3b8.jpg" alt="C5x3b8.jpg"></p>
+<p>   <strong>include()</strong><br>   <img src="https://s1.ax1x.com/2018/05/31/C5xdvq.jpg" alt="C5xdvq.jpg"></p>
+<h2 id="如何获取RequestDispatcher对象"><a href="#如何获取RequestDispatcher对象" class="headerlink" title="如何获取RequestDispatcher对象"></a>如何获取RequestDispatcher对象</h2><p>   ServletRequest接口的getRequestDispatcher()方法返回RequestDispatcher的对象。</p>
+<pre><code>public RequestDispatcher getRequestDispatcher(String resource);
+</code></pre><p>   关于参数resource参考下方的servlet.</p>
+<h2 id="使用RequestDispatcher接口的样例"><a href="#使用RequestDispatcher接口的样例" class="headerlink" title="使用RequestDispatcher接口的样例"></a>使用RequestDispatcher接口的样例</h2><p>   在这个例子中，在登陆页面（默认的欢迎页面）中提交表单，在servlet中进行处理。从不同的处理结果，可以看出forward()和include()方法的区别。</p>
+<h3 id="关于web-xml"><a href="#关于web-xml" class="headerlink" title="关于web.xml"></a>关于web.xml</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;web-app xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot; xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd&quot; id=&quot;WebApp_ID&quot; version=&quot;3.0&quot;&gt;</span><br><span class="line">  &lt;display-name&gt;ServletDemo&lt;/display-name&gt;</span><br><span class="line">  &lt;description&gt;Welcome to Tomcat&lt;/description&gt;</span><br><span class="line">  &lt;welcome-file-list&gt;</span><br><span class="line">    &lt;welcome-file&gt;login.html&lt;/welcome-file&gt;</span><br><span class="line">  &lt;/welcome-file-list&gt;</span><br><span class="line">   &lt;servlet&gt;</span><br><span class="line">        &lt;servlet-name&gt;Login&lt;/servlet-name&gt;</span><br><span class="line">        &lt;servlet-class&gt;com.dispatcher.LoginServlet&lt;/servlet-class&gt;</span><br><span class="line">    &lt;/servlet&gt;</span><br><span class="line">    &lt;servlet&gt;</span><br><span class="line">        &lt;servlet-name&gt;WelcomeServlet&lt;/servlet-name&gt;</span><br><span class="line">        &lt;servlet-class&gt;com.dispatcher.WelcomeServlet&lt;/servlet-class&gt;</span><br><span class="line">    &lt;/servlet&gt;</span><br><span class="line">    &lt;servlet-mapping&gt;</span><br><span class="line">        &lt;servlet-name&gt;Login&lt;/servlet-name&gt;</span><br><span class="line">        &lt;url-pattern&gt;/loginurl&lt;/url-pattern&gt;</span><br><span class="line">    &lt;/servlet-mapping&gt;</span><br><span class="line">    &lt;servlet-mapping&gt;</span><br><span class="line">        &lt;servlet-name&gt;WelcomeServlet&lt;/servlet-name&gt;</span><br><span class="line">        &lt;url-pattern&gt;/welcomeurl&lt;/url-pattern&gt;</span><br><span class="line">    &lt;/servlet-mapping&gt;</span><br><span class="line">&lt;/web-app&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="关于login-html"><a href="#关于login-html" class="headerlink" title="关于login.html"></a>关于login.html</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;登录&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">&lt;div style=&quot;text-align:center;&quot;&gt;</span><br><span class="line">    &lt;form action=&quot;/ServletDemo/loginurl&quot; method=&quot;get&quot;&gt;</span><br><span class="line">        用户名:&lt;input type=&quot;text&quot; name=&quot;userName&quot; /&gt;&lt;br /&gt; </span><br><span class="line">        密码:&lt;input type=&quot;password&quot; name=&quot;userPass&quot; /&gt;&lt;br /&gt; </span><br><span class="line">        &lt;input type=&quot;submit&quot; value=&quot;登录&quot; /&gt;</span><br><span class="line">    &lt;/form&gt;</span><br><span class="line">&lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<p>关于xml，注意以下两点：</p>
+<ol>
+<li>form表单中的method属性，此处指定方法类型为get,因此在相关的Servlet中也应该使用doGet()来处理。如果设置为post,则应该使用doPost()来处理。如果没有设定该属性，默认方法类型为get</li>
+<li>action=”/ServletDemo/loginurl” 其中的格式：/项目名称/url</li>
+</ol>
+<h3 id="关于Servlet"><a href="#关于Servlet" class="headerlink" title="关于Servlet"></a>关于Servlet</h3><p><strong>LoginServlet</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">package com.dispatcher;</span><br><span class="line">import java.io.*;</span><br><span class="line">import javax.servlet.*;</span><br><span class="line">import javax.servlet.http.*;</span><br><span class="line">public class LoginServlet extends HttpServlet &#123;</span><br><span class="line">    private static final long serialVersionUID = 1L;</span><br><span class="line">    protected void doGet(HttpServletRequest request, HttpServletResponse response)</span><br><span class="line">            throws ServletException, IOException &#123;</span><br><span class="line">        response.setCharacterEncoding(&quot;utf-8&quot;);</span><br><span class="line">        response.setContentType(&quot;text/html;charset=utf-8&quot;);</span><br><span class="line">        PrintWriter out = response.getWriter();</span><br><span class="line"></span><br><span class="line">        String name = request.getParameter(&quot;userName&quot;);</span><br><span class="line">        String passwd = request.getParameter(&quot;userPass&quot;);</span><br><span class="line"></span><br><span class="line">       if (passwd.equals(&quot;mypasswd&quot;) &amp;&amp; name.equals(&quot;admin&quot;)) &#123;</span><br><span class="line">            out.print(&quot;bye bye bye&quot;); //c</span><br><span class="line">            RequestDispatcher rd = request.getRequestDispatcher(&quot;welcomeurl&quot;); //a行</span><br><span class="line">            System.out.println(&quot;Username is : &quot;+name);</span><br><span class="line">            rd.forward(request, response);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            out.print(&quot;Sorry UserName or Password Error!&quot;); //c</span><br><span class="line">            RequestDispatcher rd = request.getRequestDispatcher(&quot;login.html&quot;);// b行</span><br><span class="line">            rd.include(request, response);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>关于上方的说明：</p>
+<ol>
+<li>上方a行，b行代码表明RequestDispatcher接口准发的对象可能是html，servlet或jsp等。</li>
+<li>如果转发的是servlet,那么应该使用与该servlet相对应的<url-pattern>/loginurl</url-pattern></li>
+<li>上方的c行代码主要是为了对比。</li>
+</ol>
+<p><strong>WelcomeServlet</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">package com.dispatcher;</span><br><span class="line">import java.io.*;</span><br><span class="line">import javax.servlet.*;</span><br><span class="line">import javax.servlet.http.*;</span><br><span class="line">public class WelcomeServlet extends HttpServlet &#123;</span><br><span class="line">    private static final long serialVersionUID = 1L;</span><br><span class="line">    public void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException &#123;</span><br><span class="line">    	 response.setCharacterEncoding(&quot;utf-8&quot;);//设置服务器端编码</span><br><span class="line">         response.setContentType(&quot;text/html;charset=utf-8&quot;);</span><br><span class="line">         String name = request.getParameter(&quot;userName&quot;);</span><br><span class="line">         if(name==null || name==&quot;&quot;) &#123;</span><br><span class="line">             name = &quot;&quot;;</span><br><span class="line">         &#125;</span><br><span class="line">         PrintWriter out = response.getWriter();</span><br><span class="line">         //String chset = response.getCharacterEncoding(); </span><br><span class="line">         out.print(&quot;&lt;!DOCTYPE html&gt;\r\n&quot; + </span><br><span class="line">                 &quot;&lt;html&gt;\r\n&quot; + </span><br><span class="line">                 &quot;&lt;head&gt;\r\n&quot; + </span><br><span class="line">                 &quot;&lt;meta charset=\&quot;UTF-8\&quot;&gt;\r\n&quot; + </span><br><span class="line">                 &quot;&lt;title&gt;Success-Login&lt;/title&gt;\r\n&quot; + </span><br><span class="line">                 &quot;&lt;/head&gt;\r\n&quot; + </span><br><span class="line">                 &quot;&lt;body&gt;&quot;);</span><br><span class="line">         out.print(&quot;&lt;b&gt;Well Done ~ &lt;/b&gt;&lt;hr/&gt;&quot;);</span><br><span class="line">         out.print(&quot;Welcome, &quot; + name);</span><br><span class="line">         out.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><strong>登陆界面</strong></p>
+<p><img src="https://s1.ax1x.com/2018/05/31/CI9lWQ.png" alt="CI9lWQ.png"></p>
+<p><strong>登陆验证通过，调用forward()方法</strong></p>
+<p><img src="https://s1.ax1x.com/2018/05/31/CI91zj.png" alt="CI91zj.png"></p>
+<p><strong>登陆验证没有通过，调用include()方法</strong></p>
+<p><img src="https://s1.ax1x.com/2018/05/31/CI98Qs.png" alt="CI98Qs.png"></p>
+<p>从图2来看，调用forward()方法并不会直接将自身的内容传递给另外一个servlet（例如上方添加的<strong>c行代码并不会显示</strong>）,但是调用include()方法会直接传递（<strong>c行代码在页面中显示。</strong>）</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Servlet简记/">Servlet简记</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2018/05/29/ServletRequest接口/" title="ServletRequest接口" itemprop="url">ServletRequest接口</a>
   </h1>
   <p class="article-author">By
@@ -843,70 +928,6 @@ public static void main(String[] args) {
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2018/04/23/SpringMVC视图解析器/" title="SpringMVC视图解析器" itemprop="url">SpringMVC视图解析器</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
-		
-  <p class="article-time">
-    <time datetime="2018-04-23T08:19:27.000Z" itemprop="datePublished"> Published 2018-04-23</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <pre><code>SpringMVC视图解析器
-</code></pre><h2 id="Spring-MVC内部资源视图解析器"><a href="#Spring-MVC内部资源视图解析器" class="headerlink" title="Spring MVC内部资源视图解析器"></a>Spring MVC内部资源视图解析器</h2><p>配置文件如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.InternalResourceViewResolver"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"prefix"</span> <span class="attr">value</span>=<span class="string">"/WEB-INF/jsp/"</span>/&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"suffix"</span> <span class="attr">value</span>=<span class="string">".jsp"</span>/&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>使用上面的配置：</p>
-<pre><code>对于/hello请求，DispatcherServlet会将请求转发到前缀+ view-name + suffix = /WEB-INF/jsp/hello.jsp。
-</code></pre><h2 id="Spring-MVC-Xml视图解析器"><a href="#Spring-MVC-Xml视图解析器" class="headerlink" title="Spring MVC Xml视图解析器"></a>Spring MVC Xml视图解析器</h2><p>配置文件如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.XmlViewResolver"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"location"</span>&gt;</span></span><br><span class="line">      <span class="tag">&lt;<span class="name">value</span>&gt;</span>/WEB-INF/views.xml<span class="tag">&lt;/<span class="name">value</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;/<span class="name">property</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>views.xml文件配置如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">id</span>=<span class="string">"hello"</span></span></span><br><span class="line"><span class="tag">   <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.JstlView"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"url"</span> <span class="attr">value</span>=<span class="string">"/WEB-INF/jsp/hello.jsp"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>使用上面的配置：</p>
-<pre><code>对于/hello请求，DispatcherServlet会将请求转发到由view.xml中定义的hello对应的 hello.jsp 。
-</code></pre><h2 id="Spring-MVC资源绑定视图解析器"><a href="#Spring-MVC资源绑定视图解析器" class="headerlink" title="Spring MVC资源绑定视图解析器"></a>Spring MVC资源绑定视图解析器</h2><p>配置文件如下：<br><figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">bean</span> <span class="attr">class</span>=<span class="string">"org.springframework.web.servlet.view.ResourceBundleViewResolver"</span>&gt;</span></span><br><span class="line">   <span class="tag">&lt;<span class="name">property</span> <span class="attr">name</span>=<span class="string">"basename"</span> <span class="attr">value</span>=<span class="string">"views"</span> /&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">bean</span>&gt;</span></span><br></pre></td></tr></table></figure></p>
-<p>views.properties文件如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">hello.(class)=org.springframework.web.servlet.view.JstlView</span><br><span class="line">hello.url=/WEB-INF/jsp/hello.jsp</span><br></pre></td></tr></table></figure></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/SpringMVC/">SpringMVC</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -930,11 +951,11 @@ public static void main(String[] args) {
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/SpringMVC/" title="SpringMVC">SpringMVC<sup>6</sup></a></li>
+				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>6</sup></a></li>
 			
 		
 			
-				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>5</sup></a></li>
+				<li><a href="/tags/SpringMVC/" title="SpringMVC">SpringMVC<sup>6</sup></a></li>
 			
 		
 			
