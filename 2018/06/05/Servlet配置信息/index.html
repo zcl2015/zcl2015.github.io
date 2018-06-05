@@ -1,0 +1,531 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Servlet配置信息 | SelfBlog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="赵成龙">
+    
+
+    
+    <meta name="description" content="此处主要记录Servlet的配置信息，包含两个方面：ServletConfig配置信息以及ServletContext配置信息。此外还记录了Servlet的属性设置 ServletConfig配置信息什么是ServletConfig及作用ServletConfig对象是由每个servlet的Web容器创建的。这个对象可用于从web.xml文件获取配置信息。 ServletConfig接口的方法 以">
+<meta name="keywords" content="Servlet简记">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Servlet配置信息">
+<meta property="og:url" content="http://yoursite.com/2018/06/05/Servlet配置信息/index.html">
+<meta property="og:site_name" content="SelfBlog">
+<meta property="og:description" content="此处主要记录Servlet的配置信息，包含两个方面：ServletConfig配置信息以及ServletContext配置信息。此外还记录了Servlet的属性设置 ServletConfig配置信息什么是ServletConfig及作用ServletConfig对象是由每个servlet的Web容器创建的。这个对象可用于从web.xml文件获取配置信息。 ServletConfig接口的方法 以">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="https://s1.ax1x.com/2018/06/05/C7QHXR.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/06/05/C71Vq1.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/06/05/C73DfO.png">
+<meta property="og:image" content="https://s1.ax1x.com/2018/06/05/C7yBq0.png">
+<meta property="og:updated_time" content="2018-06-05T11:36:01.267Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Servlet配置信息">
+<meta name="twitter:description" content="此处主要记录Servlet的配置信息，包含两个方面：ServletConfig配置信息以及ServletContext配置信息。此外还记录了Servlet的属性设置 ServletConfig配置信息什么是ServletConfig及作用ServletConfig对象是由每个servlet的Web容器创建的。这个对象可用于从web.xml文件获取配置信息。 ServletConfig接口的方法 以">
+<meta name="twitter:image" content="https://s1.ax1x.com/2018/06/05/C7QHXR.png">
+
+    
+    <link rel="alternative" href="/atom.xml" title="SelfBlog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+  <body>
+    <header>
+      
+<div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="SelfBlog" title="SelfBlog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="SelfBlog">SelfBlog</a></h1>
+				<h2 class="blog-motto"></h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:yoursite.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/06/05/Servlet配置信息/" title="Servlet配置信息" itemprop="url">Servlet配置信息</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
+		
+  <p class="article-time">
+    <time datetime="2018-06-05T04:34:58.000Z" itemprop="datePublished"> Published 2018-06-05</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ServletConfig配置信息"><span class="toc-number">1.</span> <span class="toc-text">ServletConfig配置信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是ServletConfig及作用"><span class="toc-number">1.1.</span> <span class="toc-text">什么是ServletConfig及作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ServletConfig接口的方法-以及获取ServletConfig的对象的方法"><span class="toc-number">1.2.</span> <span class="toc-text">ServletConfig接口的方法 以及获取ServletConfig的对象的方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于ServletConfig配置信息的代码实例"><span class="toc-number">2.</span> <span class="toc-text">关于ServletConfig配置信息的代码实例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#web-xml"><span class="toc-number">2.1.</span> <span class="toc-text">web.xml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Servlet代码部分"><span class="toc-number">2.2.</span> <span class="toc-text">Servlet代码部分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行截图："><span class="toc-number">2.3.</span> <span class="toc-text">运行截图：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ServletContext配置信息"><span class="toc-number">3.</span> <span class="toc-text">ServletContext配置信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是ServletContext及其作用"><span class="toc-number">3.1.</span> <span class="toc-text">什么是ServletContext及其作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ServletContext的优点"><span class="toc-number">3.2.</span> <span class="toc-text">ServletContext的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ServletContext方法-以及如何获取该方法"><span class="toc-number">3.3.</span> <span class="toc-text">ServletContext方法 以及如何获取该方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ServletContext代码实例"><span class="toc-number">4.</span> <span class="toc-text">ServletContext代码实例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#web-xml配置"><span class="toc-number">4.1.</span> <span class="toc-text">web.xml配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Servlet代码"><span class="toc-number">4.2.</span> <span class="toc-text">Servlet代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行结果"><span class="toc-number">4.3.</span> <span class="toc-text">运行结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Servlet属性设置（待补充）"><span class="toc-number">5.</span> <span class="toc-text">Servlet属性设置（待补充）</span></a></li></ol>
+		
+		</div>
+		
+		<p>此处主要记录Servlet的配置信息，包含两个方面：ServletConfig配置信息以及ServletContext配置信息。此外还记录了Servlet的属性设置</p>
+<h2 id="ServletConfig配置信息"><a href="#ServletConfig配置信息" class="headerlink" title="ServletConfig配置信息"></a>ServletConfig配置信息</h2><h3 id="什么是ServletConfig及作用"><a href="#什么是ServletConfig及作用" class="headerlink" title="什么是ServletConfig及作用"></a>什么是ServletConfig及作用</h3><p>ServletConfig对象是由<strong>每个servlet的Web容器</strong>创建的。<br>这个对象可用于从web.xml文件获取配置信息。</p>
+<h3 id="ServletConfig接口的方法-以及获取ServletConfig的对象的方法"><a href="#ServletConfig接口的方法-以及获取ServletConfig的对象的方法" class="headerlink" title="ServletConfig接口的方法 以及获取ServletConfig的对象的方法"></a>ServletConfig接口的方法 以及获取ServletConfig的对象的方法</h3><p><img src="https://s1.ax1x.com/2018/06/05/C7QHXR.png" alt="C7QHXR.png"></p>
+<p>通过调用Servlet接口的getServletConfig()方法来返回ServletConfig对象。</p>
+<p>语法如下：</p>
+<pre><code>public ServletConfig getServletConfig();
+</code></pre><h2 id="关于ServletConfig配置信息的代码实例"><a href="#关于ServletConfig配置信息的代码实例" class="headerlink" title="关于ServletConfig配置信息的代码实例"></a>关于ServletConfig配置信息的代码实例</h2><h3 id="web-xml"><a href="#web-xml" class="headerlink" title="web.xml"></a>web.xml</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">&lt;servlet&gt;</span><br><span class="line">     &lt;servlet-name&gt;ConfigServletAll&lt;/servlet-name&gt;</span><br><span class="line">     &lt;servlet-class&gt;com.config.ConfigServletAll&lt;/servlet-class&gt;</span><br><span class="line">     &lt;init-param&gt;</span><br><span class="line">         &lt;param-name&gt;mssql_driver&lt;/param-name&gt;</span><br><span class="line">         &lt;param-value&gt;com.mssql.jdbc.Driver&lt;/param-value&gt;</span><br><span class="line">     &lt;/init-param&gt;</span><br><span class="line">     &lt;init-param&gt;</span><br><span class="line">         &lt;param-name&gt;username&lt;/param-name&gt;</span><br><span class="line">         &lt;param-value&gt;root&lt;/param-value&gt;</span><br><span class="line">     &lt;/init-param&gt;</span><br><span class="line">     &lt;init-param&gt;</span><br><span class="line">         &lt;param-name&gt;passwd&lt;/param-name&gt;</span><br><span class="line">         &lt;param-value&gt;123456&lt;/param-value&gt;</span><br><span class="line">     &lt;/init-param&gt;</span><br><span class="line"> &lt;/servlet&gt;</span><br><span class="line"> &lt;servlet-mapping&gt;</span><br><span class="line">     &lt;servlet-name&gt;ConfigServletAll&lt;/servlet-name&gt;</span><br><span class="line">     &lt;url-pattern&gt;/ConfigServletAllUrl&lt;/url-pattern&gt;</span><br><span class="line"> &lt;/servlet-mapping&gt;</span><br></pre></td></tr></table></figure>
+<p>关于上方的说明：</p>
+<ol>
+<li><init-param>元素是<servlet>元素的子元素，需要在其内部使用。</servlet></init-param></li>
+<li>上面的方法只针对每一个具体的servlet。<strong>一个servlet是不能获取其他的servlet的<init-param>数值的。</init-param></strong>  例如在上方的web.xml文件中添加一个另外一个servlet。在下方的servlet中不能获取到新定义的servlet的参数值。</li>
+</ol>
+<h3 id="Servlet代码部分"><a href="#Servlet代码部分" class="headerlink" title="Servlet代码部分"></a>Servlet代码部分</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line">package com.config;</span><br><span class="line">import java.io.*;</span><br><span class="line">import java.util.Enumeration;</span><br><span class="line">import javax.servlet.*;</span><br><span class="line">import javax.servlet.http.*;</span><br><span class="line"></span><br><span class="line">public class ConfigServletAll extends HttpServlet &#123;</span><br><span class="line">    private static final long serialVersionUID = 1L;</span><br><span class="line">    protected void doGet(HttpServletRequest request, HttpServletResponse response)</span><br><span class="line">            throws ServletException, IOException &#123;</span><br><span class="line">        response.setContentType(&quot;text/html&quot;);</span><br><span class="line">        PrintWriter out = response.getWriter();</span><br><span class="line">        // 1. 获取ServletConfig对象</span><br><span class="line">        ServletConfig config = getServletConfig();</span><br><span class="line">        // 2. 获取该servlet内指定参数的参数值</span><br><span class="line">        String driver = config.getInitParameter(&quot;mssql_driver&quot;);</span><br><span class="line">        out.print(&quot;Driver details is: &lt;b&gt;&quot; + driver+&quot;&lt;b&gt;&quot;);</span><br><span class="line">        // 3.获取一个枚举的参数名称（注意该方法只是获取参数名称，并不能直接获取参数值）</span><br><span class="line">        Enumeration&lt;String&gt; e = config.getInitParameterNames(); </span><br><span class="line">        String str = &quot;&quot;;</span><br><span class="line">        while (e.hasMoreElements()) &#123;</span><br><span class="line">            str = e.nextElement();</span><br><span class="line">            out.print(&quot;Name: &quot; + str);</span><br><span class="line">            out.print(&quot; value: &quot; + config.getInitParameter(str)+&quot;&lt;br/&gt;&quot;); </span><br><span class="line">            //获取参数值</span><br><span class="line">        &#125;</span><br><span class="line">         out.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="运行截图："><a href="#运行截图：" class="headerlink" title="运行截图："></a>运行截图：</h3><p><img src="https://s1.ax1x.com/2018/06/05/C71Vq1.png" alt="C71Vq1.png"></p>
+<h2 id="ServletContext配置信息"><a href="#ServletContext配置信息" class="headerlink" title="ServletContext配置信息"></a>ServletContext配置信息</h2><h3 id="什么是ServletContext及其作用"><a href="#什么是ServletContext及其作用" class="headerlink" title="什么是ServletContext及其作用"></a>什么是ServletContext及其作用</h3><p>ServletContext的对象<strong>由Web容器在部署项目时</strong>创建（注意ServletConfig对象是由<strong>每个servlet的Web容器</strong>创建的）。<br>该对象可用于从web.xml文件获取配置信息。<br>每个Web应用程序只有一个ServletContext对象。</p>
+<p>如果有信息要共享给多个servlet使用，最好在web.xml文件中使用<context-param>元素提供它。</context-param></p>
+<p>基本上可以简单理解为ServletContext是”公有的,共享的”，而ServletConfig是”私有的，不可共享的”。</p>
+<h3 id="ServletContext的优点"><a href="#ServletContext的优点" class="headerlink" title="ServletContext的优点"></a>ServletContext的优点</h3><p>如果有任何信息要共享给所有的servlet使用，并且要让它容易维护，最好的办法就是在web.xml文件中提供这些信息，所以如果信息要更改直接在web.xml中修改，而不需要修改servlet代码。</p>
+<h3 id="ServletContext方法-以及如何获取该方法"><a href="#ServletContext方法-以及如何获取该方法" class="headerlink" title="ServletContext方法 以及如何获取该方法"></a>ServletContext方法 以及如何获取该方法</h3><p><img src="https://s1.ax1x.com/2018/06/05/C73DfO.png" alt="C73DfO.png"></p>
+<p>两种方式获取该方法</p>
+<ol>
+<li>通过ServletConfig接口的getServletContext()方法返回ServletContext对象。</li>
+<li>通过GenericServlet类的getServletContext()方法返回ServletContext对象。</li>
+</ol>
+<p>获取该方法的代码示例</p>
+<pre><code>ServletContext application=getServletConfig().getServletContext();                                  //先获得ServletConfig接口 再调用getServletContext()方法
+ServletContext application=getServletContext(); // 直接调用getServletContext()方法
+</code></pre><h2 id="ServletContext代码实例"><a href="#ServletContext代码实例" class="headerlink" title="ServletContext代码实例"></a>ServletContext代码实例</h2><h3 id="web-xml配置"><a href="#web-xml配置" class="headerlink" title="web.xml配置"></a>web.xml配置</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;context-param&gt;</span><br><span class="line">        &lt;param-name&gt;dname&lt;/param-name&gt;</span><br><span class="line">        &lt;param-value&gt;com.mysql.jdbc.Driver&lt;/param-value&gt;</span><br><span class="line">&lt;/context-param&gt;</span><br><span class="line">    &lt;context-param&gt;</span><br><span class="line">        &lt;param-name&gt;username&lt;/param-name&gt;</span><br><span class="line">        &lt;param-value&gt;root&lt;/param-value&gt;</span><br><span class="line">    &lt;/context-param&gt;</span><br><span class="line"></span><br><span class="line">    &lt;context-param&gt;</span><br><span class="line">        &lt;param-name&gt;password&lt;/param-name&gt;</span><br><span class="line">        &lt;param-value&gt;mypasswd&lt;/param-value&gt;</span><br><span class="line">    &lt;/context-param&gt;</span><br><span class="line">    </span><br><span class="line">    &lt;context-param&gt;</span><br><span class="line">        &lt;param-name&gt;testData&lt;/param-name&gt;</span><br><span class="line">        &lt;param-value&gt;just for test&lt;/param-value&gt;</span><br><span class="line">    &lt;/context-param&gt;</span><br><span class="line">    &lt;servlet&gt;</span><br><span class="line">        &lt;servlet-name&gt;ContextServAll&lt;/servlet-name&gt;</span><br><span class="line">        &lt;servlet-class&gt;com.config.ContextServletAll&lt;/servlet-class&gt;</span><br><span class="line">    &lt;/servlet&gt;</span><br><span class="line">    &lt;servlet-mapping&gt;</span><br><span class="line">        &lt;servlet-name&gt;ContextServAll&lt;/servlet-name&gt;</span><br><span class="line">        &lt;url-pattern&gt;/ContextServAllUrl&lt;/url-pattern&gt;</span><br><span class="line">    &lt;/servlet-mapping&gt;</span><br></pre></td></tr></table></figure>
+<p>关于上方的说明：</p>
+<ol>
+<li>有以上xml文件可知，<context-param>元素和 <servlet>是同一级元素，而不是其子元素。</servlet></context-param></li>
+<li><context-param>元素可以被不同的servlet访问，不单独属于某一个servlet。</context-param></li>
+</ol>
+<h3 id="Servlet代码"><a href="#Servlet代码" class="headerlink" title="Servlet代码"></a>Servlet代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">package com.config;</span><br><span class="line">import java.io.*;</span><br><span class="line">import java.util.Enumeration;</span><br><span class="line">import javax.servlet.*;</span><br><span class="line">import javax.servlet.http.*;</span><br><span class="line"></span><br><span class="line">public class ContextServletAll extends HttpServlet &#123;</span><br><span class="line">    private static final long serialVersionUID = 1L;</span><br><span class="line">    protected void doGet(HttpServletRequest request, HttpServletResponse response)</span><br><span class="line">            throws ServletException, IOException &#123;</span><br><span class="line">        response.setContentType(&quot;text/html&quot;);</span><br><span class="line">        PrintWriter out = response.getWriter();</span><br><span class="line">        // 1.方式1</span><br><span class="line">        ServletContext context = getServletContext();</span><br><span class="line">        // 方式2</span><br><span class="line">        // ServletContext context=getServletConfig().getServletContext(); </span><br><span class="line">        // 下方的方法与上方类似</span><br><span class="line">        String driverName = context.getInitParameter(&quot;dname&quot;);</span><br><span class="line">        out.print(&quot;driver name is = &lt;b&gt;&apos;&quot; + driverName+&quot;&apos;&lt;/b&gt;&quot;+&quot;&lt;br/&gt;&quot;);</span><br><span class="line">        Enumeration&lt;String&gt; e = context.getInitParameterNames();</span><br><span class="line">        String str = &quot;&quot;;</span><br><span class="line">        while (e.hasMoreElements()) &#123;</span><br><span class="line">        	str = e.nextElement();</span><br><span class="line">            out.print(&quot;Name: &quot; + str);</span><br><span class="line">            out.print(&quot; value: &quot; + context.getInitParameter(str)+&quot;&lt;br/&gt;&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="https://s1.ax1x.com/2018/06/05/C7yBq0.png" alt="C7yBq0.png"></p>
+<h2 id="Servlet属性设置（待补充）"><a href="#Servlet属性设置（待补充）" class="headerlink" title="Servlet属性设置（待补充）"></a>Servlet属性设置（待补充）</h2>  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Servlet简记/">Servlet简记</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://yoursite.com/2018/06/05/Servlet配置信息/" data-title="Servlet配置信息 | SelfBlog" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/06/05/Servlet过滤器介绍及使用示例/" title="Servlet过滤器介绍及使用示例">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Servlet过滤器介绍及使用示例</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/05/31/Servlet重定向/"  title="Servlet重定向">
+ <strong>下一篇：</strong><br/> 
+ <span>Servlet重定向
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#ServletConfig配置信息"><span class="toc-number">1.</span> <span class="toc-text">ServletConfig配置信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是ServletConfig及作用"><span class="toc-number">1.1.</span> <span class="toc-text">什么是ServletConfig及作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ServletConfig接口的方法-以及获取ServletConfig的对象的方法"><span class="toc-number">1.2.</span> <span class="toc-text">ServletConfig接口的方法 以及获取ServletConfig的对象的方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#关于ServletConfig配置信息的代码实例"><span class="toc-number">2.</span> <span class="toc-text">关于ServletConfig配置信息的代码实例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#web-xml"><span class="toc-number">2.1.</span> <span class="toc-text">web.xml</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Servlet代码部分"><span class="toc-number">2.2.</span> <span class="toc-text">Servlet代码部分</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行截图："><span class="toc-number">2.3.</span> <span class="toc-text">运行截图：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ServletContext配置信息"><span class="toc-number">3.</span> <span class="toc-text">ServletContext配置信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#什么是ServletContext及其作用"><span class="toc-number">3.1.</span> <span class="toc-text">什么是ServletContext及其作用</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ServletContext的优点"><span class="toc-number">3.2.</span> <span class="toc-text">ServletContext的优点</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ServletContext方法-以及如何获取该方法"><span class="toc-number">3.3.</span> <span class="toc-text">ServletContext方法 以及如何获取该方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ServletContext代码实例"><span class="toc-number">4.</span> <span class="toc-text">ServletContext代码实例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#web-xml配置"><span class="toc-number">4.1.</span> <span class="toc-text">web.xml配置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Servlet代码"><span class="toc-number">4.2.</span> <span class="toc-text">Servlet代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#运行结果"><span class="toc-number">4.3.</span> <span class="toc-text">运行结果</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Servlet属性设置（待补充）"><span class="toc-number">5.</span> <span class="toc-text">Servlet属性设置（待补充）</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			
+				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>8</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/SpringMVC/" title="SpringMVC">SpringMVC<sup>6</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/Spring框架简记/" title="Spring框架简记">Spring框架简记<sup>4</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/辅助类简记/" title="辅助类简记">辅助类简记<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/设计模式/" title="设计模式">设计模式<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/博客搭建简记/" title="博客搭建简记">博客搭建简记<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/算法/" title="算法">算法<sup>1</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/数据库简记/" title="数据库简记">数据库简记<sup>1</sup></a></li>
+			
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+          <li>
+            
+            	<a href="http://wuchong.me" target="_blank" title="Jark&#39;s Blog">Jark&#39;s Blog</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  
+
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+  <div class="weiboshow">
+  <p class="asidetitle">Weibo</p>
+    <iframe width="100%" height="119" class="share_self"  frameborder="0" scrolling="no" src="http://widget.weibo.com/weiboshow/index.php?language=&width=0&height=119&fansRow=2&ptype=1&speed=0&skin=9&isTitle=1&noborder=1&isWeibo=0&isFans=0&uid=&verifier=b3593ceb&dpc=1"></iframe>
+</div>
+
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m Larry Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		<a href="http://weibo.com/2176287895" target="_blank" class="icon-weibo" title="微博"></a>
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+			
+		
+
+		<p class="copyright">
+		Powered by <a href="http://hexo.io" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Jacman">Jacman</a> © 2018 
+		
+		<a href="/about" target="_blank" title="赵成龙">赵成龙</a>
+		
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/jquery.qrcode-0.12.0.min.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+  
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else{
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  c.click(function(){
+    ta.css('display', 'block').addClass('fadeIn');
+  });
+  o.click(function(){
+    ta.css('display', 'none');
+  });
+  $(window).scroll(function(){
+    ta.css("top",Math.max(140,320-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<div class="hoverqrcode clearfix"></div>',
+  '<a class="overlay" id="qrcode"></a>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+
+  $('.hoverqrcode').hide();
+
+  var myWidth = 0;
+  function updatehoverqrcode(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+    var qrsize = myWidth > 1024 ? 200:100;
+    var options = {render: 'image', size: qrsize, fill: '#2ca6cb', text: url, radius: 0.5, quiet: 1};
+    var p = $('.article-share-qrcode').position();
+    $('.hoverqrcode').empty().css('width', qrsize).css('height', qrsize)
+                          .css('left', p.left-qrsize/2+20).css('top', p.top-qrsize-10)
+                          .qrcode(options);
+  };
+  $(window).resize(function(){
+    $('.hoverqrcode').hide();
+  });
+  $('.article-share-qrcode').click(function(){
+    updatehoverqrcode();
+    $('.hoverqrcode').toggle();
+  });
+  $('.article-share-qrcode').hover(function(){}, function(){
+      $('.hoverqrcode').hide();
+  });
+});   
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?e6d1f421bbc9962127a50488f9ed37d1";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+
+
+<!-- MathJax End -->
+
+<!-- Tiny_search Begin -->
+
+<!-- Tiny_search End -->
+
+  </body>
+</html>
