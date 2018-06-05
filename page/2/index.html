@@ -79,6 +79,116 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2018/04/24/Spring简介及入门示例/" title="Spring简介及入门示例" itemprop="url">Spring简介及入门示例</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
+		
+  <p class="article-time">
+    <time datetime="2018-04-24T05:05:23.000Z" itemprop="datePublished"> Published 2018-04-24</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>   Spring简记</p>
+<h2 id="Spring简介"><a href="#Spring简介" class="headerlink" title="Spring简介"></a>Spring简介</h2><p>  Spring框架，由Rod Johnson开发，是一个非常强大的反转控制(IOC)框架，用来帮助分离项目组件之间的依赖关系.</p>
+<p>  <strong>框架如下图所示：</strong><br>   [<img src="https://s1.ax1x.com/2018/04/24/ClK8bQ.png" alt="ClK8bQ.png">]</p>
+<ul>
+<li>IoC Container: 这是最重要的，也是最基础的， Spring的基础。它的作用是配置和Java对象的生命周期管理。</li>
+<li>DAO, ORM, AOP, WEB: 该模块可用于将工具或框架集成到了Spring。</li>
+</ul>
+<h2 id="Spring入门示例"><a href="#Spring入门示例" class="headerlink" title="Spring入门示例"></a>Spring入门示例</h2><h3 id="创建一个接口以及与这个接口有关的service类"><a href="#创建一个接口以及与这个接口有关的service类" class="headerlink" title="创建一个接口以及与这个接口有关的service类"></a>创建一个接口以及与这个接口有关的service类</h3><p>接口代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line">     </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">()</span></span>;</span><br><span class="line">     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>service类代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorldService</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">private</span> HelloWorld helloWorld;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HelloWorldService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHelloWorld</span><span class="params">(HelloWorld helloWorld)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.helloWorld = helloWorld;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> HelloWorld <span class="title">getHelloWorld</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.helloWorld;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如上图所示Service类将上方的接口以类变量的形式引入自身。</p>
+<h3 id="创建上方接口的不同实现类，本例中定义两个实现类"><a href="#创建上方接口的不同实现类，本例中定义两个实现类" class="headerlink" title="创建上方接口的不同实现类，本例中定义两个实现类"></a>创建上方接口的不同实现类，本例中定义两个实现类</h3><p>SpringHelloWorld代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringHelloWorld</span> <span class="keyword">implements</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Spring Say Hello!!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>StrutsHelloWorld代码如下：</p>
+<pre><code>public class StrutsHelloWorld implements HelloWorld {
+    @Override
+    public void sayHello() {
+        System.out.println(&quot;Struts Say Hello!!&quot;);
+    }
+}
+</code></pre><p>下面写配置文件</p>
+<h3 id="定义配置文件"><a href="#定义配置文件" class="headerlink" title="定义配置文件"></a>定义配置文件</h3><p>默认的文件路径位置为src/main/resources,此处定义的文件名称为beans.xml</p>
+<pre><code>&lt;beanid=&quot;springHelloWorld&quot;
+    class=&quot;com.yiibai.tutorial.spring.helloworld.impl.SpringHelloWorld&quot;&gt;&lt;/bean&gt;
+&lt;beanid=&quot;strutsHelloWorld&quot;
+    class=&quot;com.yiibai.tutorial.spring.helloworld.impl.StrutsHelloWorld&quot;&gt;&lt;/bean&gt;
+
+&lt;beanid=&quot;helloWorldService&quot;
+    class=&quot;com.yiibai.tutorial.spring.helloworld.HelloWorldService&quot;&gt;
+    &lt;propertyname=&quot;helloWorld&quot;ref=&quot;springHelloWorld&quot;/&gt;
+&lt;/bean&gt;
+</code></pre><p>如上所示：</p>
+<ol>
+<li>最上方分别定义了接口的两个实现类的bean。</li>
+<li>下方定义了Service类的bean，该bean通过propertyname为该类内部的变量实现复制操作。</li>
+<li>&lt;propertyname=”xxx” ref=”beanid”/&gt; 注入类—》适用于变量类型为引用类<br>&lt;propertyname=”xxx” value=”xxx”/&gt; 注入具体的值。—》适用于变量类型为基本类型</li>
+</ol>
+<h3 id="创建运行文件"><a href="#创建运行文件" class="headerlink" title="创建运行文件"></a>创建运行文件</h3><p>HelloProgram类如下：</p>
+<pre><code>public class HelloProgram {
+public static void main(String[] args) {
+
+    ApplicationContext context =
+            new ClassPathXmlApplicationContext(&quot;beans.xml&quot;);
+
+    HelloWorldService service =
+         (HelloWorldService) context.getBean(&quot;helloWorldService&quot;);
+
+    HelloWorld hw= service.getHelloWorld();
+
+    hw.sayHello();
+    }
+}
+</code></pre><p>如上所示：</p>
+<ol>
+<li>加载配置文件，并从配置文件中获取Service类的bean（需要强制转换）。</li>
+<li>通过Service类的内部方法获取到接口的具体实现类</li>
+<li>调用实现类的方法。</li>
+</ol>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Spring框架简记/">Spring框架简记</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2018/04/23/SpringMVC视图解析器/" title="SpringMVC视图解析器" itemprop="url">SpringMVC视图解析器</a>
   </h1>
   <p class="article-author">By
@@ -1129,7 +1239,7 @@ Baidu[^1]
 <p>Markdown </p>
 <pre><code>轻量级文本标记语言，可以转换成html，pdf等格式  //  此处没有使用:
 </code></pre><h3 id="示例2-看一下二者的不同效果。"><a href="#示例2-看一下二者的不同效果。" class="headerlink" title="示例2 看一下二者的不同效果。"></a>示例2 看一下二者的不同效果。</h3><p>代码块定义<br>:<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> num = <span class="number">0</span>;</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">var</span> i = <span class="number">0</span>; i &lt; <span class="number">5</span>; i++) &#123;</span><br><span class="line">    num+=i;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">"此处未使用自定义语法"</span>);</span><br></pre></td></tr></table></figure></p>
-<h2 id="自动邮箱链接"><a href="#自动邮箱链接" class="headerlink" title="自动邮箱链接"></a>自动邮箱链接</h2><p><a href="mailto:&#119;&#x65;&#99;&#x68;&#97;&#x74;&#64;&#x71;&#113;&#x2e;&#99;&#x6f;&#109;" target="_blank" rel="noopener">&#119;&#x65;&#99;&#x68;&#97;&#x74;&#64;&#x71;&#113;&#x2e;&#99;&#x6f;&#109;</a></p>
+<h2 id="自动邮箱链接"><a href="#自动邮箱链接" class="headerlink" title="自动邮箱链接"></a>自动邮箱链接</h2><p><a href="mailto:&#x77;&#101;&#x63;&#x68;&#97;&#x74;&#64;&#x71;&#x71;&#x2e;&#99;&#111;&#x6d;" target="_blank" rel="noopener">&#x77;&#101;&#x63;&#x68;&#97;&#x74;&#64;&#x71;&#x71;&#x2e;&#99;&#111;&#x6d;</a></p>
 <h2 id="时序图（todo）"><a href="#时序图（todo）" class="headerlink" title="时序图（todo）"></a>时序图（todo）</h2><h2 id="流程图（todo）"><a href="#流程图（todo）" class="headerlink" title="流程图（todo）"></a>流程图（todo）</h2><h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>以上内容是对于markdown的入门小节，总结的目的如下</p>
 <ol>
 <li>语法的入门练习。</li>
@@ -1226,83 +1336,6 @@ Baidu[^1]
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2018/04/14/Servlet入门概述/" title="Servlet入门简介" itemprop="url">Servlet入门简介</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
-		
-  <p class="article-time">
-    <time datetime="2018-04-14T13:40:09.000Z" itemprop="datePublished"> Published 2018-04-14</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>Servlet入门概述</p>
-<h2 id="Servlet简述"><a href="#Servlet简述" class="headerlink" title="Servlet简述"></a>Servlet简述</h2><p>Servlet技术是一种<strong>基于Java语言，用于创建Web应用程序</strong>(处在服务器端并生成动态网页)。servlet API中有很多接口和类，如：Servlet，GenericServlet，HttpServlet，ServletRequest，ServletResponse等。</p>
-<p>Servlet可以通过多种方式进行描述，具体取决于上下文。 </p>
-<ul>
-<li>Servlet是一种用于<strong>创建Web应用程序</strong>的技术。</li>
-<li>Servlet<strong>是一个API</strong>，它提供了许多接口和类，包括文档。</li>
-<li>Servlet是一个<strong>必须实现的接口</strong>，用于创建任何servlet。</li>
-<li>Servlet是一个<strong>扩展服务器功能并响应传入请求的类</strong>。它可以响应任何类型的请求</li>
-<li>Servlet是<strong>部署在服务器上的Web组件</strong>，用于创建动态网页。</li>
-</ul>
-<p>模型如下：</p>
-<p><img src="https://s1.ax1x.com/2018/05/29/C42jVU.jpg" alt="C42jVU.jpg"></p>
-<h2 id="Servlet-API-简记"><a href="#Servlet-API-简记" class="headerlink" title="Servlet API 简记"></a>Servlet API 简记</h2><p><strong>javax.servlet和javax.servlet.http</strong>包表示servlet api的接口和类。<br>javax.servlet包中<strong>包含servlet或Web容器使用的许多接口和类</strong>。这些接口不是特定于任何协议。<br>javax.servlet.http包中<strong>包含仅用于负责http请求的接口和类</strong>。</p>
-<h2 id="创建Servlet的方法"><a href="#创建Servlet的方法" class="headerlink" title="创建Servlet的方法"></a>创建Servlet的方法</h2><p>   创建servlet有三种不同的方法。</p>
-<ul>
-<li>通过实现Servlet接口</li>
-<li>扩展GenericServlet类</li>
-<li>通过扩展HttpServlet类</li>
-</ul>
-<p>说明：</p>
-<pre><code>大部分servlet是通过扩展HttpServlet抽象类创建的。如前所述HttpServlet给出了Servlet接口的service()方法的定义。我们将创建Servlet类但不需要覆盖service()方法。Servlet类将仅覆盖doGet()或doPost()方法。当servlet的请求进入时，Web容器首先将调用servlet的service()方法，并根据service()方法的请求类型来调用doGet()或doPost()方法)。
-</code></pre><p> <strong>默认情况下，请求是Get请求。</strong></p>
-<p>关于Servlet的创建参考下面的例子即可。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Servlet简记/">Servlet简记</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
@@ -1326,7 +1359,7 @@ Baidu[^1]
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>6</sup></a></li>
+				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>7</sup></a></li>
 			
 		
 			

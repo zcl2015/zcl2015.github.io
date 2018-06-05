@@ -79,6 +79,82 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2018/05/31/Servlet重定向/" title="Servlet重定向" itemprop="url">Servlet重定向</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
+		
+  <p class="article-time">
+    <time datetime="2018-05-31T04:47:44.000Z" itemprop="datePublished"> Published 2018-05-31</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>此处主要记录Servlet重定向的问题。并与转发请求简单比较。</p>
+<h2 id="什么是Servlet重定向"><a href="#什么是Servlet重定向" class="headerlink" title="什么是Servlet重定向"></a>什么是Servlet重定向</h2><p>HttpServletResponse接口的sendRedirect()方法可以用于将响应重定向到另一个资源，<strong>资源可能是servlet，jsp或html文件。</strong> <strong>也可以是单纯的一个网址。</strong><br>它可以在服务器内部和外部工作。</p>
+<h2 id="forward-和sendRedirect-方法的区别"><a href="#forward-和sendRedirect-方法的区别" class="headerlink" title="forward()和sendRedirect()方法的区别"></a>forward()和sendRedirect()方法的区别</h2><p>RequestDispatcher的forward()方法和HttpServletResponse接口的sendRedirect()方法差异如下：</p>
+<p><img src="https://s1.ax1x.com/2018/05/31/CIPGV0.png" alt="CIPGV0.png"></p>
+<p>一个由HttpServletRequest发出，一个由HttpServletResponse发出。</p>
+<h2 id="实际使用差别"><a href="#实际使用差别" class="headerlink" title="实际使用差别"></a>实际使用差别</h2><p>此处与上一章的转发请求代码使用类似。</p>
+<p><strong>LoginServlet 部分代码修改</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if (passwd.equals(&quot;mypasswd&quot;) &amp;&amp; name.equals(&quot;admin&quot;)) &#123;</span><br><span class="line">   	    out.print(&quot;bye bye bye&quot;);</span><br><span class="line">           response.sendRedirect(&quot;welcomeurl&quot;); //servlet</span><br><span class="line">        // response.sendRedirect(&quot;https://store.meizu.com/&quot;); // website</span><br><span class="line">       &#125; else &#123;</span><br><span class="line">           out.print(&quot;Sorry UserName or Password Error!&quot;); </span><br><span class="line">           response.sendRedirect(&quot;login.html&quot;); //html</span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+<p>运行结果如下：</p>
+<p><img src="https://s1.ax1x.com/2018/05/31/CIPoZt.png" alt="CIPoZt.png"></p>
+<p><img src="https://s1.ax1x.com/2018/05/31/CIPLRg.png" alt="CIPLRg.png"></p>
+<p>从运行结果来看，重定向可以是servlet,html或者是<strong>某个网址</strong>。但是重定向一般不能传递参数。例如图一中就看不到关于name的信息。而这是可以在forward()方法中看到的。</p>
+<p>此外自己尝试在转发请求中修改代码如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">if (passwd.equals(&quot;mypasswd&quot;) &amp;&amp; name.equals(&quot;admin&quot;)) &#123;</span><br><span class="line">    	    out.print(&quot;bye bye bye&quot;);</span><br><span class="line">          //  RequestDispatcher rd = request.getRequestDispatcher(&quot;welcomeurl&quot;);</span><br><span class="line">            RequestDispatcher rd = request.getRequestDispatcher(&quot;https://store.meizu.com/&quot;); //a行</span><br><span class="line">            System.out.println(&quot;Username is : &quot;+name);</span><br><span class="line">            rd.forward(request, response);</span><br><span class="line">       </span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p>结果运行异常。</p>
+<h2 id="另外一个关于重定向的例子-传递参数"><a href="#另外一个关于重定向的例子-传递参数" class="headerlink" title="另外一个关于重定向的例子(传递参数)"></a>另外一个关于重定向的例子(传递参数)</h2><h3 id="web-xml配置文件"><a href="#web-xml配置文件" class="headerlink" title="web.xml配置文件"></a>web.xml配置文件</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;web-app xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot; xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd&quot; id=&quot;WebApp_ID&quot; version=&quot;3.0&quot;&gt;</span><br><span class="line">  &lt;display-name&gt;&lt;/display-name&gt;</span><br><span class="line">  &lt;description&gt;Welcome to Tomcat&lt;/description&gt;</span><br><span class="line">  &lt;welcome-file-list&gt;</span><br><span class="line">   &lt;welcome-file&gt;meizu.html&lt;/welcome-file&gt;</span><br><span class="line">  &lt;/welcome-file-list&gt;</span><br><span class="line">    &lt;servlet&gt;</span><br><span class="line">        &lt;servlet-name&gt;Searcher&lt;/servlet-name&gt;</span><br><span class="line">        &lt;servlet-class&gt;com.sendRedirectDemo.Searcher&lt;/servlet-class&gt;</span><br><span class="line">    &lt;/servlet&gt;</span><br><span class="line">   &lt;servlet-mapping&gt;</span><br><span class="line">        &lt;servlet-name&gt;Searcher&lt;/servlet-name&gt;</span><br><span class="line">        &lt;url-pattern&gt;/meizusearch&lt;/url-pattern&gt;</span><br><span class="line">    &lt;/servlet-mapping&gt;</span><br><span class="line">&lt;/web-app&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="meizu-html"><a href="#meizu-html" class="headerlink" title="meizu.html"></a>meizu.html</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;MeiZu&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div style=&quot;text-align: center;&quot;&gt;</span><br><span class="line">        &lt;form action=&quot;/ServletDemo/meizusearch&quot;&gt;</span><br><span class="line">            关键字：&lt;input type=&quot;text&quot; name=&quot;keyword&quot;&gt; </span><br><span class="line">            &lt;input type=&quot;submit&quot; value=&quot;魅族商城搜索&quot;&gt;</span><br><span class="line">        &lt;/form&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="Searcher"><a href="#Searcher" class="headerlink" title="Searcher"></a>Searcher</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">package com.sendRedirectDemo;</span><br><span class="line">import java.io.IOException;</span><br><span class="line">import javax.servlet.ServletException;</span><br><span class="line">import javax.servlet.http.*;</span><br><span class="line">public class Searcher extends HttpServlet &#123;</span><br><span class="line">    private static final long serialVersionUID = 1L;</span><br><span class="line">    protected void doGet(HttpServletRequest request, HttpServletResponse response)</span><br><span class="line">            throws ServletException, IOException &#123;</span><br><span class="line">         // 获取参数，并将参数作为查询条件添加到重定向的网页地址。</span><br><span class="line">        String keyword = request.getParameter(&quot;keyword&quot;);</span><br><span class="line">        response.sendRedirect(&quot;https://lists.meizu.com/page/search?keyword=&quot; + keyword);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p>初始界面</p>
+<p><img src="https://s1.ax1x.com/2018/06/05/C7KKj1.png" alt="C7KKj1.png"></p>
+<p>输入检索信息后的页面</p>
+<p><img src="https://s1.ax1x.com/2018/06/05/C7KajI.png" alt="C7KajI.png"></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Servlet简记/">Servlet简记</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2018/05/31/Servlet请求转发/" title="Servlet请求转发" itemprop="url">Servlet请求转发</a>
   </h1>
   <p class="article-author">By
@@ -818,116 +894,6 @@ public String toString() {
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2018/04/24/Spring简介及入门示例/" title="Spring简介及入门示例" itemprop="url">Spring简介及入门示例</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
-		
-  <p class="article-time">
-    <time datetime="2018-04-24T05:05:23.000Z" itemprop="datePublished"> Published 2018-04-24</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>   Spring简记</p>
-<h2 id="Spring简介"><a href="#Spring简介" class="headerlink" title="Spring简介"></a>Spring简介</h2><p>  Spring框架，由Rod Johnson开发，是一个非常强大的反转控制(IOC)框架，用来帮助分离项目组件之间的依赖关系.</p>
-<p>  <strong>框架如下图所示：</strong><br>   [<img src="https://s1.ax1x.com/2018/04/24/ClK8bQ.png" alt="ClK8bQ.png">]</p>
-<ul>
-<li>IoC Container: 这是最重要的，也是最基础的， Spring的基础。它的作用是配置和Java对象的生命周期管理。</li>
-<li>DAO, ORM, AOP, WEB: 该模块可用于将工具或框架集成到了Spring。</li>
-</ul>
-<h2 id="Spring入门示例"><a href="#Spring入门示例" class="headerlink" title="Spring入门示例"></a>Spring入门示例</h2><h3 id="创建一个接口以及与这个接口有关的service类"><a href="#创建一个接口以及与这个接口有关的service类" class="headerlink" title="创建一个接口以及与这个接口有关的service类"></a>创建一个接口以及与这个接口有关的service类</h3><p>接口代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line">     </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">()</span></span>;</span><br><span class="line">     </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>service类代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloWorldService</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">    <span class="keyword">private</span> HelloWorld helloWorld;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="title">HelloWorldService</span><span class="params">()</span> </span>&#123;</span><br><span class="line">  </span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setHelloWorld</span><span class="params">(HelloWorld helloWorld)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.helloWorld = helloWorld;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> HelloWorld <span class="title">getHelloWorld</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.helloWorld;</span><br><span class="line">    &#125;</span><br><span class="line">  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>如上图所示Service类将上方的接口以类变量的形式引入自身。</p>
-<h3 id="创建上方接口的不同实现类，本例中定义两个实现类"><a href="#创建上方接口的不同实现类，本例中定义两个实现类" class="headerlink" title="创建上方接口的不同实现类，本例中定义两个实现类"></a>创建上方接口的不同实现类，本例中定义两个实现类</h3><p>SpringHelloWorld代码如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">SpringHelloWorld</span> <span class="keyword">implements</span> <span class="title">HelloWorld</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">sayHello</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"Spring Say Hello!!"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>StrutsHelloWorld代码如下：</p>
-<pre><code>public class StrutsHelloWorld implements HelloWorld {
-    @Override
-    public void sayHello() {
-        System.out.println(&quot;Struts Say Hello!!&quot;);
-    }
-}
-</code></pre><p>下面写配置文件</p>
-<h3 id="定义配置文件"><a href="#定义配置文件" class="headerlink" title="定义配置文件"></a>定义配置文件</h3><p>默认的文件路径位置为src/main/resources,此处定义的文件名称为beans.xml</p>
-<pre><code>&lt;beanid=&quot;springHelloWorld&quot;
-    class=&quot;com.yiibai.tutorial.spring.helloworld.impl.SpringHelloWorld&quot;&gt;&lt;/bean&gt;
-&lt;beanid=&quot;strutsHelloWorld&quot;
-    class=&quot;com.yiibai.tutorial.spring.helloworld.impl.StrutsHelloWorld&quot;&gt;&lt;/bean&gt;
-
-&lt;beanid=&quot;helloWorldService&quot;
-    class=&quot;com.yiibai.tutorial.spring.helloworld.HelloWorldService&quot;&gt;
-    &lt;propertyname=&quot;helloWorld&quot;ref=&quot;springHelloWorld&quot;/&gt;
-&lt;/bean&gt;
-</code></pre><p>如上所示：</p>
-<ol>
-<li>最上方分别定义了接口的两个实现类的bean。</li>
-<li>下方定义了Service类的bean，该bean通过propertyname为该类内部的变量实现复制操作。</li>
-<li>&lt;propertyname=”xxx” ref=”beanid”/&gt; 注入类—》适用于变量类型为引用类<br>&lt;propertyname=”xxx” value=”xxx”/&gt; 注入具体的值。—》适用于变量类型为基本类型</li>
-</ol>
-<h3 id="创建运行文件"><a href="#创建运行文件" class="headerlink" title="创建运行文件"></a>创建运行文件</h3><p>HelloProgram类如下：</p>
-<pre><code>public class HelloProgram {
-public static void main(String[] args) {
-
-    ApplicationContext context =
-            new ClassPathXmlApplicationContext(&quot;beans.xml&quot;);
-
-    HelloWorldService service =
-         (HelloWorldService) context.getBean(&quot;helloWorldService&quot;);
-
-    HelloWorld hw= service.getHelloWorld();
-
-    hw.sayHello();
-    }
-}
-</code></pre><p>如上所示：</p>
-<ol>
-<li>加载配置文件，并从配置文件中获取Service类的bean（需要强制转换）。</li>
-<li>通过Service类的内部方法获取到接口的具体实现类</li>
-<li>调用实现类的方法。</li>
-</ol>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Spring框架简记/">Spring框架简记</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -951,7 +917,7 @@ public static void main(String[] args) {
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>6</sup></a></li>
+				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>7</sup></a></li>
 			
 		
 			

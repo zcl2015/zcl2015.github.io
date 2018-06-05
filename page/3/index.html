@@ -79,6 +79,83 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2018/04/14/Servlet入门概述/" title="Servlet入门简介" itemprop="url">Servlet入门简介</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
+		
+  <p class="article-time">
+    <time datetime="2018-04-14T13:40:09.000Z" itemprop="datePublished"> Published 2018-04-14</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>Servlet入门概述</p>
+<h2 id="Servlet简述"><a href="#Servlet简述" class="headerlink" title="Servlet简述"></a>Servlet简述</h2><p>Servlet技术是一种<strong>基于Java语言，用于创建Web应用程序</strong>(处在服务器端并生成动态网页)。servlet API中有很多接口和类，如：Servlet，GenericServlet，HttpServlet，ServletRequest，ServletResponse等。</p>
+<p>Servlet可以通过多种方式进行描述，具体取决于上下文。 </p>
+<ul>
+<li>Servlet是一种用于<strong>创建Web应用程序</strong>的技术。</li>
+<li>Servlet<strong>是一个API</strong>，它提供了许多接口和类，包括文档。</li>
+<li>Servlet是一个<strong>必须实现的接口</strong>，用于创建任何servlet。</li>
+<li>Servlet是一个<strong>扩展服务器功能并响应传入请求的类</strong>。它可以响应任何类型的请求</li>
+<li>Servlet是<strong>部署在服务器上的Web组件</strong>，用于创建动态网页。</li>
+</ul>
+<p>模型如下：</p>
+<p><img src="https://s1.ax1x.com/2018/05/29/C42jVU.jpg" alt="C42jVU.jpg"></p>
+<h2 id="Servlet-API-简记"><a href="#Servlet-API-简记" class="headerlink" title="Servlet API 简记"></a>Servlet API 简记</h2><p><strong>javax.servlet和javax.servlet.http</strong>包表示servlet api的接口和类。<br>javax.servlet包中<strong>包含servlet或Web容器使用的许多接口和类</strong>。这些接口不是特定于任何协议。<br>javax.servlet.http包中<strong>包含仅用于负责http请求的接口和类</strong>。</p>
+<h2 id="创建Servlet的方法"><a href="#创建Servlet的方法" class="headerlink" title="创建Servlet的方法"></a>创建Servlet的方法</h2><p>   创建servlet有三种不同的方法。</p>
+<ul>
+<li>通过实现Servlet接口</li>
+<li>扩展GenericServlet类</li>
+<li>通过扩展HttpServlet类</li>
+</ul>
+<p>说明：</p>
+<pre><code>大部分servlet是通过扩展HttpServlet抽象类创建的。如前所述HttpServlet给出了Servlet接口的service()方法的定义。我们将创建Servlet类但不需要覆盖service()方法。Servlet类将仅覆盖doGet()或doPost()方法。当servlet的请求进入时，Web容器首先将调用servlet的service()方法，并根据service()方法的请求类型来调用doGet()或doPost()方法)。
+</code></pre><p> <strong>默认情况下，请求是Get请求。</strong></p>
+<p>关于Servlet的创建参考下面的例子即可。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Servlet简记/">Servlet简记</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2018/04/14/Hibernate/" title="Hibernate" itemprop="url">Hibernate</a>
   </h1>
   <p class="article-author">By
@@ -340,7 +417,7 @@ hexo s(启动本地web服务，用于博客的预览).
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>6</sup></a></li>
+				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>7</sup></a></li>
 			
 		
 			
