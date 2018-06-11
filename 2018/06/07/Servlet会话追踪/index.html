@@ -29,7 +29,7 @@
 <meta property="og:image" content="https://s1.ax1x.com/2018/06/11/CLrgfO.jpg">
 <meta property="og:image" content="https://s1.ax1x.com/2018/06/11/CLr7AP.png">
 <meta property="og:image" content="https://s1.ax1x.com/2018/06/11/CLrxns.png">
-<meta property="og:updated_time" content="2018-06-11T15:43:29.524Z">
+<meta property="og:updated_time" content="2018-06-11T15:46:14.673Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Servlet会话追踪">
 <meta name="twitter:description" content="此处主要记录Servlet的会话追踪以及与会话追踪相关的几种方法。 会话追踪什么是会话追踪会话只是指一段指定的时间间隔。会话跟踪是维护用户状态(数据)的一种方式。它也被称为servlet中的会话管理。 Http协议是一个无状态的，所以我们需要使用会话跟踪技术来维护用户状态。 每次用户请求服务器时，服务器将请求视为新请求。 所以需要保持一个用户的状态来识别特定的用户。 可以参考下图：  会话追踪实现">
@@ -199,6 +199,7 @@ response.addCookie(ck);//adding cookie in the response
 <li>在前面两个Servlet中获取HttpSession采用了方法1，这没有问题（如果存在当前会话就返回当前会话，如果不存在就创建一个会话），而第三个Servlet采用的方法2，并将布尔值设为false。这样只有存在当前会话才会返回当前会话，不存在的话则返回null(HttpSession类对应的默认值)</li>
 <li>在上面三段代码中，每段代码都添加了System.out.println(“xx id：”+session.getId());的信息。经过测试登录后（未注销）在三个Servlet中会输出相同的信息。</li>
 <li>上方的setAttribute以及getAttribute方法—参考Servlet属性设置。</li>
+<li>关于上方的自动配置@WebServlet(“url-pattern”)</li>
 </ol>
 <h3 id="运行结果-2"><a href="#运行结果-2" class="headerlink" title="运行结果"></a>运行结果</h3><p>和上方的Cookie类似。</p>
   
