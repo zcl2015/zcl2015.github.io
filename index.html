@@ -79,6 +79,101 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2018/06/14/Servlet事件和监听器/" title="Servlet事件和监听器" itemprop="url">Servlet事件和监听器</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
+		
+  <p class="article-time">
+    <time datetime="2018-06-14T11:48:49.000Z" itemprop="datePublished"> Published 2018-06-14</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p> 此处记录的主要是事件和监视器。</p>
+<h2 id="Servlet-ServletContextEvent事件"><a href="#Servlet-ServletContextEvent事件" class="headerlink" title="Servlet ServletContextEvent事件"></a>Servlet ServletContextEvent事件</h2><h3 id="什么是Servlet-ServletContextEvent事件？"><a href="#什么是Servlet-ServletContextEvent事件？" class="headerlink" title="什么是Servlet ServletContextEvent事件？"></a>什么是Servlet ServletContextEvent事件？</h3><p>在之前学习ServletContext时我们知道ServletContext对象由Web容器在部署项目时创建。而当Web应用程序部署在服务器上时，会通知ServletContextEvent事件。<br>    因此如果要在部署Web应用程序时执行某些操作，例如创建数据库连接，创建项目的所有表等，可以通过实现ServletContextListener接口的方式完成。</p>
+<h3 id="ServletContextEvent-ServletContextListener-介绍"><a href="#ServletContextEvent-ServletContextListener-介绍" class="headerlink" title="ServletContextEvent  ServletContextListener 介绍"></a>ServletContextEvent  ServletContextListener 介绍</h3><p> <strong>ServletContextEvent类中只定义了一个方法：</strong></p>
+<pre><code>public ServletContext getServletContext() - 返回ServletContext的实例。
+</code></pre><p> <strong>在ServletContextListener接口中声明了两种方法，需要自定义实现。</strong></p>
+<pre><code>public void contextInitialized(ServletContextEvent e): 当应用程序部署在服务器上时被调用。
+
+public void contextDestroyed(ServletContextEvent e): 当应用程序从服务器取消部署时被调用。
+</code></pre><h2 id="关于上方的代码示例"><a href="#关于上方的代码示例" class="headerlink" title="关于上方的代码示例"></a>关于上方的代码示例</h2><p>背景：在部署应用程序时执行数据库的连接。</p>
+<h3 id="数据表"><a href="#数据表" class="headerlink" title="数据表"></a>数据表</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">DROP TABLE IF EXISTS `employees`;</span><br><span class="line">CREATE TABLE `employees` (</span><br><span class="line">  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `name` varchar(64) NOT NULL DEFAULT &apos;&apos;,</span><br><span class="line">  `age` int(3) unsigned NOT NULL DEFAULT &apos;0&apos;,</span><br><span class="line">  `address` varchar(254) DEFAULT NULL,</span><br><span class="line">  `salary` float(8,2) unsigned DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`)</span><br><span class="line">) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;</span><br><span class="line"></span><br><span class="line">-- ----------------------------</span><br><span class="line">-- Records of employees</span><br><span class="line">-- ----------------------------</span><br><span class="line">INSERT INTO `employees` VALUES (&apos;1&apos;, &apos;李小春&apos;, &apos;23&apos;, &apos;海口市人民大道1800号&apos;, &apos;8900.00&apos;);</span><br><span class="line">INSERT INTO `employees` VALUES (&apos;2&apos;, &apos;张辉&apos;, &apos;28&apos;, &apos;广州天河区珠村市场&apos;, &apos;15800.00&apos;);</span><br><span class="line">INSERT INTO `employees` VALUES (&apos;3&apos;, &apos;林贤弟&apos;, &apos;25&apos;, &apos;广州白云区龙塘村120号&apos;, &apos;18990.00&apos;);</span><br></pre></td></tr></table></figure>
+<h3 id="web-xml"><a href="#web-xml" class="headerlink" title="web.xml"></a>web.xml</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;web-app xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;</span><br><span class="line">    xmlns=&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;</span><br><span class="line">    xsi:schemaLocation=&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd&quot;</span><br><span class="line">    id=&quot;WebApp_ID&quot; version=&quot;3.1&quot;&gt;</span><br><span class="line">    &lt;display-name&gt;ServletContextEvent&lt;/display-name&gt;</span><br><span class="line">    &lt;welcome-file-list&gt;</span><br><span class="line">        &lt;welcome-file&gt;index.html&lt;/welcome-file&gt;</span><br><span class="line">    &lt;/welcome-file-list&gt;</span><br><span class="line">    &lt;!--定义监听器--&gt;</span><br><span class="line">    &lt;listener&gt;</span><br><span class="line">        &lt;listener-class&gt;com.yiibai.MyListener&lt;/listener-class&gt;</span><br><span class="line">    &lt;/listener&gt;</span><br><span class="line">    &lt;!--定义servlet--&gt;</span><br><span class="line">    &lt;servlet&gt;</span><br><span class="line">        &lt;servlet-name&gt;FetchDataServlet&lt;/servlet-name&gt;</span><br><span class="line">        &lt;servlet-class&gt;com.yiibai.FetchData&lt;/servlet-class&gt;</span><br><span class="line">    &lt;/servlet&gt;</span><br><span class="line">    &lt;servlet-mapping&gt;</span><br><span class="line">        &lt;servlet-name&gt;FetchDataServlet&lt;/servlet-name&gt;</span><br><span class="line">        &lt;url-pattern&gt;/getdata&lt;/url-pattern&gt;</span><br><span class="line">    &lt;/servlet-mapping&gt;</span><br><span class="line">&lt;/web-app&gt;</span><br></pre></td></tr></table></figure>
+<p><strong>关于上方的说明： 注意上方监听器的定义</strong></p>
+<h3 id="index-html"><a href="#index-html" class="headerlink" title="index.html"></a>index.html</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;ServletContextListener实例&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body style=&quot;text-algin: center;&quot;&gt;</span><br><span class="line">    &lt;a href=&quot;FetchDataUrl&quot;&gt;点击读取employees表中的数据&lt;/a&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="监听器代码"><a href="#监听器代码" class="headerlink" title="监听器代码"></a>监听器代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">package com.ServletContextEvent;</span><br><span class="line">import java.sql.*;</span><br><span class="line">import javax.servlet.*;</span><br><span class="line">// @WebListener   a行</span><br><span class="line">public class MyListener implements ServletContextListener &#123;</span><br><span class="line">     public void contextInitialized(ServletContextEvent event) &#123;</span><br><span class="line">        String jdbcDriver = &quot;com.mysql.jdbc.Driver&quot;;</span><br><span class="line">        String dbURL = &quot;jdbc:mysql://localhost/servlet_db&quot;;</span><br><span class="line">        // Database credentials</span><br><span class="line">        String dbUser = &quot;root&quot;;</span><br><span class="line">        final String passwd = &quot;root&quot;;</span><br><span class="line">        try &#123;</span><br><span class="line">            Class.forName(jdbcDriver);</span><br><span class="line">            Connection con = DriverManager.getConnection(dbURL, dbUser, passwd);</span><br><span class="line">           // 获取ServletContext对象</span><br><span class="line">            ServletContext ctx = event.getServletContext();</span><br><span class="line">             **// 将连接对象作为属性存储在ServletContext中**</span><br><span class="line">            ctx.setAttribute(&quot;mycon&quot;, con); // b行</span><br><span class="line"></span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public void contextDestroyed(ServletContextEvent arg0) &#123;</span><br><span class="line">        System.out.println(&quot;Servlet has contextDestroyed...&quot;);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>关于上方的说明：</strong></p>
+<ol>
+<li>上方a行代码此处被注释掉了，如果没有注释的话不需要在上方的web.xml文件中配置监听器</li>
+<li>上方b行代码将连接对象作为属性存储在ServletContext中</li>
+</ol>
+<h3 id="Servlet代码"><a href="#Servlet代码" class="headerlink" title="Servlet代码"></a>Servlet代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">package com.ServletContextEvent;</span><br><span class="line">import java.io.*;</span><br><span class="line">import java.sql.*;</span><br><span class="line">import javax.servlet.*;</span><br><span class="line">import javax.servlet.annotation.WebServlet;</span><br><span class="line">import javax.servlet.http.*;</span><br><span class="line">@WebServlet(&quot;/FetchDataUrl&quot;)</span><br><span class="line">public class FetchData extends HttpServlet &#123;</span><br><span class="line">    private static final long serialVersionUID = 1L;</span><br><span class="line">    protected void doGet(HttpServletRequest request, HttpServletResponse response)</span><br><span class="line">            throws ServletException, IOException &#123;</span><br><span class="line">        response.setCharacterEncoding(&quot;UTF-8&quot;);</span><br><span class="line">        response.setContentType(&quot;text/html;charset=UTF-8&quot;);</span><br><span class="line">        PrintWriter out = response.getWriter();</span><br><span class="line">         try &#123;</span><br><span class="line">        	// 1. 从ServletContext对象检索连接对象: 此处获取ServletContext的方法在前面有讲解</span><br><span class="line">        	// 具体为获取ServletContext接口对象的两种方式</span><br><span class="line">            ServletContext ctx = getServletContext(); // a行</span><br><span class="line">            //2. 强制转换</span><br><span class="line">            Connection con = (Connection) ctx.getAttribute(&quot;mycon&quot;);</span><br><span class="line">            if(con==null) &#123;</span><br><span class="line">                System.out.println(&quot;数据库连接异常&quot;);</span><br><span class="line">            &#125;</span><br><span class="line">            String sql = &quot;SELECT * FROM employees&quot;;</span><br><span class="line">            PreparedStatement ps = con.prepareStatement(sql, ResultSet.TYPE_SCROLL_SENSITIVE,</span><br><span class="line">                    ResultSet.CONCUR_UPDATABLE);</span><br><span class="line"></span><br><span class="line">            ResultSet rs = ps.executeQuery();</span><br><span class="line">            while (rs.next()) &#123;</span><br><span class="line">                out.print(&quot;&lt;br&gt;&quot; + rs.getString(1) + &quot; &quot; + rs.getString(2));</span><br><span class="line">            &#125;</span><br><span class="line">            con.close(); // 关闭数据库的连接</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            e.printStackTrace();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        out.close();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>关于上方的说明：</p>
+<ol>
+<li>上方a行代码： 获取ServletContext的两种方式，这个在之前的<a href="https://www.bilibili.com/video/av17941476?from=search&amp;seid=6435304828224282362" target="_blank" rel="noopener">学习</a>中看到过。</li>
+</ol>
+<h3 id="运行结果"><a href="#运行结果" class="headerlink" title="运行结果"></a>运行结果</h3><p><img src="https://s1.ax1x.com/2018/06/14/CjiJpj.png" alt="CjiJpj.png"></p>
+<p><img src="https://s1.ax1x.com/2018/06/14/Cjitcn.png" alt="Cjitcn.png"></p>
+<h2 id="HttpSessionEvent"><a href="#HttpSessionEvent" class="headerlink" title="HttpSessionEvent"></a>HttpSessionEvent</h2><h3 id="什么是HttpSessionEvent？"><a href="#什么是HttpSessionEvent？" class="headerlink" title="什么是HttpSessionEvent？"></a>什么是HttpSessionEvent？</h3><p>会话对象更改时通知HttpSessionEvent，此事件的相应侦听器接口是HttpSessionListener。<br>我们可以在这个事件上执行一些操作，例如：计数统计当前登录的用户，记录登录时间，注销时间等用户详细信息。</p>
+<p>如果对此处内容有所遗忘。可以参考上一节的<a href="https://zcl2015.github.io/2018/06/07/Servlet%E4%BC%9A%E8%AF%9D%E8%BF%BD%E8%B8%AA/" target="_blank" rel="noopener">Servlet会话追踪</a></p>
+<h3 id="HttpSessionListener接口介绍"><a href="#HttpSessionListener接口介绍" class="headerlink" title="HttpSessionListener接口介绍"></a>HttpSessionListener接口介绍</h3><p>在HttpSessionListener接口中声明了两种方法，需要由servlet程序员来实现。</p>
+<pre><code>public void sessionCreated(HttpSessionEvent e)：在创建会话对象时被调用。
+public void sessionDestroyed(ServletContextEvent e)：当会话无效时被调用。
+</code></pre><h2 id="关于上方的代码示例-1"><a href="#关于上方的代码示例-1" class="headerlink" title="关于上方的代码示例"></a>关于上方的代码示例</h2><p>背景：此处主要用于统计当前登录用户数。<br>      不同的监听器针对不同的对象，拥有不同的使用场景。</p>
+<h3 id="web-xml-1"><a href="#web-xml-1" class="headerlink" title="web.xml"></a>web.xml</h3><p>此处的配置文件非常简单，仅仅定义了web项目的欢迎页面，关于监听器，servlet都没有配置，这些都在java文件中完成配置。</p>
+<h3 id="indexHession-html"><a href="#indexHession-html" class="headerlink" title="indexHession.html"></a>indexHession.html</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE html&gt;</span><br><span class="line">&lt;html&gt;</span><br><span class="line">&lt;head&gt;</span><br><span class="line">&lt;meta charset=&quot;UTF-8&quot;&gt;</span><br><span class="line">&lt;title&gt;统计在线用户数量&lt;/title&gt;</span><br><span class="line">&lt;/head&gt;</span><br><span class="line">&lt;body&gt;</span><br><span class="line">    &lt;div style=&quot;font-align: center;&quot;&gt;</span><br><span class="line">        &lt;form action=&quot;FirstServletUrl&quot; method=&quot;post&quot;&gt;</span><br><span class="line">            用户名:&lt;input type=&quot;text&quot; name=&quot;username&quot; value=&quot;admin&quot;&gt;</span><br><span class="line">                密码:&lt;input type=&quot;password&quot; name=&quot;password&quot;&gt;</span><br><span class="line">        &lt;input type=&quot;submit&quot; value=&quot;登录&quot;/&gt;</span><br><span class="line">        &lt;/form&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">&lt;/body&gt;</span><br><span class="line">&lt;/html&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="监听器代码-1"><a href="#监听器代码-1" class="headerlink" title="监听器代码"></a>监听器代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">package com.HttpSessionEvent;</span><br><span class="line">import javax.servlet.ServletContext;</span><br><span class="line">import javax.servlet.annotation.WebListener;</span><br><span class="line">import javax.servlet.http.HttpSessionEvent;</span><br><span class="line">import javax.servlet.http.HttpSessionListener;</span><br><span class="line"></span><br><span class="line">@WebListener</span><br><span class="line">public class CountUserListener implements HttpSessionListener &#123;</span><br><span class="line">    ServletContext ctx = null;</span><br><span class="line">    static int total = 0, current = 0;</span><br><span class="line">    public void sessionCreated(HttpSessionEvent e) &#123;</span><br><span class="line">        total++; // 记录总的用户</span><br><span class="line">        current++; // 记录当前用户</span><br><span class="line">        //1.获取ServletContext对象</span><br><span class="line">        ctx = e.getSession().getServletContext();</span><br><span class="line">        ctx.setAttribute(&quot;totalusers&quot;, total);</span><br><span class="line">        ctx.setAttribute(&quot;currentusers&quot;, current);</span><br><span class="line">    &#125;</span><br><span class="line">    public void sessionDestroyed(HttpSessionEvent e) &#123;</span><br><span class="line">        current--;</span><br><span class="line">        ctx.setAttribute(&quot;currentusers&quot;, current);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Servlet代码-1"><a href="#Servlet代码-1" class="headerlink" title="Servlet代码"></a>Servlet代码</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">package com.HttpSessionEvent;</span><br><span class="line">import java.io.*;</span><br><span class="line">import javax.servlet.*;</span><br><span class="line">import javax.servlet.annotation.WebServlet;</span><br><span class="line">import javax.servlet.http.*;</span><br><span class="line">@WebServlet(&quot;/FirstServletUrl&quot;)</span><br><span class="line">public class FirstServlet extends HttpServlet &#123;</span><br><span class="line">	private static final long serialVersionUID = 1L;</span><br><span class="line">    public void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException &#123;</span><br><span class="line"></span><br><span class="line">        response.setCharacterEncoding(&quot;UTF-8&quot;);</span><br><span class="line">        response.setContentType(&quot;text/html;charset=UTF-8&quot;);</span><br><span class="line">        request.setCharacterEncoding(&quot;UTF-8&quot;);</span><br><span class="line">        PrintWriter out = response.getWriter();</span><br><span class="line"></span><br><span class="line">        String n = request.getParameter(&quot;username&quot;);</span><br><span class="line">        String password = request.getParameter(&quot;password&quot;);</span><br><span class="line">        if (password.equals(&quot;123456&quot;)) &#123;</span><br><span class="line">            out.print(&quot;欢迎您, &quot; + n);</span><br><span class="line">            //1.会话追踪部分的内容</span><br><span class="line">            HttpSession session = request.getSession();</span><br><span class="line">            session.setAttribute(&quot;uname&quot;, n);</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            out.print(&quot;密码错误&quot;);</span><br><span class="line">        &#125;</span><br><span class="line">        // 1.</span><br><span class="line">        ServletContext ctx = getServletContext();</span><br><span class="line">        int t = (Integer) ctx.getAttribute(&quot;totalusers&quot;);</span><br><span class="line">        int c = (Integer) ctx.getAttribute(&quot;currentusers&quot;);</span><br><span class="line">        out.print(&quot;&lt;br&gt;用户总数： &quot; + t);</span><br><span class="line">        out.print(&quot;&lt;br&gt;当前用户数： &quot; + c);</span><br><span class="line">        out.print(&quot;&lt;br&gt;&lt;a href=&apos;LogoutServletUrl&apos;&gt;注销&lt;/a&gt;&quot;);</span><br><span class="line">        out.close();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="运行结果-1"><a href="#运行结果-1" class="headerlink" title="运行结果"></a>运行结果</h3><p>关于运行结果：按照以下方式测试<br>1.在同一个浏览器中：<br>   登录后的网页地址是： <a href="http://localhost:8080/ServletEvent/FirstServletUrl" target="_blank" rel="noopener">http://localhost:8080/ServletEvent/FirstServletUrl</a><br>   在不注销的情况下：<a href="http://localhost:8080/ServletEvent/" target="_blank" rel="noopener">http://localhost:8080/ServletEvent/</a> 重新登陆 查看结果。<br>   在注销的情况下：<a href="http://localhost:8080/ServletEvent/" target="_blank" rel="noopener">http://localhost:8080/ServletEvent/</a>  重新登陆，查看结果。</p>
+<p>  小计：此处的内容与自己之前对于会话中session部分认知吻合。</p>
+<ol start="2">
+<li>在不同的浏览器中重复1中的操作，结果出乎意料。<br><strong>如何避免这个问题？？？</strong></li>
+</ol>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Servlet简记/">Servlet简记</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2018/06/07/Servlet会话追踪/" title="Servlet会话追踪" itemprop="url">Servlet会话追踪</a>
   </h1>
   <p class="article-author">By
@@ -865,60 +960,6 @@ ServletContext application=getServletContext(); // 直接调用getServletContext
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2018/05/25/Java设计模式简记/" title="Java设计模式简记" itemprop="url">Java设计模式简记</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
-		
-  <p class="article-time">
-    <time datetime="2018-05-25T08:01:37.000Z" itemprop="datePublished"> Published 2018-05-25</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/设计模式/">设计模式</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -942,7 +983,7 @@ ServletContext application=getServletContext(); // 直接调用getServletContext
 		<ul class="clearfix">
 		
 			
-				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>10</sup></a></li>
+				<li><a href="/tags/Servlet简记/" title="Servlet简记">Servlet简记<sup>11</sup></a></li>
 			
 		
 			
