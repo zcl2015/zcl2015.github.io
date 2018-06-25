@@ -4,22 +4,25 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Java设计模式简记 | SelfBlog</title>
+    <title>Java数据库操作以及方法比较 | SelfBlog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="赵成龙">
     
 
     
-    <meta name="keywords" content="设计模式">
+    <meta name="description" content="此处主要记录java连接数据库的步骤，以及几种处理方式。 Java数据库连接数据库代码如下：1234567891011121314use servlet_db;DROP TABLE IF EXISTS `employees`;CREATE TABLE `employees` (  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,  `name` va">
+<meta name="keywords" content="mysql数据库">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Java设计模式简记">
-<meta property="og:url" content="http://yoursite.com/2018/05/25/Java设计模式简记/index.html">
+<meta property="og:title" content="Java数据库操作以及方法比较">
+<meta property="og:url" content="http://yoursite.com/2018/06/21/Java数据库操作以及方法比较/index.html">
 <meta property="og:site_name" content="SelfBlog">
+<meta property="og:description" content="此处主要记录java连接数据库的步骤，以及几种处理方式。 Java数据库连接数据库代码如下：1234567891011121314use servlet_db;DROP TABLE IF EXISTS `employees`;CREATE TABLE `employees` (  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,  `name` va">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-05-25T08:04:39.490Z">
+<meta property="og:updated_time" content="2018-06-25T15:42:28.385Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Java设计模式简记">
+<meta name="twitter:title" content="Java数据库操作以及方法比较">
+<meta name="twitter:description" content="此处主要记录java连接数据库的步骤，以及几种处理方式。 Java数据库连接数据库代码如下：1234567891011121314use servlet_db;DROP TABLE IF EXISTS `employees`;CREATE TABLE `employees` (  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,  `name` va">
 
     
     <link rel="alternative" href="/atom.xml" title="SelfBlog" type="application/atom+xml">
@@ -79,14 +82,14 @@
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2018/05/25/Java设计模式简记/" title="Java设计模式简记" itemprop="url">Java设计模式简记</a>
+      <a href="/2018/06/21/Java数据库操作以及方法比较/" title="Java数据库操作以及方法比较" itemprop="url">Java数据库操作以及方法比较</a>
   </h1>
   <p class="article-author">By
        
 		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
 		
   <p class="article-time">
-    <time datetime="2018-05-25T08:01:37.000Z" itemprop="datePublished"> Published 2018-05-25</time>
+    <time datetime="2018-06-21T12:30:20.000Z" itemprop="datePublished"> Published 2018-06-21</time>
     
   </p>
 </header>
@@ -95,11 +98,21 @@
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java数据库连接"><span class="toc-number">1.</span> <span class="toc-text">Java数据库连接</span></a></li></ol>
 		
 		</div>
 		
-		  
+		<p>  此处主要记录java连接数据库的步骤，以及几种处理方式。</p>
+<h2 id="Java数据库连接"><a href="#Java数据库连接" class="headerlink" title="Java数据库连接"></a>Java数据库连接</h2><p><strong>数据库代码如下：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">use servlet_db;</span><br><span class="line">DROP TABLE IF EXISTS `employees`;</span><br><span class="line">CREATE TABLE `employees` (</span><br><span class="line">  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `name` varchar(64) NOT NULL DEFAULT &apos;&apos;,</span><br><span class="line">  `age` int(3) unsigned NOT NULL DEFAULT &apos;0&apos;,</span><br><span class="line">  `address` varchar(254) DEFAULT NULL,</span><br><span class="line">  `salary` float(8,2) unsigned DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`)</span><br><span class="line">) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;</span><br><span class="line"></span><br><span class="line">INSERT INTO `employees` VALUES (&apos;1&apos;, &apos;李小春&apos;, &apos;23&apos;, &apos;海口市人民大道1800号&apos;, &apos;8900.00&apos;);</span><br><span class="line">INSERT INTO `employees` VALUES (&apos;2&apos;, &apos;张辉&apos;, &apos;28&apos;, &apos;广州天河区珠村市场&apos;, &apos;15800.00&apos;);</span><br><span class="line">INSERT INTO `employees` VALUES (&apos;3&apos;, &apos;林贤弟&apos;, &apos;25&apos;, &apos;广州白云区龙塘村120号&apos;, &apos;18990.00&apos;);</span><br></pre></td></tr></table></figure></p>
+<p><strong>Java代码如下：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/*</span><br><span class="line"> 连接到数据库（MySQL），并完成几种简单的查询</span><br><span class="line"> */</span><br><span class="line">import java.sql.*;</span><br><span class="line">public class JdbcConn &#123;</span><br><span class="line">    public static void main(String[] args) throws SQLException &#123;</span><br><span class="line">        String JDBC_DRIVER = &quot;com.mysql.jdbc.Driver&quot;;</span><br><span class="line">        String DB_URL = &quot;jdbc:mysql://localhost/servlet_db&quot;;</span><br><span class="line">        String User = &quot;root&quot;;</span><br><span class="line">        String Passwd = &quot;root&quot;;</span><br><span class="line">        Connection con=null;</span><br><span class="line">        Statement stmt =null;</span><br><span class="line">        try &#123;</span><br><span class="line">            Class.forName(JDBC_DRIVER); // 加载驱动包</span><br><span class="line">        &#125; catch (ClassNotFoundException e)&#123;</span><br><span class="line">            System.out.println(&quot;Class not found &quot; + e);</span><br><span class="line">        &#125;</span><br><span class="line">        int total_rows = 0;</span><br><span class="line"></span><br><span class="line">        try &#123; // 连接数据库</span><br><span class="line">             con = DriverManager.getConnection(DB_URL, User, Passwd);</span><br><span class="line">            // 创建执行sql语句的对象</span><br><span class="line">             stmt = con.createStatement();</span><br><span class="line">             // 执行查询语句</span><br><span class="line">            ResultSet rs = stmt.executeQuery(&quot;SELECT * FROM employees&quot;);</span><br><span class="line">            while (rs.next()) &#123;</span><br><span class="line">                 total_rows++;</span><br><span class="line">                 // 方式1</span><br><span class="line">                int id = rs.getInt(&quot;ID&quot;);</span><br><span class="line">                String name = rs.getString(&quot;name&quot;);</span><br><span class="line">                int age = rs.getInt(&quot;AGE&quot;);</span><br><span class="line">                String address = rs.getString(&quot;address&quot;);</span><br><span class="line">                Float salary=rs.getFloat(&quot;salary&quot;);</span><br><span class="line">                // 方式2</span><br><span class="line">                /*</span><br><span class="line">                int id = rs.getInt(1);</span><br><span class="line">                String name = rs.getString(2);</span><br><span class="line">                int age = rs.getInt(3);</span><br><span class="line">                String address = rs.getString(4);</span><br><span class="line">                Float salary=rs.getFloat(5);</span><br><span class="line">                */</span><br><span class="line">                /* a行</span><br><span class="line">                String name=rs.getString(1);</span><br><span class="line">                System.out.println(name);</span><br><span class="line">                */</span><br><span class="line">                System.out.println(id+&quot;,&quot;+name+&quot;,&quot;+age+&quot;,&quot;+&quot;,&quot;+address+&quot;,&quot;+salary);</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(&quot;There are &quot; + total_rows + &quot; records in the table&quot;);</span><br><span class="line">        &#125; catch (SQLException e) &#123;</span><br><span class="line">            System.out.println(&quot;SQL exception occured&quot; + e);</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            // 关闭数据库连接</span><br><span class="line">            con.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>关于上方的几点说明：</strong></p>
+<ol>
+<li>数据库连接： 加载驱动包，连接数据库，创建sql语句执行对象，执行sql语句，关闭数据库连接。</li>
+<li>关于上方的查询方式包括两种，一种是按照索引（注意索引从1开始，而不是数字0），一种是按照字段名(不区分大小写)。自己之前有个模糊认识：如上方a行所示。之前认为按照a行的查询方式，会查询到数据表中第一个类型为varchar类型的数据，也就是上方会对应数据表中的name,这是不对的。a行查询到的数据是索引为1的字段：id. </li>
+<li>创建sql语句执行对象时的区别：prepareStatement , Statement。<br>执行sql语句时的区别：executeQuery , execute。后面再举例说明。</li>
+</ol>
+  
 	</div>
 		<footer class="article-footer clearfix">
 <div class="article-catetags">
@@ -107,7 +120,7 @@
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/设计模式/">设计模式</a>
+  <span></span> <a href="/tags/mysql数据库/">mysql数据库</a>
   </div>
 
 </div>
@@ -116,7 +129,7 @@
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://yoursite.com/2018/05/25/Java设计模式简记/" data-title="Java设计模式简记 | SelfBlog" data-tsina="" class="share clearfix">
+	  <div data-url="http://yoursite.com/2018/06/21/Java数据库操作以及方法比较/" data-title="Java数据库操作以及方法比较 | SelfBlog" data-tsina="" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -129,19 +142,11 @@
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2018/05/29/Servlet入门程序/" title="Servlet入门程序">
-  <strong>上一篇：</strong><br/>
-  <span>
-  Servlet入门程序</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2018/04/25/Spring依赖注入简记/"  title="Spring依赖注入简记">
+<a href="/2018/06/19/Java基础知识简记/"  title="Java基础知识简记">
  <strong>下一篇：</strong><br/> 
- <span>Spring依赖注入简记
+ <span>Java基础知识简记
 </span>
 </a>
 </div>
@@ -158,7 +163,7 @@
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Java数据库连接"><span class="toc-number">1.</span> <span class="toc-text">Java数据库连接</span></a></li></ol>
  
   </div>
 

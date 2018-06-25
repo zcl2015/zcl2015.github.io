@@ -79,6 +79,158 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2018/05/29/Servlet的几种实现方式/" title="Servlet的几种实现方式" itemprop="url">Servlet的几种实现方式</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
+		
+  <p class="article-time">
+    <time datetime="2018-05-29T07:18:09.000Z" itemprop="datePublished"> Published 2018-05-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>  基于Servlet的实现</p>
+<h2 id="实现servlet接口"><a href="#实现servlet接口" class="headerlink" title="实现servlet接口"></a>实现servlet接口</h2><h3 id="servlet接口简介"><a href="#servlet接口简介" class="headerlink" title="servlet接口简介"></a>servlet接口简介</h3><p>Servlet接口有5种方法。分别为：init，service和destroy是servlet的生命周期方法。这些方法由web容器调用。各个方法作用如下图所示。</p>
+<p><img src="https://s1.ax1x.com/2018/05/29/C4Lene.png" alt="C4Lene.png"></p>
+<h3 id="代码实现实例"><a href="#代码实现实例" class="headerlink" title="代码实现实例"></a>代码实现实例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yiibai;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyServlet</span> <span class="keyword">implements</span> <span class="title">Servlet</span> </span>&#123;</span><br><span class="line">    ServletConfig config = <span class="keyword">null</span>;</span><br><span class="line">    <span class="comment">//  init方法,由web容器仅调用一次</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(ServletConfig config)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.config = config;</span><br><span class="line">        System.out.println(<span class="string">"servlet is initialized"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 为传入的请求提供相应。比如此处的请求显示的页面中的内容就是该方法中的内容</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(ServletRequest req, ServletResponse res)</span> <span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line">        res.setContentType(<span class="string">"text/html"</span>);</span><br><span class="line">        PrintWriter out = res.getWriter();</span><br><span class="line">        out.print(<span class="string">"&lt;html&gt;&lt;body&gt;"</span>);</span><br><span class="line">        out.print(<span class="string">"&lt;div style=\"text-align:center;\"&gt;&lt;h2&gt;hello simple servlet&lt;/h2&gt;&lt;/div&gt;"</span>);</span><br><span class="line">        out.print(<span class="string">"&lt;/body&gt;&lt;/html&gt;"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"servlet is destroyed"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> ServletConfig <span class="title">getServletConfig</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> config;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getServletInfo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"copyright 2012-2020"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="配置文件（仅显示部分）"><a href="#配置文件（仅显示部分）" class="headerlink" title="配置文件（仅显示部分）"></a>配置文件（仅显示部分）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;servlet&gt;</span><br><span class="line">    &lt;description&gt;&lt;/description&gt;</span><br><span class="line">    &lt;display-name&gt;MyServlet&lt;/display-name&gt;&lt;!-- // 类的显示名称 --&gt;</span><br><span class="line">    &lt;servlet-name&gt;MyServlet&lt;/servlet-name&gt;&lt;!-- // 类的别名 --&gt;</span><br><span class="line">    &lt;servlet-class&gt;com.yiibai.MyServlet&lt;/servlet-class&gt;&lt;!-- // 类的名称 --&gt;</span><br><span class="line">  &lt;/servlet&gt;</span><br><span class="line">  &lt;servlet-mapping&gt;</span><br><span class="line">    &lt;servlet-name&gt;MyServlet&lt;/servlet-name&gt;// 类的别名</span><br><span class="line">    &lt;url-pattern&gt;/MyServletDemo&lt;/url-pattern&gt;// 请求此类的对应URL</span><br><span class="line">  &lt;/servlet-mapping&gt;</span><br></pre></td></tr></table></figure>
+<p>关于配置文件主要记住以下内容：</p>
+<pre><code>&lt;servlet-name&gt;是&lt;servlet&gt;的子元素，表示servlet的名称。
+&lt;servlet-class&gt;是&lt;servlet&gt;的子元素，表示servlet的类。
+&lt;servlet-mapping&gt;是&lt;web-app&gt;的子元素。它用于映射servlet。
+&lt;url-pattern&gt;是&lt;servlet-mapping&gt;的子元素。客户端使用此模式来调用servlet。
+</code></pre><p>也就是servlet-class指定某一个确定的类，该类有一个名称servlet-name（一般与类名相同）。在servlet-mapping中使用自定义的url来使用相关的servlet。）</p>
+<h3 id="运行结果如图"><a href="#运行结果如图" class="headerlink" title="运行结果如图"></a>运行结果如图</h3><p><img src="https://s1.ax1x.com/2018/05/29/C4ORsS.png" alt="C4ORsS.png"></p>
+<h2 id="继承GenericServlet类"><a href="#继承GenericServlet类" class="headerlink" title="继承GenericServlet类"></a>继承GenericServlet类</h2><h3 id="GenericServlet类简介"><a href="#GenericServlet类简介" class="headerlink" title="GenericServlet类简介"></a>GenericServlet类简介</h3><p>Servlet接口为所有servlet提供常见的行为。<br>GenericServlet类实现了Servlet，ServletConfig和Serializable接口。它提供除了service方法之外，还实现了这些接口的所有方法。<br>GenericServlet类可以处理任何类型的请求，因此它与协议无关。<br><strong>可以通过继承GenericServlet类并提供服务方法的实现来创建通用的servlet。</strong></p>
+<h3 id="代码实现实例-1"><a href="#代码实现实例-1" class="headerlink" title="代码实现实例"></a>代码实现实例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yiibai;</span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyServlet</span> <span class="keyword">extends</span> <span class="title">GenericServlet</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(ServletRequest req, ServletResponse res)</span> <span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line">        res.setContentType(<span class="string">"text/html"</span>);</span><br><span class="line">        PrintWriter out = res.getWriter();</span><br><span class="line">        out.print(<span class="string">"&lt;html&gt;&lt;body&gt;"</span>);</span><br><span class="line">        out.print(<span class="string">"&lt;div style=\"text-align:center;\"&gt;&lt;h2&gt;hello generic servlet&lt;/h2&gt;&lt;/div&gt;"</span>);</span><br><span class="line">        out.print(<span class="string">"&lt;/body&gt;&lt;/html&gt;"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="继承-HttpServlet类"><a href="#继承-HttpServlet类" class="headerlink" title="继承 HttpServlet类"></a>继承 HttpServlet类</h2><h3 id="HttpServlet类简介"><a href="#HttpServlet类简介" class="headerlink" title="HttpServlet类简介"></a>HttpServlet类简介</h3><p>HttpServlet类扩展了GenericServlet类并实现了Serializable接口。它提供了http特定的方法，如:doGet，doPost，doHead，doTrace等。</p>
+<h3 id="代码实现实例-2"><a href="#代码实现实例-2" class="headerlink" title="代码实现实例"></a>代码实现实例</h3><pre><code>参考上一章的入门示例。该示例基于HttpServlet类。
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Servlet简记/">Servlet简记</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/05/29/Servlet入门程序/" title="Servlet入门程序" itemprop="url">Servlet入门程序</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
+		
+  <p class="article-time">
+    <time datetime="2018-05-29T02:50:00.000Z" itemprop="datePublished"> Published 2018-05-29</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>Servlet入门程序：此处入门程序不采用IDE或者ECLIPSE的方式运行，而是在webapps中运行。主要包括以下几个步骤。</p>
+<h2 id="创建一个Servlet"><a href="#创建一个Servlet" class="headerlink" title="创建一个Servlet"></a>创建一个Servlet</h2><p> 与之前的例子相呼应，此处采用扩展HttpServlet抽象类的方式创建Servlet。代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import javax.servlet.*;</span><br><span class="line">import javax.servlet.http.*;</span><br><span class="line">import java.io.*;</span><br><span class="line"></span><br><span class="line">public class MyServlet extends HttpServlet</span><br><span class="line">&#123;</span><br><span class="line"> public void doGet(HttpServletRequest request,HttpServletResponse response) </span><br><span class="line">                     throws ServletException, IOException </span><br><span class="line"> &#123;</span><br><span class="line">   response.setContentType(&quot;text/html&quot;);</span><br><span class="line">   PrintWriter out = response.getWriter();</span><br><span class="line">   out.println(&quot;&lt;html&gt;&lt;body&gt;&quot;);</span><br><span class="line">   out.println(&quot;&lt;h2 style=&apos;text-align:center&apos;&gt;Hello Servlet ~&lt;/h2&gt;&quot;);</span><br><span class="line">   out.println(&quot;&lt;/body&gt;&lt;/html&gt;&quot;);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>将该文件放在F:\Demo\First目录下</p>
+<h2 id="编译Servlet类"><a href="#编译Servlet类" class="headerlink" title="编译Servlet类"></a>编译Servlet类</h2><pre><code>关于编译的说明：要编译Servlet，需要一个JAR文件。不同的服务器需要不同的JAR文件。在Apache Tomcat服务器需要的是servlet-api.jar文件来编译servlet类。（该jar文件可以直接在tomcat的lib目录下找到。）
+</code></pre><p>步骤如下：</p>
+<ol>
+<li>将上述jar包放在一个目录中（此处放置的位置是F:\Demo\library）</li>
+<li><p>在MyServlet所在的目录执行以下命令：</p>
+<pre><code>F:\Demo\First&gt; javac -Djava.ext.dirs=F:\Demo\library MyServlet.java
+</code></pre></li>
+<li>将当前目录下生成的类文件：MyServlet.class 粘贴到F:\Demo\First\WEB-INF\classes目录中。</li>
+</ol>
+<h2 id="创建部署描述符"><a href="#创建部署描述符" class="headerlink" title="创建部署描述符"></a>创建部署描述符</h2><p>   部署描述符(DD)是由Web容器用于运行Servlet和JSP页面的XML文档。也就是web.xml文件。其作用如下：</p>
+<ol>
+<li>将URL映射到Servlet类</li>
+<li>初始化参数</li>
+<li>定义错误页面</li>
+<li>安全角色</li>
+<li>声明标签库<br>web.xml代码如下：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;web-app xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot; xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot; id=&quot;WebApp_ID&quot; version=&quot;2.5&quot;&gt;</span><br><span class="line">  &lt;display-name&gt;MyFirstServlet&lt;/display-name&gt;</span><br><span class="line">  &lt;welcome-file-list&gt;</span><br><span class="line">    &lt;!--// 默认主页--&gt;</span><br><span class="line">    &lt;welcome-file&gt;index.html&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;index.html&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;default.html&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;default.html&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;default.jsp&lt;/welcome-file&gt;</span><br><span class="line">  &lt;/welcome-file-list&gt;</span><br><span class="line">  &lt;servlet&gt;</span><br><span class="line">    &lt;description&gt;&lt;/description&gt;</span><br><span class="line">    &lt;display-name&gt;MyServlet&lt;/display-name&gt;&lt;!--// 类的显示名称 --&gt;</span><br><span class="line">    &lt;servlet-name&gt;MyServlet&lt;/servlet-name&gt;&lt;!--// 类的别名 --&gt;</span><br><span class="line">    &lt;servlet-class&gt;MyServlet&lt;/servlet-class&gt;&lt;!--// 类的名称 --&gt;</span><br><span class="line">  &lt;/servlet&gt;</span><br><span class="line">  &lt;servlet-mapping&gt;</span><br><span class="line">    &lt;servlet-name&gt;MyServlet&lt;/servlet-name&gt;&lt;!--// 类的别名 --&gt;</span><br><span class="line">    &lt;url-pattern&gt;/hello&lt;/url-pattern&gt;&lt;!--// 请求此类的对应URL --&gt;</span><br><span class="line">  &lt;/servlet-mapping&gt;</span><br><span class="line">&lt;/web-app&gt;</span><br></pre></td></tr></table></figure>
+<h2 id="启动服务器并部署应用程序"><a href="#启动服务器并部署应用程序" class="headerlink" title="启动服务器并部署应用程序"></a>启动服务器并部署应用程序</h2><pre><code>步骤如下：
+</code></pre><ol>
+<li>将目录F:\Demo\First 拷贝到 tomcat下的webapps目录下</li>
+<li>在tomcat的bin目录下启动项目</li>
+<li>访问http:localhost:8080/First/hello</li>
+</ol>
+<h2 id="关于上方的说明"><a href="#关于上方的说明" class="headerlink" title="关于上方的说明"></a>关于上方的说明</h2><pre><code>有点问题（todo）
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Servlet简记/">Servlet简记</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2018/05/25/Java设计模式简记/" title="Java设计模式简记" itemprop="url">Java设计模式简记</a>
   </h1>
   <p class="article-author">By
@@ -762,367 +914,9 @@ public static void main(String[] args) {
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2018/04/19/SpringMVC表单标签库/" title="SpringMVC表单标签库" itemprop="url">SpringMVC表单标签库</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
-		
-  <p class="article-time">
-    <time datetime="2018-04-19T04:25:36.000Z" itemprop="datePublished"> Published 2018-04-19</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>SpringMVC表单标签库的使用</p>
-<h2 id="Spring-MVC-表单标签库简述"><a href="#Spring-MVC-表单标签库简述" class="headerlink" title="Spring MVC 表单标签库简述"></a>Spring MVC 表单标签库简述</h2><p>   表单标签库主要用于网页中信息的获取。大体分为以下两个使用场景：</p>
-<ol>
-<li>登陆界面：网页的登陆界面需要用户输入用户信息，从而完成用户的信息验证以及与之相关的操作。</li>
-<li>基于实际需要填写信息。例如注册页面的信息采集，网页中表单信息的采集。<br>基于以上考虑，标签在网页中使用非常普遍，应当熟练掌握。</li>
-</ol>
-<h2 id="Spring-MVC-表单标签库分类"><a href="#Spring-MVC-表单标签库分类" class="headerlink" title="Spring MVC 表单标签库分类"></a>Spring MVC 表单标签库分类</h2><h3 id="不需要外部数据标签"><a href="#不需要外部数据标签" class="headerlink" title="不需要外部数据标签"></a>不需要外部数据标签</h3><ol>
-<li><p><strong>文本框</strong><br>使用&lt;form:input /&gt;标签来渲染一个HTML文本框。</p>
-<pre><code>例如 -&lt;form:input path=&quot;Modelattribute&quot; /&gt;  
-HTML它将生成以下HTML内容： 
-&lt;input id=&quot;Modelattribute&quot; name=&quot;Modelattribute&quot; type=&quot;text&quot; value=&quot;&quot;/&gt; 
-</code></pre><p>效果如下： <input id="Modelattribute" name="Modelattribute" type="text" value=""></p>
-</li>
-<li><p><strong>密码框</strong><br>使用&lt;form:password /&gt;标签来呈现HTML密码框。 </p>
-<pre><code>例如 -&lt;form:password path=&quot;Modelattribute&quot; /&gt;
-HTML它将呈现以下HTML内容:
-&lt;input id=&quot;password&quot; name=&quot;password&quot; type=&quot;password&quot; value=&quot;&quot;/&gt;
-</code></pre><p>效果如下：<input id="Modelattribute" name="Modelattribute" type="password" value=""></p>
-</li>
-<li><p><strong>文本域</strong><br>使用&lt;form:textarea /&gt;标签来呈现HTML密码框。</p>
-<pre><code>例如 - &lt;form:textarea path=&quot;xxx&quot; rows=&quot;5&quot; cols=&quot;30&quot; /&gt;
-HTML它将呈现以下HTML内容。
-&lt;textarea id=&quot;Modelattribute&quot; name=&quot;Modelattribute&quot; rows=&quot;5&quot; cols=&quot;30&quot;&gt;
-</code></pre><p>效果如下：<textarea id="Modelattribute" name="Modelattribute" rows="5" cols="30"></textarea></p>
-</li>
-</ol>
-<ol start="4">
-<li><p><strong>复选框 (单选)</strong><br>使用&lt;form:checkbox /&gt;标签来呈现HTML密码框。 </p>
-<pre><code>例如 - &lt;form:checkbox path=&quot;Modelattribute&quot; /&gt;
-HTML它将呈现以下HTML内容。
-&lt;input id=&quot;Modelattribute&quot; name=&quot;Modelattribute&quot; type=&quot;checkbox&quot; value=&quot;true&quot;/&gt;
-</code></pre><p>效果如下：</p>
-   <input id="Modelattribute" name="Modelattribute" type="checkbox" value="true">
-</li>
-<li><p><strong>单选框</strong><br>使用&lt;form:radiobutton /&gt;标签来呈现HTML密码框。</p>
-<pre><code>例如   &lt;form:radiobutton path=&quot;Modelattribute&quot; value=&quot;M&quot; label=&quot;男&quot; /&gt;  
-      &lt;form:radiobutton path=&quot;Modelattribute&quot; value=&quot;F&quot; label=&quot;女&quot; /&gt;
-HTML它将呈现以下HTML内容。
-&lt;input id=&quot;gender1&quot; name=&quot;gender&quot; type=&quot;radio&quot; value=&quot;M&quot; checked=&quot;checked&quot;/&gt;&lt;label for=&quot;gender1&quot;&gt;男&lt;label&gt;
-&lt;input id=&quot;gender2&quot; name=&quot;gender&quot; type=&quot;radio&quot; value=&quot;F&quot;/&gt;&lt;label for=&quot;gender2&quot;&gt;女&lt;/label&gt;
-</code></pre><p>效果如下：<br> <input id="gender1" name="gender" type="radio" value="M" checked="checked"><label for="gender1">男<label><br> <input id="gender2" name="gender" type="radio" value="F"><label for="gender2">女</label></label></label></p>
-</li>
-<li><p><strong>隐藏字段域</strong><br>使用&lt;form:hidden /&gt;标签来呈现HTML隐藏字段域。</p>
-<pre><code>例如 -&lt;form:hidden path=&quot;id&quot; value=&quot;1000&quot;/&gt;
-HTML它将呈现以下HTML内容。
-&lt;input id=&quot;id&quot; name=&quot;id&quot; type=&quot;hidden&quot; value=&quot;1000&quot;/&gt;
-以下作为对比:
-&lt;input id=&quot;id&quot; name=&quot;id&quot;  value=&quot;1000&quot;/&gt;
-</code></pre><p>效果如下：<br> <input id="id" name="id" value="1000"></p>
- <input id="id" name="id" type="hidden" value="1000">
-
-</li>
-</ol>
-<p>注：上方标签中的path分别指向Model类中的属性。</p>
-<h3 id="需要外部数据标签"><a href="#需要外部数据标签" class="headerlink" title="需要外部数据标签"></a>需要外部数据标签</h3><ol>
-<li><p><strong>复选框(多选)</strong></p>
-<pre><code>使用&lt;form:checkboxes /&gt;标签来呈现HTML多个复选框。 
-例如 -  
-&lt;form:checkboxes items=&quot;${xxx}&quot; path=&quot;Modelshuxing&quot; /&gt;
-其中xxx是在xxxController中使用@ModelAttribute(&quot;yyy&quot;)定义的。
-</code></pre></li>
-<li><p><strong>单选框(多个选项)</strong></p>
-<pre><code>使用&lt;form:radiobuttons /&gt;标签来呈现HTML密码框。
-例如 - 
-&lt;form:radiobuttons items=&quot;${yyy}&quot; path=&quot;Modelshuxing&quot; /&gt;
-其中xxx是在xxxController中使用@ModelAttribute(&quot;yyy&quot;)定义的。
-</code></pre></li>
-<li><p><strong>下拉框</strong></p>
-<p> 使用&lt;form:select /&gt; , &lt;form:option /&gt; 和 &lt;form:options /&gt;标签来呈现HTML密码框。<br> 例如 - &lt;form:select path=”country”&gt;</p>
-<pre><code>&lt;form:option value=&quot;NONE&quot; label=&quot;Select&quot;/&gt;
-&lt;form:options items=&quot;${countryList}&quot; /&gt;&lt;/form:select&gt;
-</code></pre><p>  HTML它将呈现以下HTML内容。</p>
-<pre><code>&lt;select id=&quot;country&quot; name=&quot;country&quot;&gt;
-&lt;option value=&quot;NONE&quot;&gt;请选择...&lt;/option&gt;
-&lt;option value=&quot;US&quot;&gt;United States&lt;/option&gt;
-&lt;option value=&quot;CH&quot;&gt;China&lt;/option&gt;
-&lt;option value=&quot;MY&quot;&gt;Malaysia&lt;/option&gt;
-&lt;option value=&quot;SG&quot;&gt;Singapore&lt;/option&gt;
-&lt;/select&gt;
-</code></pre></li>
-<li><p><strong>列表多选框</strong></p>
-<p> 使用&lt;form:select /&gt; 及其属性 multiple=true标签来呈现HTML列表多选框。<br> 例如 -<br> &lt;form:select path=”skills” items=”${xxx}” multiple=”true” /&gt;<br> HTML它将呈现以下HTML内容。</p>
- <select id="skills" name="skills" multiple="multiple"><br> <option value="Struts">Struts</option><br> <option value="Hibernate">Hibernate</option><br> <option value="Apache Wicket">Apache Hadoop</option><br> <option value="Spring">Spring</option><br> </select>
-</li>
-<li><p><strong>错误处理</strong>(todo)</p>
-</li>
-</ol>
-<h3 id="如何配置标签所需的外部数据"><a href="#如何配置标签所需的外部数据" class="headerlink" title="如何配置标签所需的外部数据"></a>如何配置标签所需的外部数据</h3><pre><code>使用 @ModelAttribute(&quot;XXX&quot;)属性来配置外部数据。添加方式包括以下两种：
-</code></pre><ol>
-<li>使用List。此时List添加的元素就是数据源，也就是在页面中显示的数据。</li>
-<li>使用Map。 此时Map中的key-value分别对应数据源-标签。</li>
-</ol>
-<p>以以下代码为例：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;tr&gt;</span><br><span class="line">         &lt;td&gt;&lt;form:label path="country"&gt;所在国家：(使用Map)&lt;/form:label&gt;&lt;/td&gt;</span><br><span class="line">         &lt;td&gt;&lt;form:select path=<span class="string">"country"</span>&gt;</span><br><span class="line">             &lt;form:option value=<span class="string">"NONE"</span> label=<span class="string">"请选择..."</span> /&gt;</span><br><span class="line">             &lt;form:options items=<span class="string">"$&#123;countryList&#125;"</span> /&gt;</span><br><span class="line">             &lt;/form:select&gt;&lt;/td&gt;</span><br><span class="line">   &lt;/tr&gt;</span><br><span class="line"></span><br><span class="line">     </span><br><span class="line">&lt;tr&gt;</span><br><span class="line">         &lt;td&gt;&lt;form:label path="country"&gt;所在国家：(使用list)&lt;/form:label&gt;&lt;/td&gt;</span><br><span class="line">         &lt;td&gt;&lt;form:select path=<span class="string">"country"</span>&gt;</span><br><span class="line">             &lt;form:option value=<span class="string">"NONE"</span> label=<span class="string">"请选择..."</span> /&gt;</span><br><span class="line">             &lt;form:options items=<span class="string">"$&#123;countryList1&#125;"</span> /&gt;</span><br><span class="line">             &lt;/form:select&gt;&lt;/td&gt;</span><br><span class="line">    &lt;/tr&gt;</span><br></pre></td></tr></table></figure>
-<p>其中上方代码的第一部分使用Map，第二部分使用List。数据源如下所示：</p>
-<pre><code class="java"><span class="meta">@ModelAttribute</span>(<span class="string">"countryList1"</span>)
-<span class="function"><span class="keyword">public</span> List&lt;String&gt; <span class="title">getCountryList1</span><span class="params">()</span></span>
-<span class="function">  </span>{
-     List&lt;String&gt; webFrameworkList = <span class="keyword">new</span> ArrayList&lt;String&gt;();
-     webFrameworkList.add(<span class="string">"United States"</span>);
-     webFrameworkList.add(<span class="string">"China"</span>);
-     webFrameworkList.add(<span class="string">"Singapore"</span>);
-     webFrameworkList.add(<span class="string">"Malaysia"</span>);
-     <span class="keyword">return</span> webFrameworkList;
-  }
-
-<span class="meta">@ModelAttribute</span>(<span class="string">"countryList"</span>)
-<span class="function"><span class="keyword">public</span> Map&lt;String, String&gt; <span class="title">getCountryList</span><span class="params">()</span></span>
-<span class="function">  </span>{
-     Map&lt;String, String&gt; countryList = <span class="keyword">new</span> HashMap&lt;String, String&gt;();
-     countryList.put(<span class="string">"US"</span>, <span class="string">"United States"</span>);
-     countryList.put(<span class="string">"CH"</span>, <span class="string">"China"</span>);
-     countryList.put(<span class="string">"SG"</span>, <span class="string">"Singapore"</span>);
-     countryList.put(<span class="string">"MY"</span>, <span class="string">"Malaysia"</span>);
-     <span class="keyword">return</span> countryList;
-  }
-</code></pre>
-<p>效果如下：<br><img src="https://s1.ax1x.com/2018/04/23/CQ0MEq.png" alt="CQ0MEq.png"><br><img src="https://s1.ax1x.com/2018/04/23/CQ0QU0.png" alt="CQ0QU0.png"><br>如上图所示：对于List的数据来源，展示界面和最终的数据都是add（xxx）中添加的数据，对于map而言，展示中的数据是key-value中的value，而获取到的数据是key-value中的key。 </p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/SpringMVC/">SpringMVC</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2018/04/19/SpringMVC表单处理/" title="SpringMVC表单处理1" itemprop="url">SpringMVC表单处理1</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
-		
-  <p class="article-time">
-    <time datetime="2018-04-19T03:29:56.000Z" itemprop="datePublished"> Published 2018-04-19</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>SpringMVC表单处理</p>
-<h2 id="Spring-MVC-表单项目创建"><a href="#Spring-MVC-表单项目创建" class="headerlink" title="Spring MVC 表单项目创建"></a>Spring MVC 表单项目创建</h2><p><strong>以下示例演示如何编写一个简单的基于Web的应用程序，它使用Spring Web MVC框架使用HTML表单。 首先使用Eclipse IDE，并按照以下步骤使用Spring Web Framework开发基于动态表单的Web应用程序：</strong></p>
-<ul>
-<li>基于上一小节中的Spring MVC - HelloWeb实例章节所创建的 HelloWeb来创建。在com.yiibai.springmvc包下创建两个Java类Student，StudentController。分别作为MVC中的MOdell和Controller。</li>
-<li>在jsp子文件夹下创建两个视图文件student.jsp，result.jsp。</li>
-</ul>
-<h2 id="关于Model类"><a href="#关于Model类" class="headerlink" title="关于Model类"></a>关于Model类</h2><h3 id="Model类的创建"><a href="#Model类的创建" class="headerlink" title="Model类的创建"></a>Model类的创建</h3><pre><code class="java"> <span class="keyword">package</span> com.yiibai.springmvc;
- <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Student</span> </span>{
-   <span class="keyword">private</span> Integer age;
-   <span class="keyword">private</span> String name;
-   <span class="keyword">private</span> Integer id;
-   Student(){  <span class="comment">// a行</span>
-   }
-   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setAge</span><span class="params">(Integer age)</span> </span>{
-      <span class="keyword">this</span>.age = age;
-   }
-   <span class="function"><span class="keyword">public</span> Integer <span class="title">getAge</span><span class="params">()</span> </span>{
-      <span class="keyword">return</span> age;
-   }
-
-   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setName</span><span class="params">(String name)</span> </span>{
-      <span class="keyword">this</span>.name = name;
-   }
-   <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>{
-      <span class="keyword">return</span> name;
-   }
-
-   <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setId</span><span class="params">(Integer id)</span> </span>{
-      <span class="keyword">this</span>.id = id;
-   }
-   <span class="function"><span class="keyword">public</span> Integer <span class="title">getId</span><span class="params">()</span> </span>{
-      <span class="keyword">return</span> id;
-   }
-}
-
-</code></pre>
-<p><strong>关于上方a行的说明：一般情况下创建Model类时最好创建一个不带参数的构造方法。</strong></p>
-<h2 id="关于Controller类"><a href="#关于Controller类" class="headerlink" title="关于Controller类"></a>关于Controller类</h2><h3 id="Controller类的创建"><a href="#Controller类的创建" class="headerlink" title="Controller类的创建"></a>Controller类的创建</h3><pre><code class="java"><span class="keyword">package</span> com.yiibai.springmvc;
-<span class="keyword">import</span> org.springframework.stereotype.Controller;
-<span class="keyword">import</span> org.springframework.web.bind.annotation.ModelAttribute;
-<span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMapping;
-<span class="keyword">import</span> org.springframework.web.bind.annotation.RequestMethod;
-<span class="keyword">import</span> org.springframework.web.servlet.ModelAndView;
-<span class="keyword">import</span> org.springframework.ui.ModelMap;
-
-<span class="meta">@Controller</span>
-<span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">StudentController</span> </span>{
-
-   <span class="meta">@RequestMapping</span>(value = <span class="string">"/student"</span>, method = RequestMethod.GET)
-   <span class="function"><span class="keyword">public</span> ModelAndView <span class="title">student</span><span class="params">()</span> </span>{
-    <span class="keyword">return</span> <span class="keyword">new</span> ModelAndView(<span class="string">"student"</span>, <span class="string">"command"</span>, <span class="keyword">new</span> Student());
-    <span class="comment">/* 我们已经在ModelAndView对象中传递了一个名为“command”的空对象，因为如果在JSP中使用&lt;form：form&gt;标签</span>
-<span class="comment">     spring框架需要一个名为“command”的对象文件。 所以当调用student()方法时，它返回student.jsp视图。</span>
-<span class="comment">       */</span>
-   }
-   <span class="meta">@RequestMapping</span>(value = <span class="string">"/addStudent"</span>, method = RequestMethod.POST)
-   <span class="function"><span class="keyword">public</span> String <span class="title">addStudent</span><span class="params">(@ModelAttribute(<span class="string">"SpringWeb"</span>)</span>Student student, </span>
-<span class="function">   ModelMap model) </span>{
-      model.addAttribute(<span class="string">"name"</span>, student.getName());
-      model.addAttribute(<span class="string">"age"</span>, student.getAge());
-      model.addAttribute(<span class="string">"id"</span>, student.getId());
-      <span class="keyword">return</span> <span class="string">"result"</span>;
-   }
-}
-</code></pre>
-<ul>
-<li>关于上方的ModelAndView，查看源代码可知返回模型和视图。其中构造方法中第一个参数表示viewName,而第二个参数的作用是将第三个对象设置为Model。</li>
-<li>关于上方的ModelAttribute。查看源代码可知，其作用是将方法参数或方法返回值绑定到(exposed to a web view)命名模型属性的注释。 其中的(“SpringWeb”)表示别名，可有可无。</li>
-</ul>
-<h2 id="关于视图类的创建"><a href="#关于视图类的创建" class="headerlink" title="关于视图类的创建"></a>关于视图类的创建</h2><h3 id="student-jsp"><a href="#student-jsp" class="headerlink" title="student.jsp"></a>student.jsp</h3><pre><code>&lt;%@ page contentType=&quot;text/html; charset=UTF-8&quot; %&gt;
-&lt;%@taglib uri=&quot;http://www.springframework.org/tags/form&quot; prefix=&quot;form&quot;%&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;title&gt;Spring MVC表单处理&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-&lt;h2&gt;Student Information&lt;/h2&gt;
-&lt;form:form method=&quot;POST&quot; action=&quot;/HelloWeb/addStudent&quot;&gt;
-&lt;table&gt;
-&lt;tr&gt;
-    &lt;td&gt;&lt;form:label path=&quot;name&quot;&gt;名字：&lt;/form:label&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;form:input path=&quot;name&quot; /&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-    &lt;td&gt;&lt;form:label path=&quot;age&quot;&gt;年龄：&lt;/form:label&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;form:input path=&quot;age&quot; /&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-    &lt;td&gt;&lt;form:label path=&quot;id&quot;&gt;编号：&lt;/form:label&gt;&lt;/td&gt;
-    &lt;td&gt;&lt;form:input path=&quot;id&quot; /&gt;&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-    &lt;td colspan=&quot;2&quot;&gt;
-        &lt;input type=&quot;submit&quot; value=&quot;提交表单&quot;/&gt;
-    &lt;/td&gt;
-&lt;/tr&gt;
-&lt;/table&gt;  
-/form:form&gt;
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><p>关于上方的说明：</p>
-<ul>
-<li>form中的action：指明处理该请求的Controller /xxx/xxxx（其中xxx表示项目名称，比如此处既是HelloWeb，xxxx指明Controller的名称）</li>
-<li>下方的table 其中的path属性分别为Model类中的属性，比如此处的name,age和id。经过测试发现数据类型和数据范围必须与Model类中定义的一致，否则会报错。</li>
-<li>该视图提交后将交给addStudent控制器来处理，该控制器处理HTTP POST请求的服务方法.</li>
-</ul>
-<h3 id="result-jsp"><a href="#result-jsp" class="headerlink" title="result.jsp"></a>result.jsp</h3><pre><code>&lt;%@ page contentType=&quot;text/html; charset=UTF-8&quot; %&gt;
-&lt;%@taglib uri=&quot;http://www.springframework.org/tags/form&quot; prefix=&quot;form&quot;%&gt;
-&lt;html&gt;
-&lt;head&gt;
-&lt;title&gt;Spring MVC表单处理&lt;/title&gt;
-&lt;/head&gt;
-&lt;body&gt;
-
-&lt;h2&gt;提交的学生信息如下 - &lt;/h2&gt;
-&lt;table&gt;
-&lt;tr&gt;
-   &lt;td&gt;名称：&lt;/td&gt;
-   &lt;td&gt;${name}&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-   &lt;td&gt;年龄：&lt;/td&gt;
-   &lt;td&gt;${age}&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-   &lt;td&gt;编号：&lt;/td&gt;
-   &lt;td&gt;${id}&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/table&gt;  
-&lt;/body&gt;
-&lt;/html&gt;
-</code></pre><p>此处仅仅作为结果的展示界面，用于将控制器addStudent中的数据进行展示。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/SpringMVC/">SpringMVC</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
-    <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
+    <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
   </nav>
 
 </div>
@@ -1156,6 +950,10 @@ HTML它将呈现以下HTML内容。
 		
 			
 				<li><a href="/tags/辅助类简记/" title="辅助类简记">辅助类简记<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/mysql数据库/" title="mysql数据库">mysql数据库<sup>1</sup></a></li>
 			
 		
 			

@@ -79,6 +79,119 @@
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2018/06/21/Java数据库操作以及方法比较/" title="Java数据库操作以及方法比较" itemprop="url">Java数据库操作以及方法比较</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
+		
+  <p class="article-time">
+    <time datetime="2018-06-21T12:30:20.000Z" itemprop="datePublished"> Published 2018-06-21</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>  此处主要记录java连接数据库的步骤，以及几种处理方式。</p>
+<h2 id="Java数据库连接"><a href="#Java数据库连接" class="headerlink" title="Java数据库连接"></a>Java数据库连接</h2><p><strong>数据库代码如下：</strong><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">use servlet_db;</span><br><span class="line">DROP TABLE IF EXISTS `employees`;</span><br><span class="line">CREATE TABLE `employees` (</span><br><span class="line">  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,</span><br><span class="line">  `name` varchar(64) NOT NULL DEFAULT &apos;&apos;,</span><br><span class="line">  `age` int(3) unsigned NOT NULL DEFAULT &apos;0&apos;,</span><br><span class="line">  `address` varchar(254) DEFAULT NULL,</span><br><span class="line">  `salary` float(8,2) unsigned DEFAULT NULL,</span><br><span class="line">  PRIMARY KEY (`id`)</span><br><span class="line">) ENGINE=MyISAM AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;</span><br><span class="line"></span><br><span class="line">INSERT INTO `employees` VALUES (&apos;1&apos;, &apos;李小春&apos;, &apos;23&apos;, &apos;海口市人民大道1800号&apos;, &apos;8900.00&apos;);</span><br><span class="line">INSERT INTO `employees` VALUES (&apos;2&apos;, &apos;张辉&apos;, &apos;28&apos;, &apos;广州天河区珠村市场&apos;, &apos;15800.00&apos;);</span><br><span class="line">INSERT INTO `employees` VALUES (&apos;3&apos;, &apos;林贤弟&apos;, &apos;25&apos;, &apos;广州白云区龙塘村120号&apos;, &apos;18990.00&apos;);</span><br></pre></td></tr></table></figure></p>
+<p><strong>Java代码如下：</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">/*</span><br><span class="line"> 连接到数据库（MySQL），并完成几种简单的查询</span><br><span class="line"> */</span><br><span class="line">import java.sql.*;</span><br><span class="line">public class JdbcConn &#123;</span><br><span class="line">    public static void main(String[] args) throws SQLException &#123;</span><br><span class="line">        String JDBC_DRIVER = &quot;com.mysql.jdbc.Driver&quot;;</span><br><span class="line">        String DB_URL = &quot;jdbc:mysql://localhost/servlet_db&quot;;</span><br><span class="line">        String User = &quot;root&quot;;</span><br><span class="line">        String Passwd = &quot;root&quot;;</span><br><span class="line">        Connection con=null;</span><br><span class="line">        Statement stmt =null;</span><br><span class="line">        try &#123;</span><br><span class="line">            Class.forName(JDBC_DRIVER); // 加载驱动包</span><br><span class="line">        &#125; catch (ClassNotFoundException e)&#123;</span><br><span class="line">            System.out.println(&quot;Class not found &quot; + e);</span><br><span class="line">        &#125;</span><br><span class="line">        int total_rows = 0;</span><br><span class="line"></span><br><span class="line">        try &#123; // 连接数据库</span><br><span class="line">             con = DriverManager.getConnection(DB_URL, User, Passwd);</span><br><span class="line">            // 创建执行sql语句的对象</span><br><span class="line">             stmt = con.createStatement();</span><br><span class="line">             // 执行查询语句</span><br><span class="line">            ResultSet rs = stmt.executeQuery(&quot;SELECT * FROM employees&quot;);</span><br><span class="line">            while (rs.next()) &#123;</span><br><span class="line">                 total_rows++;</span><br><span class="line">                 // 方式1</span><br><span class="line">                int id = rs.getInt(&quot;ID&quot;);</span><br><span class="line">                String name = rs.getString(&quot;name&quot;);</span><br><span class="line">                int age = rs.getInt(&quot;AGE&quot;);</span><br><span class="line">                String address = rs.getString(&quot;address&quot;);</span><br><span class="line">                Float salary=rs.getFloat(&quot;salary&quot;);</span><br><span class="line">                // 方式2</span><br><span class="line">                /*</span><br><span class="line">                int id = rs.getInt(1);</span><br><span class="line">                String name = rs.getString(2);</span><br><span class="line">                int age = rs.getInt(3);</span><br><span class="line">                String address = rs.getString(4);</span><br><span class="line">                Float salary=rs.getFloat(5);</span><br><span class="line">                */</span><br><span class="line">                /* a行</span><br><span class="line">                String name=rs.getString(1);</span><br><span class="line">                System.out.println(name);</span><br><span class="line">                */</span><br><span class="line">                System.out.println(id+&quot;,&quot;+name+&quot;,&quot;+age+&quot;,&quot;+&quot;,&quot;+address+&quot;,&quot;+salary);</span><br><span class="line">            &#125;</span><br><span class="line">            System.out.println(&quot;There are &quot; + total_rows + &quot; records in the table&quot;);</span><br><span class="line">        &#125; catch (SQLException e) &#123;</span><br><span class="line">            System.out.println(&quot;SQL exception occured&quot; + e);</span><br><span class="line">        &#125; finally &#123;</span><br><span class="line">            // 关闭数据库连接</span><br><span class="line">            con.close();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>关于上方的几点说明：</strong></p>
+<ol>
+<li>数据库连接： 加载驱动包，连接数据库，创建sql语句执行对象，执行sql语句，关闭数据库连接。</li>
+<li>关于上方的查询方式包括两种，一种是按照索引（注意索引从1开始，而不是数字0），一种是按照字段名(不区分大小写)。自己之前有个模糊认识：如上方a行所示。之前认为按照a行的查询方式，会查询到数据表中第一个类型为varchar类型的数据，也就是上方会对应数据表中的name,这是不对的。a行查询到的数据是索引为1的字段：id. </li>
+<li>创建sql语句执行对象时的区别：prepareStatement , Statement。<br>执行sql语句时的区别：executeQuery , execute。后面再举例说明。</li>
+</ol>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/mysql数据库/">mysql数据库</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/06/19/Java基础知识简记/" title="Java基础知识简记" itemprop="url">Java基础知识简记</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
+		
+  <p class="article-time">
+    <time datetime="2018-06-19T03:35:09.000Z" itemprop="datePublished"> Published 2018-06-19</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2018/06/14/Servlet事件和监听器/" title="Servlet事件和监听器" itemprop="url">Servlet事件和监听器</a>
   </h1>
   <p class="article-author">By
@@ -808,161 +921,9 @@ ServletContext application=getServletContext(); // 直接调用getServletContext
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2018/05/29/Servlet的几种实现方式/" title="Servlet的几种实现方式" itemprop="url">Servlet的几种实现方式</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
-		
-  <p class="article-time">
-    <time datetime="2018-05-29T07:18:09.000Z" itemprop="datePublished"> Published 2018-05-29</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>  基于Servlet的实现</p>
-<h2 id="实现servlet接口"><a href="#实现servlet接口" class="headerlink" title="实现servlet接口"></a>实现servlet接口</h2><h3 id="servlet接口简介"><a href="#servlet接口简介" class="headerlink" title="servlet接口简介"></a>servlet接口简介</h3><p>Servlet接口有5种方法。分别为：init，service和destroy是servlet的生命周期方法。这些方法由web容器调用。各个方法作用如下图所示。</p>
-<p><img src="https://s1.ax1x.com/2018/05/29/C4Lene.png" alt="C4Lene.png"></p>
-<h3 id="代码实现实例"><a href="#代码实现实例" class="headerlink" title="代码实现实例"></a>代码实现实例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yiibai;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.*;</span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyServlet</span> <span class="keyword">implements</span> <span class="title">Servlet</span> </span>&#123;</span><br><span class="line">    ServletConfig config = <span class="keyword">null</span>;</span><br><span class="line">    <span class="comment">//  init方法,由web容器仅调用一次</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">init</span><span class="params">(ServletConfig config)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">this</span>.config = config;</span><br><span class="line">        System.out.println(<span class="string">"servlet is initialized"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 为传入的请求提供相应。比如此处的请求显示的页面中的内容就是该方法中的内容</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(ServletRequest req, ServletResponse res)</span> <span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line">        res.setContentType(<span class="string">"text/html"</span>);</span><br><span class="line">        PrintWriter out = res.getWriter();</span><br><span class="line">        out.print(<span class="string">"&lt;html&gt;&lt;body&gt;"</span>);</span><br><span class="line">        out.print(<span class="string">"&lt;div style=\"text-align:center;\"&gt;&lt;h2&gt;hello simple servlet&lt;/h2&gt;&lt;/div&gt;"</span>);</span><br><span class="line">        out.print(<span class="string">"&lt;/body&gt;&lt;/html&gt;"</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">destroy</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        System.out.println(<span class="string">"servlet is destroyed"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> ServletConfig <span class="title">getServletConfig</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> config;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getServletInfo</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"copyright 2012-2020"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h3 id="配置文件（仅显示部分）"><a href="#配置文件（仅显示部分）" class="headerlink" title="配置文件（仅显示部分）"></a>配置文件（仅显示部分）</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;servlet&gt;</span><br><span class="line">    &lt;description&gt;&lt;/description&gt;</span><br><span class="line">    &lt;display-name&gt;MyServlet&lt;/display-name&gt;&lt;!-- // 类的显示名称 --&gt;</span><br><span class="line">    &lt;servlet-name&gt;MyServlet&lt;/servlet-name&gt;&lt;!-- // 类的别名 --&gt;</span><br><span class="line">    &lt;servlet-class&gt;com.yiibai.MyServlet&lt;/servlet-class&gt;&lt;!-- // 类的名称 --&gt;</span><br><span class="line">  &lt;/servlet&gt;</span><br><span class="line">  &lt;servlet-mapping&gt;</span><br><span class="line">    &lt;servlet-name&gt;MyServlet&lt;/servlet-name&gt;// 类的别名</span><br><span class="line">    &lt;url-pattern&gt;/MyServletDemo&lt;/url-pattern&gt;// 请求此类的对应URL</span><br><span class="line">  &lt;/servlet-mapping&gt;</span><br></pre></td></tr></table></figure>
-<p>关于配置文件主要记住以下内容：</p>
-<pre><code>&lt;servlet-name&gt;是&lt;servlet&gt;的子元素，表示servlet的名称。
-&lt;servlet-class&gt;是&lt;servlet&gt;的子元素，表示servlet的类。
-&lt;servlet-mapping&gt;是&lt;web-app&gt;的子元素。它用于映射servlet。
-&lt;url-pattern&gt;是&lt;servlet-mapping&gt;的子元素。客户端使用此模式来调用servlet。
-</code></pre><p>也就是servlet-class指定某一个确定的类，该类有一个名称servlet-name（一般与类名相同）。在servlet-mapping中使用自定义的url来使用相关的servlet。）</p>
-<h3 id="运行结果如图"><a href="#运行结果如图" class="headerlink" title="运行结果如图"></a>运行结果如图</h3><p><img src="https://s1.ax1x.com/2018/05/29/C4ORsS.png" alt="C4ORsS.png"></p>
-<h2 id="继承GenericServlet类"><a href="#继承GenericServlet类" class="headerlink" title="继承GenericServlet类"></a>继承GenericServlet类</h2><h3 id="GenericServlet类简介"><a href="#GenericServlet类简介" class="headerlink" title="GenericServlet类简介"></a>GenericServlet类简介</h3><p>Servlet接口为所有servlet提供常见的行为。<br>GenericServlet类实现了Servlet，ServletConfig和Serializable接口。它提供除了service方法之外，还实现了这些接口的所有方法。<br>GenericServlet类可以处理任何类型的请求，因此它与协议无关。<br><strong>可以通过继承GenericServlet类并提供服务方法的实现来创建通用的servlet。</strong></p>
-<h3 id="代码实现实例-1"><a href="#代码实现实例-1" class="headerlink" title="代码实现实例"></a>代码实现实例</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> com.yiibai;</span><br><span class="line"><span class="keyword">import</span> java.io.*;</span><br><span class="line"><span class="keyword">import</span> javax.servlet.*;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">MyServlet</span> <span class="keyword">extends</span> <span class="title">GenericServlet</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">service</span><span class="params">(ServletRequest req, ServletResponse res)</span> <span class="keyword">throws</span> IOException, ServletException </span>&#123;</span><br><span class="line">        res.setContentType(<span class="string">"text/html"</span>);</span><br><span class="line">        PrintWriter out = res.getWriter();</span><br><span class="line">        out.print(<span class="string">"&lt;html&gt;&lt;body&gt;"</span>);</span><br><span class="line">        out.print(<span class="string">"&lt;div style=\"text-align:center;\"&gt;&lt;h2&gt;hello generic servlet&lt;/h2&gt;&lt;/div&gt;"</span>);</span><br><span class="line">        out.print(<span class="string">"&lt;/body&gt;&lt;/html&gt;"</span>);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<h2 id="继承-HttpServlet类"><a href="#继承-HttpServlet类" class="headerlink" title="继承 HttpServlet类"></a>继承 HttpServlet类</h2><h3 id="HttpServlet类简介"><a href="#HttpServlet类简介" class="headerlink" title="HttpServlet类简介"></a>HttpServlet类简介</h3><p>HttpServlet类扩展了GenericServlet类并实现了Serializable接口。它提供了http特定的方法，如:doGet，doPost，doHead，doTrace等。</p>
-<h3 id="代码实现实例-2"><a href="#代码实现实例-2" class="headerlink" title="代码实现实例"></a>代码实现实例</h3><pre><code>参考上一章的入门示例。该示例基于HttpServlet类。
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Servlet简记/">Servlet简记</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2018/05/29/Servlet入门程序/" title="Servlet入门程序" itemprop="url">Servlet入门程序</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="/about" title="赵成龙" target="_blank" itemprop="author">赵成龙</a>
-		
-  <p class="article-time">
-    <time datetime="2018-05-29T02:50:00.000Z" itemprop="datePublished"> Published 2018-05-29</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>Servlet入门程序：此处入门程序不采用IDE或者ECLIPSE的方式运行，而是在webapps中运行。主要包括以下几个步骤。</p>
-<h2 id="创建一个Servlet"><a href="#创建一个Servlet" class="headerlink" title="创建一个Servlet"></a>创建一个Servlet</h2><p> 与之前的例子相呼应，此处采用扩展HttpServlet抽象类的方式创建Servlet。代码如下：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">import javax.servlet.*;</span><br><span class="line">import javax.servlet.http.*;</span><br><span class="line">import java.io.*;</span><br><span class="line"></span><br><span class="line">public class MyServlet extends HttpServlet</span><br><span class="line">&#123;</span><br><span class="line"> public void doGet(HttpServletRequest request,HttpServletResponse response) </span><br><span class="line">                     throws ServletException, IOException </span><br><span class="line"> &#123;</span><br><span class="line">   response.setContentType(&quot;text/html&quot;);</span><br><span class="line">   PrintWriter out = response.getWriter();</span><br><span class="line">   out.println(&quot;&lt;html&gt;&lt;body&gt;&quot;);</span><br><span class="line">   out.println(&quot;&lt;h2 style=&apos;text-align:center&apos;&gt;Hello Servlet ~&lt;/h2&gt;&quot;);</span><br><span class="line">   out.println(&quot;&lt;/body&gt;&lt;/html&gt;&quot;);</span><br><span class="line"> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>将该文件放在F:\Demo\First目录下</p>
-<h2 id="编译Servlet类"><a href="#编译Servlet类" class="headerlink" title="编译Servlet类"></a>编译Servlet类</h2><pre><code>关于编译的说明：要编译Servlet，需要一个JAR文件。不同的服务器需要不同的JAR文件。在Apache Tomcat服务器需要的是servlet-api.jar文件来编译servlet类。（该jar文件可以直接在tomcat的lib目录下找到。）
-</code></pre><p>步骤如下：</p>
-<ol>
-<li>将上述jar包放在一个目录中（此处放置的位置是F:\Demo\library）</li>
-<li><p>在MyServlet所在的目录执行以下命令：</p>
-<pre><code>F:\Demo\First&gt; javac -Djava.ext.dirs=F:\Demo\library MyServlet.java
-</code></pre></li>
-<li>将当前目录下生成的类文件：MyServlet.class 粘贴到F:\Demo\First\WEB-INF\classes目录中。</li>
-</ol>
-<h2 id="创建部署描述符"><a href="#创建部署描述符" class="headerlink" title="创建部署描述符"></a>创建部署描述符</h2><p>   部署描述符(DD)是由Web容器用于运行Servlet和JSP页面的XML文档。也就是web.xml文件。其作用如下：</p>
-<ol>
-<li>将URL映射到Servlet类</li>
-<li>初始化参数</li>
-<li>定义错误页面</li>
-<li>安全角色</li>
-<li>声明标签库<br>web.xml代码如下：</li>
-</ol>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;</span><br><span class="line">&lt;web-app xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot; xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot; xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd&quot; id=&quot;WebApp_ID&quot; version=&quot;2.5&quot;&gt;</span><br><span class="line">  &lt;display-name&gt;MyFirstServlet&lt;/display-name&gt;</span><br><span class="line">  &lt;welcome-file-list&gt;</span><br><span class="line">    &lt;!--// 默认主页--&gt;</span><br><span class="line">    &lt;welcome-file&gt;index.html&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;index.html&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;index.jsp&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;default.html&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;default.html&lt;/welcome-file&gt;</span><br><span class="line">    &lt;welcome-file&gt;default.jsp&lt;/welcome-file&gt;</span><br><span class="line">  &lt;/welcome-file-list&gt;</span><br><span class="line">  &lt;servlet&gt;</span><br><span class="line">    &lt;description&gt;&lt;/description&gt;</span><br><span class="line">    &lt;display-name&gt;MyServlet&lt;/display-name&gt;&lt;!--// 类的显示名称 --&gt;</span><br><span class="line">    &lt;servlet-name&gt;MyServlet&lt;/servlet-name&gt;&lt;!--// 类的别名 --&gt;</span><br><span class="line">    &lt;servlet-class&gt;MyServlet&lt;/servlet-class&gt;&lt;!--// 类的名称 --&gt;</span><br><span class="line">  &lt;/servlet&gt;</span><br><span class="line">  &lt;servlet-mapping&gt;</span><br><span class="line">    &lt;servlet-name&gt;MyServlet&lt;/servlet-name&gt;&lt;!--// 类的别名 --&gt;</span><br><span class="line">    &lt;url-pattern&gt;/hello&lt;/url-pattern&gt;&lt;!--// 请求此类的对应URL --&gt;</span><br><span class="line">  &lt;/servlet-mapping&gt;</span><br><span class="line">&lt;/web-app&gt;</span><br></pre></td></tr></table></figure>
-<h2 id="启动服务器并部署应用程序"><a href="#启动服务器并部署应用程序" class="headerlink" title="启动服务器并部署应用程序"></a>启动服务器并部署应用程序</h2><pre><code>步骤如下：
-</code></pre><ol>
-<li>将目录F:\Demo\First 拷贝到 tomcat下的webapps目录下</li>
-<li>在tomcat的bin目录下启动项目</li>
-<li>访问http:localhost:8080/First/hello</li>
-</ol>
-<h2 id="关于上方的说明"><a href="#关于上方的说明" class="headerlink" title="关于上方的说明"></a>关于上方的说明</h2><pre><code>有点问题（todo）
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Servlet简记/">Servlet简记</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
   </nav>
 
 </div>
@@ -996,6 +957,10 @@ ServletContext application=getServletContext(); // 直接调用getServletContext
 		
 			
 				<li><a href="/tags/辅助类简记/" title="辅助类简记">辅助类简记<sup>2</sup></a></li>
+			
+		
+			
+				<li><a href="/tags/mysql数据库/" title="mysql数据库">mysql数据库<sup>1</sup></a></li>
 			
 		
 			
